@@ -1,7 +1,7 @@
 title: bitfield trong C
 date: 27-09-2021
 tags: C
-name: bitfield
+name: bitfield-c
 summary: Bitfield? Nó là gì?
 -----------------
 
