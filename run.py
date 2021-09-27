@@ -47,7 +47,7 @@ def render_home(outputs_folder: Path, tags: t.List[str], template: Template):
 def render_posts(
     posts: dict, tags: t.List[str], outputs_folder: Path, template: Template
 ):
-    """Render post_metadata['name'].html file to outputs/posts/ folder."""
+    """Render post_metadata['name'].html file to outputs/ folder."""
 
     for p in posts:
         post_metadata = posts[p].metadata
@@ -61,7 +61,7 @@ def render_posts(
 
         # render to html files
         post_path = outputs_folder.joinpath(
-            f"posts/{post_metadata['title']}.html"
+            f"{post_metadata['title']}.html"
         ).resolve()
         os.makedirs(dirname(post_path), exist_ok=True)
         with open(post_path, "w") as f:
