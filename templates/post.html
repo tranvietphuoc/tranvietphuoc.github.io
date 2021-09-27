@@ -1,8 +1,14 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>Chủ đề: {{ post.title }}</h1>
+<div class="row">
+  <h1 class="col-sm-4">Chủ đề:</h1>
+  <h2 class="col-sm-6">{{ post.title }}</h3>
+</div>
+<div class="row">
+  <small class='post-date'>Ngày: {{ post.date }}</small>
+  <small>Tags: {{ post.tags }}</small>
+</div>
 <p>
-  <small style="color: gray; font-size: 15px">Ngày: {{ post.date }}</small>
   {{ post.content }}
 </p>
 

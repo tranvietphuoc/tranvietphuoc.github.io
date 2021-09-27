@@ -72,6 +72,7 @@ def render_posts(
         post_data = {
             "title": post_metadata["title"],
             "date": post_metadata["date"],
+            "tags": post_metadata["tags"],
             "content": posts[p],
         }
         post_html = template.render(post=post_data)

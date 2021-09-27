@@ -1,18 +1,58 @@
-html {
+html a{
   font-family: serif sans-serif;
-}
-
-.nav {
-  display: flex;
-  flex-direction: left;
-}
-
-
-a {
-  color: rgb(255, 200, 200);
+  text-decoration: none;
+  color: rgb(255, 100, 100);
 
 }
 
 a:hover {
   color: purple;
+}
+
+a:visited {
+  color: gray;
+}
+
+* {box-sizing: border-box;}
+
+
+.author {
+  justify-content: center;
+  text-align: center;
+}
+
+.fixed {
+  position: fixed;
+}
+
+.scrollit {
+  float: left;
+}
+
+.post-date {
+  justify-content: right;
+  color: gray;
+  font-size: 15px;
+}
+
+.home-date {
+  font-size: 13px;
+  padding-top: 5px;
+  margin-bottom: 3px;
+  color: gray;
+}
+
+.home-tags {
+  font-size: 13px;
+  padding-top: 5px;
+  padding-left: 10px;
+  margin-bottom: 3px;
+  color: gray;
+
+}
+.home-meta {
+  display: flex;
+  flex-direction: row;
+  flex-flow: row;
+
 }

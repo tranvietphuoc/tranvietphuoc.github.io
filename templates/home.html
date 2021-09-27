@@ -3,10 +3,13 @@
 <h1>Tất cả các bài viết</h1>
 {% for i in range(0, metas | length) %}
   <p>
-    <h2>{{ loop.index }}. <a href="outputs/{{ metas[i].name }}.html">{{ metas[i].title }}</a>
-      <small style="font-size: 15px; color: gray;">ngày: {{ metas[i].date }}</small>
-      <small style="font-size: 15px; color: gray;">tags: {{ metas[i].tags }}</small>
-    </h2>
+  <div class="home-meta">
+    <small class="home-date">{{ metas[i].date }}</small>
+    <br>
+    <small class="home-tags">tags: {{ metas[i].tags }}</small>
+  </div>
+    <h3>{{ loop.index }}. <a href="outputs/{{ metas[i].name }}.html">{{ metas[i].title }}</a>
+    </h3>
     <small>
       {{ metas[i].summary }}
     </small>
