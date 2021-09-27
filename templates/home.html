@@ -1,0 +1,13 @@
+{% extends 'layout.html' %}
+{% block content %}
+<h1>All paper</h1>
+{% for meta in metas %}
+  <p>
+  <h2>{{ loop.index }}<a href="posts/{{ meta.name }}.html">{{ meta.title }}</a>
+    <small>{{ meta.date }}</small>
+    <small>{{ meta.tags }}</small>
+  </h2>
+  {{ meta.sumary }}
+  </p>
+{% endfor %}
+{% endblock %}
