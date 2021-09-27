@@ -1,3 +1,8 @@
+title: variadic function trong C
+date: 27-09-2020
+tags: C
+name: variadic-function-c
+
 ~~Bài này mình bàn về variadic functions và variadic macros trong C~~
 
 # Variadic functions

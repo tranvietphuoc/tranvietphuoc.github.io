@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./static/main.css">
+  <title>My blog</title>
+</head>
+<body class="container">
+  
+<h1>Read/Write trong C</h1>
+<p>
+  <small>27-09-2020</small>
+  <h1>Hoạt động của các hàm read()/write() và sự khác nhau với các hàm đọc/ghi trong thư viện stdio.h.</h1>
+
+<p>Trước hết mình nói qua về khái niệm file. File là một tập có cấu trúc của dữ liệu. Một physical file (file vật lý) đề cập đến cách lưu trữ file trên phần cứng (ví dụ: trên đĩa, file được lưu trữ thành các blocks được tạo thành từ các tracks và sectors). Một logical file là cách lập trình viên tổ chức cấu trúc file, chứa một đặc tả (description) các bản ghi (record) đặc tính được tìm thấy trong một hoặc nhiều file.</p>
+
+<p>Mọi thiết bị trên hệ thống UNIX đều được xem là file, các file được quản lý bởi kernel thông qua các file descriptor. Khi bạn muốn truy cập thiết bị nào, hệ thống sẽ cấp cho bạn file desciptor của thiết bị đó, bạn sẽ tương tác với thiết bị thông qua file descriptor.</p>
+
+<h2>Hàm read()/write().</h2>
+
+<p>Các hàm read(), write() là một lời gọi tới hệ thống nằm trong thư viện unistd.h. Dùng để đọc dữ liệu từ physical file hoặc ghi dữ liệu ra physical file.</p>
+
+<p>Theo sách ~~<em>The C Programming Language</em>~~ thì prototype của read() là:</p>
+
+<p><code>c
+int read(int fd, char* buf, int size);
+</code></p>
+
+<p>và của write() là:</p>
+
+<p><code>c
+int write(int fd, char* buf, int size);
+</code></p>
+
+<p>Trong đó <strong>fd</strong> là <em>file descriptor</em>, <strong>buf</strong> là con trỏ tới bộ đệm để chưa dữ liệu đọc được hoặc dữ liệu cần ghi, <strong>size</strong> là số byte cần đọc hoặc ghi.
+Số byte đọc/ghi có thể nhỏ hơn size vì nhiều lý do, chẳng hạn nhu bộ nhớ vật lý thiếu không gian lưu trữ, hoặc bị ngắt (interrupt) bởi <em>signal handler</em>, etc. Nếu đọc/ghi thành công sẽ trả về số byte đoc/ghi được, nếu lỗi giá trị trả về là -1 kết hợp với biến hệ thống <strong>errno</strong> được set. Chi tiết của hàm <a href="https://linux.die.net/man/2/read">read()</a>, <a href="https://linux.die.net/man/2/write">write()</a> bạn có thể tham khảo thêm.</p>
+
+<p>read()/write() có thể đọc/ghi bất cứ số bytes nào trong một lần gọi. Giá trị phổ biến nhất là 1, điều này nghĩa là mọt ký tự được đọc/ghi tại 1 thời điểm (unbuffered), và một số nhứ 1024 hay 4096 tương ứng với một khối kích thước trên một thiết bị ngoại vi. Các kích thươc shonw hơn sẽ hiệu quả hơn vì ít lời gọi tới hệ thống được tạo ra hơn. Xét ví dụ đơn giản sau:</p>
+
+<p>```c</p>
+
+<h1>include <unistd.h></h1>
+
+<h1>define BUFSIZE 1024</h1>
+
+<p>/* copy input to output */
+int main(){
+    char buf[BUFSIZE];
+    int n;
+    while((n=read(0,buf,BUFSIZE))&gt;0)
+        write(1,buf,n);
+    return 0;
+}
+```</p>
+
+<p>Chương trình trên đơn giản là đọc dữ liệu từ bạn phím, sau đó in dữ liệu đọc được ra màn hình. Nếu kích thước file không phải là bội của BUFSIZE, một vài lời gọi read sẽ trả về một số bytes nhỏ hơn và sẽ được ghi bởi write, lần gọi kế tiếp read sẽ trả về 0.</p>
+
+<p>Bởi vì read()/write) đọc dữ liệu từ thiết bị ngoại vi hay ghi dữ liệu ra thiết bị đều không qua bộ đệm dữ liệu nên chúng là <strong>unbuffered</strong>.</p>
+
+<h2>Các hàm đọc/ghi file trong thư viện stdio.h</h2>
+
+<p>Các hàm đọc/ghi file trong stdio.h ở một mức trừu tượng cao hơn so với các lời gọi hệ thống read()/write()/ Và cấc thao tác đoc/ghi trong stdio.h được thực hiện thông qua một bộ đệm.</p>
+
+<p>Buffer hay bộ đệm alf một vùng nhớ tạm.</p>
+
+<p>Trong stdio.h có một cấu trúc dữ liệu là FILE được định nghĩa như sau (trích ~~<em>The C Programming Language</em>~~):</p>
+
+<p><code>c
+typedef struct _iobuf{
+    int cnt;    /* character left*/
+    char* ptr;  /* next character position*/
+    char* base; /*location of buffer*/
+    int flag;   /*mode of file access*/
+    int fd;     /*file descriptor*/
+} FILE;
+</code></p>
+
+<p>Tại sao mình lại trích khái niệm FILE lên đây? Phần trước bạn đã biết mọi thao tác đoc/ghi file dùng các lời gọi hệ thống read()/write() đều thông qua file descriptor, nhưng với thao tác đọc/ghi file trong <em>stdio.h</em> thì thực hiện thông qua con trỏ FILE. Nói chính xác hơn thì nó vẫn thao tác với file descriptor nhưng ở mức trường tượng cao hơn là <em>FILE</em> (đã mô tả ở định nghĩa trên). Bạn có thể lấy file descriptor của một <em>FILE</em> * bằng hàm:</p>
+
+<p><code>c
+int fileno(FILE*);
+</code></p>
+
+<p>Bài này mình chỉ xét hàm fwrite(), các hàm đọc/ghi khác trong <em>stdio.h</em> khá tương tự. fwrite() có prototype là:</p>
+
+<p><code>c
+size_t fwrite(const void* ptr, size_t size, size_t nobj, FILE* stream);
+</code></p>
+
+<p>Hàm này ghi <strong>nobj</strong> đối tượng, mỗi đối tượng có kích thước <strong>size</strong> bytes từ mảng được trỏ bởi <strong>ptr</strong> vào postition trong <strong>stream</strong>. Trả về số đối tượng ghi được nếu thành công và một số khác <strong>nobj</strong> nếu không thành công đồng thời set biến hệ thống <strong>errno</strong>. Nếu <strong>size</strong> hoặc <strong>nobj</strong> bằng 0 thì hàm sẽ trả về 0.</p>
+
+<p>Điểm khác biệt nữa là fwrite() ghi dữ liệu từ ptr vào một buffer, khi buffer đầy mới flush dữ liệu lên stream. Trong struct FILE thì buffer là vùng nhớ được trỏ bởi <strong>base</strong>. Tương tự với quá trình ghi, dữ liệu sẽ được đọc vào buffer rồi mới được lưu vào biến.</p>
+
+<p>Khi bạn mở file bằng <a href="http://www.cplusplus.com/reference/cstdio/fopen/">fopen()</a>, một buffer sẽ được tạo ra cho <em>FILE</em> stream được mở bởi hàm:</p>
+
+<p><code>c
+int setvbuf(FILE* stream, char* buf, int mode, size_t size);
+</code></p>
+
+<p>Hàm này điều khiển bộ đệm của stream, luôn được gọi trước các thao tác đoc/ghi file. <strong>mode</strong> có các giá trị <em>_IOFBF</em> nếu full buffering hoặc <em>_IOFBF</em> nếu buffering dòng cho các text files, hoặc <em>_IONBF</em> nếu không dùng buffer. Nếu <strong>buf</strong> không phải là <em>NULL</em> thì nó được dùng như buffer. <strong>size</strong> xác định kích thước của bộ đệm.</p>
+
+<h2>Lợi ích của đọc/ghi file thông qua buffer</h2>
+
+<p>Việc dùng bộ đệm với các thao tác đọc/ghi sẽ làm tăng tốc độ. Tuy nhiên việc dùng bộ đệm sẽ gây ra các side effect, chẳng hạn như khi ghi dữ liệu ra file thì dữ liệu vẫn nằm trên bộ đệm cho tới khi đầy mới được đưa ra, trong thời điểm này nếu có các thao tác đọc vào thì dữ liệu sẽ được đưa vào input. Dẫn tới kết quả sai lêch, etc.</p>
+
+<p>Bài viết này kết thúc ở đây!</p>
+
+</p>
+
+
+<br>
+</body>
+</html>

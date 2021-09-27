@@ -1,3 +1,9 @@
+title: sizeof struct trong C
+date: 27-09-2020
+tags: C
+name: sizeof-struct
+
+
 # sizeof của struct
 
 Có khi nào bạn thắc mắc dữ liệu của một struct trong C hay C++ được tổ chức như thế nào không? Vì sao kích thước một struct khi chạy một chương trình đôi khi lại không giống những gì ta đã tính ở ngoài? Bài viết này sẽ đề cập đến các vấn đề trên.

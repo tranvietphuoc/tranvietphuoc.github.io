@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./static/main.css">
+  <title>My blog</title>
+</head>
+<body class="container">
+  
+<h1>undefined behavior trong C</h1>
+<p>
+  <small>27-09-2020</small>
+  <p>Trong C/C++, bạn có thể viết một biểu thức tối giản hết mức có thể, chẳng hạn:</p>
+
+<p><code>c
+int a=4;
+int b=0;
+a++;
+b+=a;
+printf("%d %d\n",a,b);
+</code></p>
+
+<p>Ở đây biểu thức <code>a++</code> và <code>b+=a</code> tương đương <code>a=a+1</code> và <code>b=b+a</code>. Đây là điểm mạnh của C/C++, tuy nhiên cũng là điểm yếu vì đôi lúc ta thật sự thấy bối rối về kết quả của nó.</p>
+
+<p>Độ ưu tiên của các toán tử (operator precedence) là một trong những thứ làm ta khá rối khi mới tiếp xúc lập trình.</p>
+
+<p>Bài này mình sẽ bàn về những hành vi không xác định (<em>undefined behavior</em>) với một số toán tử trong C/C++.</p>
+
+<p>Thử ví dụ sau, bạn có đoán được kết quả in ra là gì?</p>
+
+<p><code>c
+int a=1;
+printf("%d %d %d\n",++a,a,a++);
+</code></p>
+
+<p>Có thể bạn sẽ nhẩm kết quả, và khẳng định nó đúng. Vậy thử xét trường hợp sau:</p>
+
+<p><code>c
+int a=1,b=0;
+b=++a + a + a-- + --a + a++;
+printf("%d %d\n",a,b);
+</code></p>
+
+<p>Bắt đầu rối phải không nào? :smile: Thật ra thì bản chất nó là rối như vậy. Nếu bạn thử test trên nhiều compiler, các kết quả thu được sẽ khác nhau, tất cả các kết quả đó đều vô nghĩa, vì chúng là <em>undefined behavior</em>, giá trị tính được sẽ tùy thuộc vào cách compiler quy định. Nguyên nhân là các biểu thức trên thay đổi giá trị của một biến quá nhiều lần mà không phân biệt thứ tự trước -  sau (++a trước hay a++ trước? --a trước hay a-- trước?).</p>
+
+<p>Điều này vi phạm một số quy định quan trọng trong trình tự thực thi (<em>execution sequence</em>) gọi là <a href="https://en.wikipedia.org/wiki/Sequence_point">sequence point</a>, tất cả các <em>side-effect</em> của các tính toán trước đó được đảm bảo là hoàn thành, không ảnh hưởng tới các tính toán theo sau. Nếu các tính toán theo sau bị ảnh hưởng bởi các <em>side-effect</em> của các tính toán thực hiện trước thì kết quả là <em>undefined behavior</em></p>
+
+<p>Tuy nhiên xét đoạn code này:</p>
+
+<p><code>c
+int a=1,b=0;
+b=(++a)+(a++) -a
+printf("%d %d\n",a,b);
+</code></p>
+
+<p>Thì kết quả thu được thì lại hoàn toàn xác định, bởi biểu thức trên sử dụng ký pháp Ba Lan (Polish Notation), nên thứ tự tính toán hoàn toàn xác định, do đó, kết quả là duy nhất!</p>
+
+<p>Bài viết này kết thúc ở đây!</p>
+
+</p>
+
+
+<br>
+</body>
+</html>

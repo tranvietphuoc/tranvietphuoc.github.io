@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./static/main.css">
+  <title>My blog</title>
+</head>
+<body class="container">
+  
+<h1>sizeof struct trong C</h1>
+<p>
+  <small>27-09-2020</small>
+  <h1>sizeof của struct</h1>
+
+<p>Có khi nào bạn thắc mắc dữ liệu của một struct trong C hay C++ được tổ chức như thế nào không? Vì sao kích thước một struct khi chạy một chương trình đôi khi lại không giống những gì ta đã tính ở ngoài? Bài viết này sẽ đề cập đến các vấn đề trên.</p>
+
+<p>Trước hết, đối vớicác biến có kiểu dữ liệu built-in types thì chúng được tổ chức trên bộ nhớ ra sao? Xét ví dụ:</p>
+
+<p>```c</p>
+
+<h1>include <stdio.h></h1>
+
+<p>int main(){
+    int a=10;
+    float a=3.14;
+    printf("\nAddress of a: %p. Address of b: %p\n",&amp;a,&amp;b);
+    return 0;
+}
+```</p>
+
+<p>Khi biên dịch và chạy đoạn mã trên, kết quả in ra trên máy mình như sau:</p>
+
+<p><img src="http://i.imgur.com/R3FQ2qj.png"></p>
+
+<p>Như vậy, địa chỉ của b nằm sau a 4 bytes, tức là b nằm kế sau a trên bộ nhớ. Tuy nhiên, kết quả này là ngẫu nhiên. Nói cách khác, a và b có thể nằm kề nhau trên bộ nhớ hoặc nằm rời rạc nhau tùy từng hệ thống. Và hiển nhiên kích thước của a, b cũng có thể tính được (bằng toán tử sizeof).</p>
+
+<p>Giờ ta sẽ xét tới struct. Với chương trình nhỏ sau:</p>
+
+<p>```c</p>
+
+<h1>include <stdio.h></h1>
+
+<p>struct S{
+    int x;
+    int y;
+};</p>
+
+<p>int main(){
+    printf("Size of struct S: %d\n",sizeof(S));
+    return 0;
+}
+```</p>
+
+<p>Ở đây bạn có thể nhẩm ở ngoài là x có sizeof là 4, y cũng có sizeof là 4, vậy kích thước của struct S sẽ là 4+4=8. Và khi biên dịch, chạy chương trình trên kết quả cũng là 8.</p>
+
+<p>Nhưng xét ví dụ sau:</p>
+
+<p>```c</p>
+
+<h1>include <stdio.h></h1>
+
+<p>struct Student{
+    char id; //1 byte
+    int age; //4 bytes
+    double gpa; //8 byte;
+};</p>
+
+<p>int main(){
+    printf("The size of struct Student: %d\n",sizeof(struct Student)); //in ra 16
+    return 0;
+}
+```</p>
+
+<p>Tới đây bạn sẽ nhẩm được kích thước của Student là 1+4+8=13 bytes, nhưng khi chạy chuong trình thì kết quả lại là 16? Nguyên nhân của sự khác biệt này là cách tổ chức bộ nhớ với struct trong C hay struct và class trong C++ gọi là <strong>Struct Alignment</strong>.</p>
+
+<p>Nguyên lý của <em>struct alignment</em> như sau:</p>
+
+<p>Đầu tiên compiler sẽ tìm xem trong struct, thành viên nào có kích thước lớn nhất, sau đó cấp phát một block có kích thước tương ứng rồi điền các members vào theo thứ tự khai báo trong struct. Khi nào kết một block, compiler sẽ tiếp tục cấp block mới rồi điền vào, cho đến khi nào cấp hết bộ nhớ cho các thành viên trong struct.</p>
+
+<p>Trở lại chương trình ví dụ trên, compiler sẽ xác định member <strong>gpa</strong> là thành viên có kích thước lớn nhất trong struct (8 bytes).</p>
+
+<p><img src="http://i.imgur.com/pTbdSaE.png"></p>
+
+<p>Sau đó compiler sẽ đẩy 1 byte của member id vào block.</p>
+
+<p><img src="http://i.imgur.com/dQfK37L.png"></p>
+
+<p>Lúc này còn 7 bytes trống trong block, compiler sẽ đẩy thành viên tiếp theo vào block, nếu thành viên có kích thước lớn hơn số byte trống còn lại, compiler sẽ cấp thêm block mới. Ở ví dụ trên compiler sẽ padding 3 bytes và đẩy 4 bytes của member age vào 7 bytes trống.</p>
+
+<p><img src="http://i.imgur.com/H6BpVnD.png"></p>
+
+<p>Vậy là hết block đầu tiên, struct còn lại member gpa chưa cấp bộ nhớ, compiler lúc này sẽ cấp thêm block mới, rồi đẩy 8 bytes của member gpa vào block đó.</p>
+
+<p><img src="http://i.imgur.com/HHyK1Wa.png"></p>
+
+<p>Xét ví dụ sau:</p>
+
+<p><code>c
+struct foo{
+    char p;        //1 byte
+    struct foo1{
+        char* ptr;  // 4 hoặc 8 bytes -- giả sử là 8 bytes(hệ thống 64 bit)
+        short x;    //2 bytes
+    } inner; 
+    /*compiler sẽ xác định inner.ptr là member có kích thước lớn nhất, sau đó sẽ cấp 1 block bằng 8 bytes, đẩy 1 byte của member p vào block, padding 7 bytes. Vì 7 bytes không đủ để cấp cho member tiếp theo nên compiler sẽ cấp block mới rồi điền inner.ptr (8 bytes) vào, tiếp tục cấp thêm block mới rồi điền inner.x (2 bytes) vào. Lúc này đã cấp xong bộ nhớ cho các member, còn dư 6 bytes trống, padding 6 bytes này. Vậy kích thước của struct foo là 8+8+8=24 bytes*/
+};
+</code></p>
+
+<p>Xét ví dụ:</p>
+
+<p>```c</p>
+
+<h1>include <stdio.h></h1>
+
+<p>struct foo{
+};</p>
+
+<p>int main(){
+    printf("The size of struct foo is: %d\n",sizeof(struct foo)); // in 1
+    return 0;
+}
+```</p>
+
+<p><strong>Kết luận</strong> : Vậy, với struct rông (không có member) thì compiler sẽ cấp cho struct đó 1 byte.</p>
+
+<p><strong>Lưu ý</strong> : <em>Địa chỉ của một struct sẽ là địa chỉ của member đầu tiên của struct</em>.</p>
+
+<p>Ở các ví dụ sau, bạn hãy tính xem kích thước của các struct sau đây là bao nhiêu nhé!</p>
+
+<p><code>c
+struct foo1{
+    char* p;
+    char c;
+    int n;
+};
+</code></p>
+
+<p><code>c
+struct foo2{
+    short x;
+    double a;
+    char p;
+};
+</code></p>
+
+<p>Trở lại các ví dụ trên, bạn có thắc mắc tại sao lại phải padding không?</p>
+
+<h1>Data alignment</h1>
+
+<p>Như bạn đã biết, bộ nhớ máy tính là một dãy các ô nhớ liên tiếp nhau mỗi ô nhớ có kích thước 1 byte. Tuy nhiên khi chương trình chạy, các vi xử lý hiện nay sẽ không đọc từng ô nhớ một mà là một nhóm các ô nhớ là bội của 2, 4 hoặc 8 (tức là đọc 2, 4, hoặc 8 bytes liên tiếp). Mục đích của việc này là tăng hiệu suất đọc/ghi của hệ thống.</p>
+
+<p>Việc lưu trữ các kiểu dữ liệu cơ bản trên C hay C++ trên các hệ thống x86 hay ARM không thường bắt đầu bằng các bytes địa chỉ tùy ý trong bộ nhớ. Ngoại trừ kiểu <em>char</em> là có thể được lưu trữ ở bất kì ô nhớ có địa chỉ nào, các kiểu dữ liệu khác đều có <em>alignment requirement</em> (yêu cầu liên kết dữ liệu) riêng. <em>short</em> được lưu ở ô nhớ nào có địa chỉ chẵn, <em>int</em> - 4 bytes hoặc <em>float</em> - 4 bytes được lưu ở ô nhớ nào có địa chỉ là bội số của 4, <em>long</em> - 8 bytes hoặc <em>double</em> - 8 bytes được lưu ở ô nhớ có địa chỉ là bội của 8. Nguyên tắc trên được áp dụng cho kiểu dữ liệu có dấu (<em>signed</em>) hoặc không dấu (<em>unsigned</em>).</p>
+
+<p>Ta gọi các kiểu dữ liệu cơ bản trong C trên hệ thống x86 hay ARM là <strong>self-alignment</strong> . Các con trỏ cũng là <strong>self-alignment</strong> (về cơ bản, con trỏ cũng được xem là kiểu dữ liêu).</p>
+
+<p>Tới đây có lẽ bạn đã hiểu vì sao phải padding ở các ví dụ ở phần trên rồi. Tác dụng của nó là truy cập bộ nhớ nhanh hơn vì nó tạo điều kiện sinh ra việc nạp (fetch) và đặt các chỉ thị đơn (single-instruction) của kiểu dữ liệu. Nếu không có hạn chế của alignment, code có thể kết thúc việc phải truy cập 2 hay nhiều từ máy (machine word).</p>
+
+<p>Một số vi xử lý cũ bắt buộc chương trình C của bạn vi phạm các nguyên tắc alignment (chẳng hạn việc ép kiểu địa chỉ lẻ sang một con trỏ <em>int</em> và cố sử dụng nó). Việc này không chỉ làm code thực thi thậm lại mà còn gây các chỉ thị sai.</p>
+
+<p><strong>Lưu ý</strong> một từ máy có kích thước tùy thuộc vào hệ thông của bạn:</p>
+
+<ul>
+<li>Hệ thống 16 bit: 1 word = 2 bytes (16 bit)</li>
+<li>Hệ thống 32 bit: 1 word = 4 bytes (32 bit)</li>
+<li>Hệ thống 64 bit: 1 word = 8 bytes (64 bit)</li>
+</ul>
+
+<p><strong>Kết luận</strong>: ~~Mục đích của việc padding dữ liệu là để các khối dữ liệu luôn rơi vào vị trí các bytes địa chỉ chẵn nhằm tăng tốc độ đọc của CPU với bộ nhớ~~.</p>
+
+</p>
+
+
+<br>
+</body>
+</html>

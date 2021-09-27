@@ -1,3 +1,9 @@
+title: Read/Write trong C
+date: 27-09-2020
+tags: C
+name: read-write
+
+
 # Hoạt động của các hàm read()/write() và sự khác nhau với các hàm đọc/ghi trong thư viện stdio.h.
 
 Trước hết mình nói qua về khái niệm file. File là một tập có cấu trúc của dữ liệu. Một physical file (file vật lý) đề cập đến cách lưu trữ file trên phần cứng (ví dụ: trên đĩa, file được lưu trữ thành các blocks được tạo thành từ các tracks và sectors). Một logical file là cách lập trình viên tổ chức cấu trúc file, chứa một đặc tả (description) các bản ghi (record) đặc tính được tìm thấy trong một hoặc nhiều file.

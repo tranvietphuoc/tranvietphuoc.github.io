@@ -10,7 +10,7 @@ import typing as t
 
 # path
 root = Path(__file__).parent  # project's path
-posts_folder = root.joinpath("./posts").resolve()  # project/posts/
+posts_folder = root.joinpath("./_posts").resolve()  # project/posts/
 
 
 # read markdown file then write to a dict
@@ -18,7 +18,7 @@ def create_posts(paths: Path):
     posts = {}
     for md_post in paths.iterdir():
         with open(md_post.resolve(), "r") as f:
-            posts[md_post.name] = markdown(f.read(), extras=["metadata"])
+            posts[md_post] = markdown(f.read(), extras=["metadata"])
 
     # return a dict with sorted following date created
     return {
@@ -35,10 +35,10 @@ def create_posts(paths: Path):
 
 # render homepage
 def render_home(outputs_folder: Path, tags: t.List[str], template: Template):
-    """Render home.html file to outputs folder."""
+    """Render home.html file to root folder."""
 
     home_html = template.render(metas=posts_metadata, tags=tags)
-    home_path = outputs_folder.joinpath("home.html").resolve()
+    home_path = outputs_folder.joinpath("index.html").resolve()
     with open(home_path, "w") as f:
         f.write(home_html)
 
@@ -61,7 +61,7 @@ def render_posts(
 
         # render to html files
         post_path = outputs_folder.joinpath(
-            f"posts/{post_metadata['name']}.html"
+            f"posts/{post_metadata['title']}.html"
         ).resolve()
         os.makedirs(dirname(post_path), exist_ok=True)
         with open(post_path, "w") as f:
@@ -80,5 +80,5 @@ if __name__ == "__main__":
     tags = [p["tags"] for p in posts_metadata]  # get posts tags
 
     outputs_folder = root.joinpath("outputs/").resolve()
-    render_home(outputs_folder, tags, home_template)
+    render_home(root.resolve(), tags, home_template)
     render_posts(posts, tags, outputs_folder, post_template)

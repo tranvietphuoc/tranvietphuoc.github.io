@@ -1,3 +1,9 @@
+title: storage classes trong C
+date: 27-09-2020
+tags: C
+name: storage-class
+
+
 # Các lớp lưu trữ trong C
 
 Trong lập trình C bạn sẽ hay gặp các storage classes còn gọi là các lớp lưu trữ. Điển hình hay gặp là **extern**, **static**, **register** và **auto**.

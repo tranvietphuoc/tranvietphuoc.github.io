@@ -1,3 +1,9 @@
+title: preprocessor trong C
+date: 27-09-2020
+tags: C
+name: preprocessor-c
+
+
 ~~Bài này mình chỉ nói về preprocessor directives trong C, trong C++, khái niệm này cũng tương tự.~~
 
 # Do you completely understand  Preprocessor directives?
