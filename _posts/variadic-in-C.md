@@ -1,5 +1,5 @@
 title: variadic function trong C
-date: 27-09-2020
+date: 27-09-2021
 tags: C
 name: variadic-function-c
 ---------------------------
