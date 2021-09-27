@@ -61,7 +61,7 @@ def render_posts(
 
         # render to html files
         post_path = outputs_folder.joinpath(
-            f"{post_metadata['title']}.html"
+            f"{post_metadata['name']}.html"
         ).resolve()
         os.makedirs(dirname(post_path), exist_ok=True)
         with open(post_path, "w") as f:
