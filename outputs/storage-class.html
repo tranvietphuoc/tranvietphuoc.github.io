@@ -2,14 +2,21 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./static/main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <title>My blog</title>
 </head>
-<body class="container">
-  
-<h1>storage classes trong C</h1>
+<body>
+  <header class="container">
+    <nav class="navbar">
+    </nav>
+  </header>
+  <main class="container">
+    
+<h1>Chủ đề: storage classes trong C</h1>
 <p>
-  <small>27-09-2020</small>
+  <small style="color: gray; font-size: 15px">Ngày: 27-09-2020</small>
   <h1>Các lớp lưu trữ trong C</h1>
 
 <p>Trong lập trình C bạn sẽ hay gặp các storage classes còn gọi là các lớp lưu trữ. Điển hình hay gặp là <strong>extern</strong>, <strong>static</strong>, <strong>register</strong> và <strong>auto</strong>.</p>
@@ -18,9 +25,8 @@
 
 <p>Lúc lập trình bạn có thể gặp trường hợp khai báo biến với từ khóa <strong>extern</strong> ở trong 1 hoặc vài file của chương trình, ví dụ:</p>
 
-<p><code>c
-extern int value;
-</code></p>
+<pre><code>extern int value;
+</code></pre>
 
 <p>Về ý nghĩa, lớp lưu trữ này thường được sử dụng để tham chiếu tới biến global (biến toàn cục) trong chương trình và báo cho compiler biết rằng biến này đã khai báo và định nghĩa ở một file nào đó của chương trình rồi để tránh việc xung đột trong đặt tên, cũng như giảm bớt số lượng tên biến phải dùng.</p>
 
@@ -32,9 +38,8 @@ extern int value;
 
 <p>Lớp lưu trữ <strong>static</strong> được dùng cho cả các biến global và local trong chương trình, ví dụ:</p>
 
-<p><code>c
-static int value;
-</code></p>
+<pre><code>static int value;
+</code></pre>
 
 <p>Các biến static cục bộ (local static variables) chỉ có thể được truy cập trong phạm vi một hàm hoặc một block nơi nó được khai báo, nhưng thời gian tồn tại của  biến static cục bộ là suốt toàn bộ chương trình.</p>
 
@@ -50,9 +55,8 @@ static int value;
 
 <p>Phạm vi truy cập và thời gian tồn tại của biến <strong>register</strong> là cục bộ, tức là tới khi hàm hoặc một khối code nơi nó được khai báo kết thúc. Ví dụ:</p>
 
-<p><code>c
-register int value;
-</code></p>
+<pre><code>register int value;
+</code></pre>
 
 <p><strong><em>Tuy nhiên</em></strong>, trình tối ưu của compiler sẽ lờ đi các biến khai báo <strong>register</strong> nếu như số lượng thanh ghi trong CPU không đủ.</p>
 
@@ -60,15 +64,17 @@ register int value;
 
 <p>Khi một biến được khai báo với lớp lưu trữ <strong>auto</strong>, phạm vi truy cập của biến là cục bộ trong hàm hoặc block code nó được khai báo, thời gian tồn tại của biến tới khi hàm hoặc một block code kết thúc. Ví dụ:</p>
 
-<p><code>c
-auto int value;
-</code></p>
+<pre><code>auto int value;
+</code></pre>
 
 <p>Đó là một số lớp lưu trữ trong C, mình xin kết bài ở đây!</p>
 
 </p>
 
 
-<br>
+    <footer><small>Powered by <a href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></small></footer>
+  </main>
+  <br>
 </body>
+
 </html>

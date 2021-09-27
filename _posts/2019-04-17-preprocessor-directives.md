@@ -1,14 +1,15 @@
 title: preprocessor trong C
 date: 27-09-2020
 tags: C
-name: preprocessor-c
+name: preprocessor-directives-c
+--------------------
 
 
-~~Bài này mình chỉ nói về preprocessor directives trong C, trong C++, khái niệm này cũng tương tự.~~
+~~Bài này mình chỉ nói về Preprocessor Directives trong C, trong C++, khái niệm này cũng tương tự.~~
 
-# Do you completely understand  Preprocessor directives?
+# Bạn đã nghe qua khái niệm preprocessor directives chưa?
 
-## Preprocessor directives 
+## preprocessor directives 
 
 Tạm dịch là tiền xử lý, là một phần của compiler C/C++, hướng dẫn cho compiler thực hiện một số thao tác sơ bộ (như biên dịch mã có điều kiện, include file,...) trước khi bước vào giai đoạn biên dịch chương trình. Chúng được bắt đầu bằng ký tự **#** và không phải là lệnh trong chương trình, do đó không có dấu **;** khi kết thúc.
 

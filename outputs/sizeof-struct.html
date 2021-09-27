@@ -2,31 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./static/main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
   <title>My blog</title>
 </head>
-<body class="container">
-  
-<h1>sizeof struct trong C</h1>
+<body>
+  <header class="container">
+    <nav class="navbar">
+    </nav>
+  </header>
+  <main class="container">
+    
+<h1>Chủ đề: sizeof struct trong C</h1>
 <p>
-  <small>27-09-2020</small>
+  <small style="color: gray; font-size: 15px">Ngày: 27-09-2020</small>
   <h1>sizeof của struct</h1>
 
 <p>Có khi nào bạn thắc mắc dữ liệu của một struct trong C hay C++ được tổ chức như thế nào không? Vì sao kích thước một struct khi chạy một chương trình đôi khi lại không giống những gì ta đã tính ở ngoài? Bài viết này sẽ đề cập đến các vấn đề trên.</p>
 
 <p>Trước hết, đối vớicác biến có kiểu dữ liệu built-in types thì chúng được tổ chức trên bộ nhớ ra sao? Xét ví dụ:</p>
 
-<p>```c</p>
+<pre><code>#include &lt;stdio.h&gt;
 
-<h1>include <stdio.h></h1>
-
-<p>int main(){
+int main(){
     int a=10;
     float a=3.14;
     printf("\nAddress of a: %p. Address of b: %p\n",&amp;a,&amp;b);
     return 0;
 }
-```</p>
+</code></pre>
 
 <p>Khi biên dịch và chạy đoạn mã trên, kết quả in ra trên máy mình như sau:</p>
 
@@ -36,40 +41,36 @@
 
 <p>Giờ ta sẽ xét tới struct. Với chương trình nhỏ sau:</p>
 
-<p>```c</p>
+<pre><code>#include &lt;stdio.h&gt;
 
-<h1>include <stdio.h></h1>
-
-<p>struct S{
+struct S{
     int x;
     int y;
-};</p>
+};
 
-<p>int main(){
+int main(){
     printf("Size of struct S: %d\n",sizeof(S));
     return 0;
 }
-```</p>
+</code></pre>
 
 <p>Ở đây bạn có thể nhẩm ở ngoài là x có sizeof là 4, y cũng có sizeof là 4, vậy kích thước của struct S sẽ là 4+4=8. Và khi biên dịch, chạy chương trình trên kết quả cũng là 8.</p>
 
 <p>Nhưng xét ví dụ sau:</p>
 
-<p>```c</p>
+<pre><code>#include &lt;stdio.h&gt;
 
-<h1>include <stdio.h></h1>
-
-<p>struct Student{
+struct Student{
     char id; //1 byte
     int age; //4 bytes
     double gpa; //8 byte;
-};</p>
+};
 
-<p>int main(){
+int main(){
     printf("The size of struct Student: %d\n",sizeof(struct Student)); //in ra 16
     return 0;
 }
-```</p>
+</code></pre>
 
 <p>Tới đây bạn sẽ nhẩm được kích thước của Student là 1+4+8=13 bytes, nhưng khi chạy chuong trình thì kết quả lại là 16? Nguyên nhân của sự khác biệt này là cách tổ chức bộ nhớ với struct trong C hay struct và class trong C++ gọi là <strong>Struct Alignment</strong>.</p>
 
@@ -95,8 +96,7 @@
 
 <p>Xét ví dụ sau:</p>
 
-<p><code>c
-struct foo{
+<pre><code>struct foo{
     char p;        //1 byte
     struct foo1{
         char* ptr;  // 4 hoặc 8 bytes -- giả sử là 8 bytes(hệ thống 64 bit)
@@ -104,22 +104,20 @@ struct foo{
     } inner; 
     /*compiler sẽ xác định inner.ptr là member có kích thước lớn nhất, sau đó sẽ cấp 1 block bằng 8 bytes, đẩy 1 byte của member p vào block, padding 7 bytes. Vì 7 bytes không đủ để cấp cho member tiếp theo nên compiler sẽ cấp block mới rồi điền inner.ptr (8 bytes) vào, tiếp tục cấp thêm block mới rồi điền inner.x (2 bytes) vào. Lúc này đã cấp xong bộ nhớ cho các member, còn dư 6 bytes trống, padding 6 bytes này. Vậy kích thước của struct foo là 8+8+8=24 bytes*/
 };
-</code></p>
+</code></pre>
 
 <p>Xét ví dụ:</p>
 
-<p>```c</p>
+<pre><code>#include &lt;stdio.h&gt;
 
-<h1>include <stdio.h></h1>
+struct foo{
+};
 
-<p>struct foo{
-};</p>
-
-<p>int main(){
+int main(){
     printf("The size of struct foo is: %d\n",sizeof(struct foo)); // in 1
     return 0;
 }
-```</p>
+</code></pre>
 
 <p><strong>Kết luận</strong> : Vậy, với struct rông (không có member) thì compiler sẽ cấp cho struct đó 1 byte.</p>
 
@@ -127,21 +125,19 @@ struct foo{
 
 <p>Ở các ví dụ sau, bạn hãy tính xem kích thước của các struct sau đây là bao nhiêu nhé!</p>
 
-<p><code>c
-struct foo1{
+<pre><code>struct foo1{
     char* p;
     char c;
     int n;
 };
-</code></p>
+</code></pre>
 
-<p><code>c
-struct foo2{
+<pre><code>struct foo2{
     short x;
     double a;
     char p;
 };
-</code></p>
+</code></pre>
 
 <p>Trở lại các ví dụ trên, bạn có thắc mắc tại sao lại phải padding không?</p>
 
@@ -165,11 +161,14 @@ struct foo2{
 <li>Hệ thống 64 bit: 1 word = 8 bytes (64 bit)</li>
 </ul>
 
-<p><strong>Kết luận</strong>: ~~Mục đích của việc padding dữ liệu là để các khối dữ liệu luôn rơi vào vị trí các bytes địa chỉ chẵn nhằm tăng tốc độ đọc của CPU với bộ nhớ~~.</p>
+<p><strong>Kết luận</strong>: <strike>Mục đích của việc padding dữ liệu là để các khối dữ liệu luôn rơi vào vị trí các bytes địa chỉ chẵn nhằm tăng tốc độ đọc của CPU với bộ nhớ</strike>.</p>
 
 </p>
 
 
-<br>
+    <footer><small>Powered by <a href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></small></footer>
+  </main>
+  <br>
 </body>
+
 </html>

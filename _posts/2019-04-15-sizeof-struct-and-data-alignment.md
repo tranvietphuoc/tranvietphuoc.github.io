@@ -2,7 +2,7 @@ title: sizeof struct trong C
 date: 27-09-2020
 tags: C
 name: sizeof-struct
-
+------------------
 
 # sizeof của struct
 

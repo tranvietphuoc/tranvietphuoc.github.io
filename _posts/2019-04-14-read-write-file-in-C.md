@@ -2,6 +2,7 @@ title: Read/Write trong C
 date: 27-09-2020
 tags: C
 name: read-write
+------------------
 
 
 # Hoạt động của các hàm read()/write() và sự khác nhau với các hàm đọc/ghi trong thư viện stdio.h.

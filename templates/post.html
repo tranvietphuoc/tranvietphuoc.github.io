@@ -1,8 +1,8 @@
 {% extends 'layout.html' %}
 {% block content %}
-<h1>{{ post.title }}</h1>
+<h1>Chủ đề: {{ post.title }}</h1>
 <p>
-  <small>{{ post.date }}</small>
+  <small style="color: gray; font-size: 15px">Ngày: {{ post.date }}</small>
   {{ post.content }}
 </p>
 

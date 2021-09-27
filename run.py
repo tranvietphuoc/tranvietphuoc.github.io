@@ -18,7 +18,19 @@ def create_posts(paths: Path):
     posts = {}
     for md_post in paths.iterdir():
         with open(md_post.resolve(), "r") as f:
-            posts[md_post] = markdown(f.read(), extras=["metadata"])
+            posts[md_post] = markdown(
+                f.read(),
+                extras=[
+                    "metadata",
+                    "fenced-code-blocks",
+                    "tables",
+                    "strike",
+                    "task_list",
+                    "code-friendly",
+                    "numbering",
+                    "footnotes",
+                ],
+            )
 
     # return a dict with sorted following date created
     return {
