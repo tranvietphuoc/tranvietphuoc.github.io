@@ -4,7 +4,7 @@
 {% for i in range(0, metas | length) %}
   <p>
     <h2>{{ loop.index }}. <a href="outputs/{{ metas[i].name }}.html">{{ metas[i].title }}</a>
-      <small style="font-size: 15px; color: gray;">date: {{ metas[i].date }}</small>
+      <small style="font-size: 15px; color: gray;">ngày: {{ metas[i].date }}</small>
       <small style="font-size: 15px; color: gray;">tags: {{ metas[i].tags }}</small>
     </h2>
     <small>
