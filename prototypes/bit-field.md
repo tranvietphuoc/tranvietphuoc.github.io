@@ -1,6 +1,6 @@
 title: bitfield trong C
 date: 27-09-2021
-tags: C
+tags: C, Python
 name: bitfield-c
 summary: Bitfield? Nó là gì?
 -----------------

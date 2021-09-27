@@ -8,17 +8,14 @@ import os
 import typing as t
 
 
-# path
-root = Path(__file__).parent  # project's path
-posts_folder = root.joinpath("./prototypes").resolve()  # project/posts/
-
-
 # read markdown file then write to a dict
-def create_posts(paths: Path):
+def create_posts(root_path: Path):
     posts = {}
+
+    paths = root_path.joinpath("prototypes").resolve()
     for md_post in paths.iterdir():
         with open(md_post.resolve(), "r") as f:
-            posts[md_post] = markdown(
+            posts[md_post.name] = markdown(
                 f.read(),
                 extras=[
                     "metadata",
@@ -48,21 +45,21 @@ def create_posts(paths: Path):
 # render homepage
 def render_home(
     posts_metadata: t.List[dict],
-    posts_folder: Path,
-    tags: t.List[str],
+    render_folder: Path,
+    tags: set,
     template: Template,
 ):
     """Render home.html file to root folder."""
 
-    home_html = template.render(metas=posts_metadata, tags=tags, per_page=5)
-    home_path = posts_folder.joinpath("index.html").resolve()
+    home_html = template.render(posts=posts_metadata, tags=tags)
+    home_path = render_folder.joinpath("index.html").resolve()
     with open(home_path, "w") as f:
         f.write(home_html)
 
 
 # render posts
 def render_posts(
-    posts: dict, tags: t.List[str], posts_folder: Path, template: Template
+    posts: dict, tags: set, render_folder: Path, template: Template
 ):
     """Render post_metadata['name'].html file to outputs/ folder."""
 
@@ -75,28 +72,67 @@ def render_posts(
             "tags": post_metadata["tags"],
             "content": posts[p],
         }
-        post_html = template.render(post=post_data)
+        post_html = template.render(post=post_data, tags=tags)
 
         # render to html files
-        post_path = posts_folder.joinpath(
+        post_path = render_folder.joinpath(
             f"{post_metadata['name']}.html"
         ).resolve()
-        os.makedirs(dirname(post_path), exist_ok=True)
         with open(post_path, "w") as f:
             f.write(post_html)
 
 
+def render_tags(
+    posts_metadata: t.List[dict],
+    tags: set,
+    render_folder: Path,
+    template: Template,
+):
+
+    # build a dict, contains all metadata follow key is tag
+    tags_data = {}
+    for t in tags:
+        tag = []
+        for p in posts_metadata:
+            if t in p["tags"]:
+                tag.append(p)
+                tags_data.update({t: tag})
+
+    # render to html
+    for key, value in tags_data.items():
+        tag_html = template.render(posts=value, tag=key)
+
+        tag_path = (
+            render_folder.joinpath("tags").joinpath(f"{key}.html").resolve()
+        )
+        with open(tag_path, "w") as f:
+            f.write(tag_html)
+
+
 if __name__ == "__main__":
-    posts = create_posts(posts_folder)  # get all posts in ./posts/ folder
+    # path
+    root = Path(__file__).parent.resolve()  # project's path
+
+    posts = create_posts(root)  # get all posts in ./posts/ folder
 
     # get template environment
     env = Environment(loader=FileSystemLoader(searchpath="./templates"))
     home_template = env.get_template("home.html")
     post_template = env.get_template("post.html")
+    tag_template = env.get_template("tags.html")
 
-    posts_metadata = [posts[p].metadata for p in posts]  # all posts metadatas
-    tags = [p["tags"] for p in posts_metadata]  # get posts tags
+    posts_metadata = [posts[p].metadata for p in posts]  # all posts metadata
+
+    # convert tags of posts_metadata to list
+    for meta in posts_metadata:
+        meta["tags"] = meta["tags"].split(",")
+
+    # get posts's tags
+    tags = [meta["tags"] for meta in posts_metadata]
+    tags = set([i for tag in tags for i in tag])  # is a set
 
     posts_folder = root.joinpath("posts/").resolve()
+    # render all html files
     render_home(posts_metadata, root.resolve(), tags, home_template)
     render_posts(posts, tags, posts_folder, post_template)
+    render_tags(posts_metadata, tags, root.resolve(), tag_template)
