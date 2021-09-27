@@ -1,20 +1,17 @@
-html a{
-  font-family: serif sans-serif;
-  text-decoration: none;
-  color: rgb(255, 100, 100);
 
-}
 
 a:hover {
   color: purple;
 }
 
 a:visited {
-  color: gray;
+  color: lightcoral;
 }
 
-/* * {box-sizing: border-box;} */
-
+* {
+  box-sizing: border-box;
+  font-family: serif sans-serif;
+}
 
 .author {
   justify-content: center;

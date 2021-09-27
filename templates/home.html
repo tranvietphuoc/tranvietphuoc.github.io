@@ -8,7 +8,9 @@
     <br>
     <small class="home-tags">tags: {{ metas[i].tags }}</small>
   </div>
-    <h3>{{ loop.index }}. <a href="outputs/{{ metas[i].name }}.html">{{ metas[i].title }}</a>
+    <h3>{{ loop.index }}. <a href="outputs/{{ metas[i].name }}.html" style="text-decoration: none; color: lightgray">
+        {{ metas[i].title }}
+      </a>
     </h3>
     <small>
       {{ metas[i].summary }}
