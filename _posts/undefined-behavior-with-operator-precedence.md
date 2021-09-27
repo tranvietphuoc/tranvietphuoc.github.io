@@ -2,6 +2,7 @@ title: undefined behavior trong C
 date: 27-09-2021
 tags: C
 name: undefine-behavior-c
+summary: các undefined behaviors trong C
 -------------------------------
 
 Trong C/C++, bạn có thể viết một biểu thức tối giản hết mức có thể, chẳng hạn:

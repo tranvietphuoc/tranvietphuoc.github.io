@@ -2,6 +2,7 @@ title: variadic function trong C
 date: 27-09-2021
 tags: C
 name: variadic-function-c
+summary: Về variadic functions và variadic macros trong C
 ---------------------------
 
 ~~Bài này mình bàn về variadic functions và variadic macros trong C~~

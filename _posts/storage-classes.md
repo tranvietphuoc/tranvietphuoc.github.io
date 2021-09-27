@@ -2,6 +2,7 @@ title: storage classes trong C
 date: 27-09-2021
 tags: C
 name: storage-class
+summary: Storage classes là gì?
 -----------------------
 
 # Các lớp lưu trữ trong C

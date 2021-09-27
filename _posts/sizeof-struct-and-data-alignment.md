@@ -2,6 +2,7 @@ title: sizeof struct trong C
 date: 27-09-2021
 tags: C
 name: sizeof-struct
+summary: Dữ liệu của một struct trong C/C++ được tổ chức như thế nào? 
 ------------------
 
 # sizeof của struct

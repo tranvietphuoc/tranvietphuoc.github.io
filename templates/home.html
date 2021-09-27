@@ -1,13 +1,15 @@
 {% extends 'layout.html' %}
 {% block content %}
 <h1>Tất cả các bài viết</h1>
-{% for meta in metas %}
+{% for i in range(0, metas | length) %}
   <p>
-  <h2>{{ loop.index }}. <a href="outputs/{{ meta.name }}.html">{{ meta.title }}</a>
-    <small style="font-size: 15px; color: gray;">date: {{ meta.date }}</small>
-    <small style="font-size: 15px; color: gray;">tags: {{ meta.tags }}</small>
-  </h2>
-  {{ meta.sumary }}
+    <h2>{{ loop.index }}. <a href="outputs/{{ metas[i].name }}.html">{{ metas[i].title }}</a>
+      <small style="font-size: 15px; color: gray;">date: {{ metas[i].date }}</small>
+      <small style="font-size: 15px; color: gray;">tags: {{ metas[i].tags }}</small>
+    </h2>
+    <small>
+      {{ metas[i].summary }}
+    </small>
   </p>
 {% endfor %}
 {% endblock %}

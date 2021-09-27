@@ -1,7 +1,8 @@
-title: Bitfield trong C
+title: bitfield trong C
 date: 27-09-2021
 tags: C
-name: Bitfield
+name: bitfield
+summary: Bitfield? Nó là gì?
 -----------------
 
 

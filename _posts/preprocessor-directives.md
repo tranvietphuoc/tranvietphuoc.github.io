@@ -2,6 +2,7 @@ title: preprocessor trong C
 date: 27-09-2021
 tags: C
 name: preprocessor-directives-c
+summary: Bàn về preprocessor directives
 --------------------
 
 

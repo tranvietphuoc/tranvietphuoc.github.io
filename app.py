@@ -46,10 +46,15 @@ def create_posts(paths: Path):
 
 
 # render homepage
-def render_home(outputs_folder: Path, tags: t.List[str], template: Template):
+def render_home(
+    posts_metadata: t.List[dict],
+    outputs_folder: Path,
+    tags: t.List[str],
+    template: Template,
+):
     """Render home.html file to root folder."""
 
-    home_html = template.render(metas=posts_metadata, tags=tags)
+    home_html = template.render(metas=posts_metadata, tags=tags, per_page=5)
     home_path = outputs_folder.joinpath("index.html").resolve()
     with open(home_path, "w") as f:
         f.write(home_html)
@@ -92,5 +97,5 @@ if __name__ == "__main__":
     tags = [p["tags"] for p in posts_metadata]  # get posts tags
 
     outputs_folder = root.joinpath("outputs/").resolve()
-    render_home(root.resolve(), tags, home_template)
+    render_home(posts_metadata, root.resolve(), tags, home_template)
     render_posts(posts, tags, outputs_folder, post_template)

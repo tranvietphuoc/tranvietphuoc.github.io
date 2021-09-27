@@ -2,6 +2,7 @@ title: Read/Write trong C
 date: 27-09-2021
 tags: C
 name: read-write
+summary: Các hàm read()/write() hoạt động ra sao?
 ------------------
 
 
