@@ -7,11 +7,6 @@ html {
   flex-direction: left;
 }
 
-h2 > small {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 15px;
-  color: gray;
-}
 
 a {
   color: rgb(255, 200, 200);

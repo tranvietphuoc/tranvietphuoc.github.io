@@ -4,8 +4,8 @@
 {% for meta in metas %}
   <p>
   <h2>{{ loop.index }}. <a href="outputs/{{ meta.name }}.html">{{ meta.title }}</a>
-    <small>date: {{ meta.date }}</small>
-    <small>tags: {{ meta.tags }}</small>
+    <small style="font-size: 15px; color: gray;">date: {{ meta.date }}</small>
+    <small style="font-size: 15px; color: gray;">tags: {{ meta.tags }}</small>
   </h2>
   {{ meta.sumary }}
   </p>
