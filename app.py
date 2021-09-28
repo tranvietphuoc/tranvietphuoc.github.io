@@ -1,10 +1,8 @@
 from jinja2 import Environment, FileSystemLoader
 from jinja2.environment import Template
 from markdown2 import markdown
-from pathlib import Path, PosixPath
+from pathlib import Path
 from datetime import datetime
-from os.path import dirname
-import os
 import typing as t
 
 
@@ -46,7 +44,7 @@ def create_posts(root_path: Path):
 def render_home(
     posts_metadata: t.List[dict],
     render_folder: Path,
-    tags: set,
+    tags: t.Set[str],
     template: Template,
 ):
     """Render home.html file to root folder."""
@@ -59,7 +57,7 @@ def render_home(
 
 # render posts
 def render_posts(
-    posts: dict, tags: set, render_folder: Path, template: Template
+    posts: dict, tags: t.Set[str], render_folder: Path, template: Template
 ):
     """Render post_metadata['name'].html file to outputs/ folder."""
 
@@ -84,7 +82,7 @@ def render_posts(
 
 def render_tags(
     posts_metadata: t.List[dict],
-    tags: set,
+    tags: t.Set[str],
     render_folder: Path,
     template: Template,
 ):
