@@ -1,7 +1,7 @@
 # This is my personal blog
 * I create a tool to render from markdown file to static site by `Python` for my self.
 * To use this template, you need to clone the repo first.
-* Then write the your posts in `.md` format, edit the metadata and push them into `prototypes` folder. Notice that, the metadata of .md file you need to keep track of the format
+* Then write the your posts in `.md` format, edit the metadata and push them into `prototypes` folder. Notice that, the metadata of .md file you need to keep following these formats
 ```
 title: ....
 date: ....
