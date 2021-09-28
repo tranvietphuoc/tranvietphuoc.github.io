@@ -128,7 +128,7 @@ if __name__ == "__main__":
 
     # convert tags of posts_metadata to list
     for meta in posts_metadata:
-        meta["tags"] = meta["tags"].split(",")
+        meta["tags"] = meta["tags"].split(",").strip()
 
     # get posts's tags
     tags = [meta["tags"] for meta in posts_metadata]
