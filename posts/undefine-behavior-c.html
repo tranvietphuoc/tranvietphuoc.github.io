@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../static/main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <title>My blog</title>
+</head>
+<body>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2">
+        <h1 class="home-page"><a style="text-decoration: none; color: orangered" href="../index.html">Trang chủ</a></h1>
+      </div>
+      <div class="col-sm-10">
+        
+<div class="row">
+  <h1 class="col-sm-4">Chủ đề:</h1>
+  <h1 class="col-sm-6">undefined behavior trong C</h1>
+</div>
+<div class="row">
+  <small class='post-meta'>Ngày: 27-09-2021</small>
+  <small class="post-meta">Tags: 
+    
+    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
+    
+  </small>
+</div>
+<p class="post-content">
+  <p>Trong C/C++, bạn có thể viết một biểu thức tối giản hết mức có thể, chẳng hạn:</p>
+
+<pre><code>int a=4;
+int b=0;
+a++;
+b+=a;
+printf("%d %d\n",a,b);
+</code></pre>
+
+<p>Ở đây biểu thức <code>a++</code> và <code>b+=a</code> tương đương <code>a=a+1</code> và <code>b=b+a</code>. Đây là điểm mạnh của C/C++, tuy nhiên cũng là điểm yếu vì đôi lúc ta thật sự thấy bối rối về kết quả của nó.</p>
+
+<p>Độ ưu tiên của các toán tử (operator precedence) là một trong những thứ làm ta khá rối khi mới tiếp xúc lập trình.</p>
+
+<p>Bài này mình sẽ bàn về những hành vi không xác định (<em>undefined behavior</em>) với một số toán tử trong C/C++.</p>
+
+<p>Thử ví dụ sau, bạn có đoán được kết quả in ra là gì?</p>
+
+<pre><code>int a=1;
+printf("%d %d %d\n",++a,a,a++);
+</code></pre>
+
+<p>Có thể bạn sẽ nhẩm kết quả, và khẳng định nó đúng. Vậy thử xét trường hợp sau:</p>
+
+<pre><code>int a=1,b=0;
+b=++a + a + a-- + --a + a++;
+printf("%d %d\n",a,b);
+</code></pre>
+
+<p>Bắt đầu rối phải không nào? :smile: Thật ra thì bản chất nó là rối như vậy. Nếu bạn thử test trên nhiều compiler, các kết quả thu được sẽ khác nhau, tất cả các kết quả đó đều vô nghĩa, vì chúng là <em>undefined behavior</em>, giá trị tính được sẽ tùy thuộc vào cách compiler quy định. Nguyên nhân là các biểu thức trên thay đổi giá trị của một biến quá nhiều lần mà không phân biệt thứ tự trước -  sau (++a trước hay a++ trước? --a trước hay a-- trước?).</p>
+
+<p>Điều này vi phạm một số quy định quan trọng trong trình tự thực thi (<em>execution sequence</em>) gọi là <a href="https://en.wikipedia.org/wiki/Sequence_point">sequence point</a>, tất cả các <em>side-effect</em> của các tính toán trước đó được đảm bảo là hoàn thành, không ảnh hưởng tới các tính toán theo sau. Nếu các tính toán theo sau bị ảnh hưởng bởi các <em>side-effect</em> của các tính toán thực hiện trước thì kết quả là <em>undefined behavior</em></p>
+
+<p>Tuy nhiên xét đoạn code này:</p>
+
+<pre><code>int a=1,b=0;
+b=(++a)+(a++) -a
+printf("%d %d\n",a,b);
+</code></pre>
+
+<p>Thì kết quả thu được thì lại hoàn toàn xác định, bởi biểu thức trên sử dụng ký pháp Ba Lan (Polish Notation), nên thứ tự tính toán hoàn toàn xác định, do đó, kết quả là duy nhất!</p>
+
+<p>Bài viết này kết thúc ở đây!</p>
+
+</p>
+
+
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="footer">
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 author">
+          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://utteranc.es/client.js"
+        repo="tranvietphuoc/tranvietphuoc.github.io"
+        issue-term="url"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+
+</body>
+
+</html>

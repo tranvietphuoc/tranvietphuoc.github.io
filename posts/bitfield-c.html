@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../static/main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <title>My blog</title>
+</head>
+<body>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2">
+        <h1 class="home-page"><a style="text-decoration: none; color: orangered" href="../index.html">Trang chủ</a></h1>
+      </div>
+      <div class="col-sm-10">
+        
+<div class="row">
+  <h1 class="col-sm-4">Chủ đề:</h1>
+  <h1 class="col-sm-6">bitfield trong C</h1>
+</div>
+<div class="row">
+  <small class='post-meta'>Ngày: 27-09-2021</small>
+  <small class="post-meta">Tags: 
+    
+    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
+    
+    <a href="../tags/struct.html" style="text-decoration: none; color: orchid">struct</a>,
+    
+    <a href="../tags/bitfield.html" style="text-decoration: none; color: orchid">bitfield</a>,
+    
+  </small>
+</div>
+<p class="post-content">
+  <h1>Bit field là gì?</h1>
+
+<p>Trong lập trình C hay C++, bạn sẽ gặp một struct có dạng như thế này:</p>
+
+<pre><code>struct Example{
+    //.......
+    type value: number;
+    //.......
+};
+</code></pre>
+
+<p>Trong đó:
+* <strong>type</strong> là tên kiểu dữ liệu (có thể là built-in types hay struct, class).
+* <strong>value</strong> là tên biến thành viên.
+* <strong>number</strong> là một số nguyên dương, biểu thị số bit mà <strong>value</strong> dùng trong dãy giá trị của <strong>type</strong>.</p>
+
+<p>Ví dụ, xét struct:</p>
+
+<pre><code>struct foo{
+    int a: 2;
+};
+</code></pre>
+
+<p>Ở đây, <strong>type</strong> là <em>int</em> (giả sử <em>int</em> được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ -2^32 -- 2^32-1. Tuy nhiên, <strong><em>int a: 2;</em></strong> nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của <strong>a</strong> sẽ từ -2 đến 1 (tức 2^2 giá trị).</p>
+
+<p><strong>Vậy</strong>, bit field là một khai báo các thành viên của struct  với độ rộng rõ ràng theo các bit. Nhưng <strike>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</strike></p>
+
+<p>Công dụng của bit field là tiết kiệm không gian nhớ. Việc này rất hữu dụng khi bạn lập trình cho các hệ thống có ít tài nguyên như hệ thống nhúng.</p>
+
+<p><strong>Lưu ý</strong> các kiểu dữ liệu dùng trong bit field chỉ thuộc một trong 4 kiểu sau:</p>
+
+<ul>
+<li><em>unsigned int</em> -- Ví dụ:  <code>unsigned int a: 3; //a có giá trị từ 0..7</code></li>
+<li><em>signed int</em> -- Ví dụ: <code>signed int a: 3; //a có giá trị từ -4..3</code></li>
+<li><em>int</em> -- Ví dụ: <code>int a: 3; //a có giá trị từ -4..3 hoặc từ 0..7</code></li>
+<li><em>_Bool</em> (C99) -- Ví dụ: <code>bool a: 1; //a có giá trị 0..1</code></li>
+</ul>
+
+<p>Mở rộng ra, type của các bit field là các kiểu nguyên như <em>int</em>, <em>long</em>, <em>short</em>, <em>char</em>, <em>long long</em> có thể kèm theo <strong>signed</strong> hoặc <strong>unsigned</strong>. <strike>Đặc biệt là không phải kiểu dấu chấm động như <em>float</em>, <em>double</em></strike> </p>
+
+<h1>Một số ví dụ</h1>
+
+<p>Giả gử bạn cho các bit field giá trị vượt quá giá trị tối đa mà bit field có thể lưu trữ thì thế nào? Xét ví dụ:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+struct S{
+    unsigned int a: 2; //dãy giá trị từ 0..4
+};
+
+int main(){
+    S s;
+    s.a=4; //gán member a giá trị tối đa có thể chứa
+    ++s.a; //tăng member a lên 1
+    printf("%d\n",s.a); //in ra 0 -- tương tự như khi bị overflow dữ liệu
+    return 0;
+}
+</code></pre>
+
+<p><strong>Vậy</strong>, kích thước của một bit field là bao nhiêu? Xét ví dụ:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+struct S{
+    /*cộng tổng số bit mà a,b, chiếm, sau đó so sánh với 8 bit, nếu nhỏ hơn 8 bit thì tính luôn là 1 byte*/
+    unsigned char a: 2; //2 bit
+    unsigned char b: 1; //1 bit
+    // tổng số bit là 3&lt;8 --&gt; sizeof là 1
+};
+
+int main(){
+    printf("%d\n",sizeof(S)); //in ra 1
+    return 0;
+}
+</code></pre>
+
+<p><strong>Kết luận</strong>: Đối với bit field chỉ dùng 1 kiểu dữ liệu, nếu tổng số bit trong bit field nhỏ hơn số bít tối đa để biểu diễn kiểu dữ liệu thì kích thước của bit field là kích thước của kiểu dữ liệu đó, trong ví dụ trên, kiểu <em>unsigned char</em> có kích thước là 1 byte được biểu diễn bởi 8 bit</p>
+
+<p>Còn nếu tổng số bít là lớn hơn số bít tối đa biểu diễn kiểu dữ liệu, xét hai trường hợp:</p>
+
+<ul>
+<li><p>Nếu tổng số bit chia hết cho số bit biểu diễn kiểu dữ liệu thì kích thước của bit field là thương của tổng số bit của member với số bit biểu diễn kiểu dữ liệu đó nhân với kích thước của kiểu dữ liệu.</p></li>
+<li><p>Nếu tổng số bit không chia hết cho số bit của kiểu dữ liệu thì kích thước của bit field là thương của phép chia nguyên giữa tổng số bit member với số bit của kiểu dữ liệu cộng 1 rồi nhân với kích thước của kiểu dữ liệu đó.</p></li>
+</ul>
+
+<p>Xem ví dụ sau:</p>
+
+<pre><code>//giả sử sizeof(unsigned int) là 4
+#include &lt;iostream&gt;
+
+struct S{
+    unsigned int a: 30;
+    unsigned int b: 7;
+};
+
+int main(){
+    std::cout&lt;&lt;sizeof(S)&lt;&lt;std::endl; //in ra 8 vì 30+7=37&gt;32
+    return 0;
+}
+</code></pre>
+
+<p>Vậy kích thước bit field sẽ là bao nhiêu nếu nó dùng nhiều kiểu dữ liệu khác nhau? Xét ví du:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+//giả sử unsigned int có sizeof là 4 bytes
+struct S{
+    unsigned char a: 4; //dùng 4 bit trong 8 bit
+    unsigned int b: 30; //dùng 30 trong 32 bit
+};
+
+int main(){
+    printf("%d\n",sizeof(struct S); in ra 8
+    return 0;
+}
+</code></pre>
+
+<p>Vì sao lại là 8 bytes? Nguyên tắc cũng giống <a href="https://ptv14.github.io/sizeof-struct-and-data-alignment/">data alignment</a> Đầu tiên, compiler sẽ tìm ra member có kích thước lớn nhất (ví dụ trên là <em>unsigned int</em>) sau đó sẽ xác định số bit tối đa để biểu diễn kiểu dữ liệu của member đó ( ví dụ trên là 32 bit). Và việc so sánh chỉ thực hiện với số này thôi, việc cấp phát, tổ chức bộ nhớ thì y chang như phần <strong>data alignment</strong>. Tổng số bit của các members là 34>32, do đó kết quả sẽ là 8.</p>
+
+<p>Nhiều bit field liền kề được phép đóng gói (packed) cùng nhau, ví du:</p>
+
+<pre><code>#include &lt;iostream&gt;
+
+struct S{
+    //unsigned được hiểu là unsigned int, giả sử sizeof là 4 bytes
+    //compiler cấp 1 block 4 byte (32 bit) rồi điền các bit field vào
+    //5 bit biểu diễn giá trị của b1;
+    //11 bit: padding, không sử dụng;
+    //6 bit biểu diễn  giá trị của b2;
+    // 2 bit biểu diễn giá trị của b3;
+    //8 bit thừa, không sử dụng
+    unsigned b1: 5, : 11, b2: 6, b3: 2; 
+};
+
+int main(){
+    std::cout&lt;&lt;sizeof(S)&lt;&lt;std::endl; //in ra 4 
+    return 0;
+}
+</code></pre>
+
+<p>Ở ví dụ này có một bit field không tên (tức là không có tên trước dấu <strong>:</strong>) chiếm 11 bit, tổng số bit là 24 bit &lt; 32 nên kích thước là 4 byte.</p>
+
+<p>Với các bit field không tên mà khai báo giá trị 0 sau dấu <strong>:</strong> thì compiler sẽ padding vùng nhớ còn lại của block và cấp block mới để đẩy vào các bit field tiếp theo. Ví dụ:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+
+struct S{
+    //giả sử *unsigned* chiến 4 bytes -- 32 bit
+    unsigned b1: 5; // 5 bit biểu diễn b1
+    unsigned : 0; // padding 27 bit còn lại của block, cấp block mới
+    unsigned b2: 6; // điền tiếp 6 bit để biểu diễn b2 vào block mới
+    unsigned b3: 15; //điền 15 bit của b3 vào
+    //dư 11 bit chưa dùng
+};
+
+int main(){
+    printf("%d\n",sizeof(struct S)); //in 8
+    return 0;
+}
+</code></pre>
+
+<p>Trên đây là một số sơ lược về bit field, bài viết mình kết thúc ở đây!</p>
+
+</p>
+
+
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="footer">
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 author">
+          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://utteranc.es/client.js"
+        repo="tranvietphuoc/tranvietphuoc.github.io"
+        issue-term="url"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+
+</body>
+
+</html>

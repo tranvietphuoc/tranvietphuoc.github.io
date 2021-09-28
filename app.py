@@ -99,6 +99,8 @@ def render_tags(
                 tag.append(p)
                 tags_data.update({t: tag})
 
+    # print(tags_data)
+
     # render to html
     for key, value in tags_data.items():
         tag_html = template.render(posts=value, tag=key)
@@ -126,9 +128,9 @@ if __name__ == "__main__":
 
     posts_metadata = [posts[p].metadata for p in posts]  # all posts metadata
 
-    # convert tags of posts_metadata to list
+    # convert tags of posts_metadata from str to list
     for meta in posts_metadata:
-        meta["tags"] = meta["tags"].split(",").strip()
+        meta["tags"] = [i.strip() for i in meta["tags"].split(",")]
 
     # get posts's tags
     tags = [meta["tags"] for meta in posts_metadata]

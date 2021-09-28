@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../static/main.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
+  <title>My blog</title>
+</head>
+<body>
+  <br>
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-2">
+        <h1 class="home-page"><a style="text-decoration: none; color: orangered" href="../index.html">Trang chủ</a></h1>
+      </div>
+      <div class="col-sm-10">
+        
+<div class="row">
+  <h1 class="col-sm-4">Chủ đề:</h1>
+  <h1 class="col-sm-6">variadic function trong C</h1>
+</div>
+<div class="row">
+  <small class='post-meta'>Ngày: 27-09-2021</small>
+  <small class="post-meta">Tags: 
+    
+    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
+    
+    <a href="../tags/functions.html" style="text-decoration: none; color: orchid">functions</a>,
+    
+  </small>
+</div>
+<p class="post-content">
+  <p><strike>Bài này mình bàn về variadic functions và variadic macros trong C</strike></p>
+
+<h1>Variadic functions</h1>
+
+<p>Variadic functions tạm dịch là các hàm tham lượng động, là các hàm có các tham số không cố định,nó có thể được gọi với một số các tham số khác nhau, chẳng hạn họ hàm <a href="http://en.cppreference.com/w/c/io/fprintf">printf</a>.</p>
+
+<p>Khai báo một hàm tham lượng động sử dụng một ellipsis (dấu <strong>...</strong>) cho tham số cuối cùng, ví dụ, hàm <code>int printf(const char* fmt, ...);</code>. Ví dụ:</p>
+
+<pre><code>int printx(const char* fmt,...); //khai báo
+printx("hello world"); //có thể được gọi với một tham số
+printx("a=%d b=%d",a,b); //hoặc nhiều tham số
+
+//Nhưng các dạng sau đây sẽ lỗi
+// int printy(...,const char* fmt); //Khai báo sai
+// int printz(...) //ít nhất phải có một tham số có tên trước ...
+</code></pre>
+
+<p>Tại function call, mỗi tham số là một phần của danh sách đối biến trải qua chuyển đổi đặc biệt không rõ ràng được biết như tham số khuyến mãi mặc định.</p>
+
+<p>Trong thân hàm sử dụng tham lượng động, giá trị của các tham số có thể được truy cập sử dụng <a href="http://www.cplusplus.com/reference/cstdarg/">stdarg.h</a> header. Ví dụ:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;time.h&gt;
+#include &lt;stdarg.h&gt;
+
+void timelog(const char* fmt,...){
+    char msg[50];
+    strftime(msg, sizeof msg, "%T",localtime(&amp;(time_t){time(NULL)}));
+    printf("[%s] ",msg);
+    va_list args;
+    va_start(args, fmt);
+    vprintf(fmt,args);
+    va_end(args);
+}
+int main(){
+    timelog("logging %d %d....\n",1,2,3); //xuất dạng [hh:mm:ss] logging 1 2 3...
+}
+</code></pre>
+
+<p>Ví dụ, in các giá trị của các kiểu dữ liệu khác nhau:</p>
+
+<pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdarg.h&gt;
+
+void m_printf(const char* fmt,...){
+    va_list args;
+    va_start(args,fmt);
+
+    while(*fmt!='\0'){
+        if(*fmt=='d'){
+            int i=va_arg(args,int);
+            printf("%d\n",i);
+        }else if(*fmt=='c'){
+            //automatic conversion to integral type
+            int c=va_arg(args,int);
+            printf("%c\n",c);
+        }else if(*fmt=='f'){
+            double d=va_arg(args,double);
+            printf("%f\n",d);
+        }
+        ++fmt;
+    }
+    va_end(args);
+}
+
+int main(void)
+{
+    m_printf("dcff",1,'a',3.14,0);
+}
+</code></pre>
+
+<h1>Variadic macro</h1>
+
+<p>Variadic macro là một tính năng của vài ngôn ngữ lập trình máy tính, đặc biệt là C preprocessor, theo đó một macro có thể được khai báo để chấp nhận một số đa dạng các tham số. Ví dụ:</p>
+
+<pre><code>#define eprintf(...) fprintf(stderr, __VA_ARGS__)
+</code></pre>
+
+<p>Khi macro được gọi, tất cả các token trong danh sách tham số của nó sau tham số có tên cuối cùng, gồm cả bất kỳ dấu phẩy nào, gọi là <em>variable argument</em>. Trình tự này của các token thay thế identifier __VA_ARGS__ trong thân macro bất cứ khi nào nó xuất hiện, ví dụ:</p>
+
+<pre><code>eprintf("%s:%d: ",in_file, line_no)
+// trở thành fprintf(stderr, "%s:%d: ",in_file, line_no)
+</code></pre>
+
+<p>Variable argument là macro mở rộng hoàn toàn trước khi nó được chèn vào macro mở rộng, như một tham số bình thường. Bạn có thể dùng toán tử <strong>#</strong> và <strong>##</strong>  để nối variable argument hoặc paste nó vào token đầu hoặc đuôi với token khác. </p>
+
+<p>Nếu macro của bạn phức tạp, có thể bạn muốn nhiều tên mô tả cho variable argument hơn __VA_ARGS__. CPP cho phép điều này, như là phần mở rộng. Bạn có thể viết một tham số ngay trước <em>'...'</em>, tên đó được dùng cho variable argument, ví dụ macro eprintf trên có thể được viết:</p>
+
+<pre><code>#define eprintf(args...) fprintf(stderr, args)
+</code></pre>
+
+<p>sử dụng phần mở rộng này. Bạn không thể dùng __VA_ARGS__ và phần mở rộng này trong một macro giống nhau.</p>
+
+<p>Bạn có thể đặt tên các tham số cũng như các variable arguments trong một variadic macro. Ta có thể định nghĩa <em>eprintf</em> như sau:</p>
+
+<pre><code>#define eprintf(fmt,...) fprintf(stderr,fmt,__VA_ARGS__)
+</code></pre>
+
+<p>Dạng này trông có vẻ đặc tả nhiều hơn, nhưng nó lại ít mềm dẻo hơn. Bạn phải cung cấp ít nhất một tham số sau chuỗi định dạng. Trong C chuẩn, bạn không thể bỏ qua dấu phẩy tham số đã đặt tên từ các variable argument. Hơn nữa, nếu bạn để variable argument rỗng, bạn sẽ nhận lỗi cú pháp, bởi vì sẽ có dấu phẩy mở rộng phía sau chuỗi định dạng, chẳng hạn như:</p>
+
+<pre><code>eprintf("success!\n",);
+// trở thành fprintf(stderr, "success!\n",);
+//sẽ báo lỗi
+</code></pre>
+
+<p>GNU CPP có một cặp extensions để giải quyết vấn đề này. Thứ nhất, bạn được phép để variable argument ngoài một cách trọn vẹn:</p>
+
+<pre><code>eprintf("success!\n")
+//trở thành fprintf(stderr,"success!\n",); --&gt; OK
+</code></pre>
+
+<p>Hai là dùng <strong>##</strong>  paste toán tử có một nghĩa đặc biệt khi thế giữa một dấu phẩy và một variable, nếu bạn viết:</p>
+
+<pre><code>#define eprintf(fmt,...) fprintf(stderr, fmt,##__VA_ARGS__)
+</code></pre>
+
+<p>và variable argument được rời ra khi macro eprintf được dùng, sau đó dấu phẩy trước <em>##</em> sẽ bị xóa. Nó không xảy ra nếu bạn truyền một tham số rỗng,hoặc nếu trước <em>##</em> là bất cứ gì khác dấu phẩy.</p>
+
+<pre><code>eprintf("success!\n")
+// trở thành fprintf(stderr, "success!\n");
+</code></pre>
+
+<p>Variadic macro trở thành một phần của ngôn ngữ C chuẩn với C99. </p>
+
+<p>Bài viết tham khảo từ các nguồn khác nhau!</p>
+
+</p>
+
+
+      </div>
+    </div>
+  </div>
+  <br>
+  <div class="footer">
+    <div class="container">
+      
+      <div class="row">
+        <div class="col-sm-4"></div>
+        <div class="col-sm-4 author">
+          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+        </div>
+        <div class="col-sm-4"></div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://utteranc.es/client.js"
+        repo="tranvietphuoc/tranvietphuoc.github.io"
+        issue-term="url"
+        label="Comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+
+</body>
+
+</html>
