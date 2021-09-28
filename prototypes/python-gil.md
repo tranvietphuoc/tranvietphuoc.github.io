@@ -142,7 +142,7 @@ Giả sử bạn đang có 2 thread:
 
 **Trường hợp 1: đơn giản:**
 
-* Thread 1 đang chạy 1 tác vụ I/O (read/write), nó có thể bị chặn. Vì thế nó releases GIL như hình sau:
+* Thread 1 đang chạy 1 tác vụ I/O (read/write), nó có thể bị chặn. Vì thế nó releases GIL như hình sau.
 
 <img src="https://i.imgur.com/h6aKNVN.png" alt="I-O" width=400 height=200/>
 
@@ -156,6 +156,7 @@ Giả sử bạn đang có 2 thread:
 **Trường hợp 1: tricky:**
 
 * Thread 1 vẫn đan check.
+
 <img src="https://i.imgur.com/ww6Utdm.png" alt="thread" width=400 height=200/>
 
 
