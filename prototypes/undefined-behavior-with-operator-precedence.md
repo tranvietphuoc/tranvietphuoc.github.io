@@ -1,6 +1,6 @@
-title: undefined behavior trong C
+title: Undefined behavior in C
 date: 27-09-2021
-tags: C
+tags: c
 name: undefine-behavior-c
 summary: các undefined behaviors trong C
 -------------------------------

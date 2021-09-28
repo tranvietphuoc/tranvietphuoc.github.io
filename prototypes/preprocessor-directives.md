@@ -1,26 +1,26 @@
-title: preprocessor trong C
+title: Preprocessor in C
 date: 27-09-2021
-tags: C
+tags: c
 name: preprocessor-directives-c
 summary: Bàn về preprocessor directives
 --------------------
 
 
-~~Bài này mình chỉ nói về Preprocessor Directives trong C, trong C++, khái niệm này cũng tương tự.~~
+<u>Bài này mình chỉ nói về Preprocessor Directives trong C, trong C++, khái niệm này cũng tương tự.</u>
 
-# Bạn đã nghe qua khái niệm preprocessor directives chưa?
+# 1. Khái niệm preprocessor directives?
 
-## preprocessor directives 
+## * preprocessor directives 
 
 Tạm dịch là tiền xử lý, là một phần của compiler C/C++, hướng dẫn cho compiler thực hiện một số thao tác sơ bộ (như biên dịch mã có điều kiện, include file,...) trước khi bước vào giai đoạn biên dịch chương trình. Chúng được bắt đầu bằng ký tự **#** và không phải là lệnh trong chương trình, do đó không có dấu **;** khi kết thúc.
 
 Dưới đây là các preprocessor directives bạn sẽ hay gặp.
 
-## #include
+## * #include
 
 Đây là chỉ thị mà code C/C++ bắt buộc phải có, trước khi compile, nếu trình biên dịch bắt gặp chỉ thị *#include* nó sẽ tìm kiếm tập tin theo tên được ghi trong đoạn lệnh *#include*. Nếu tìm thấy nó sẽ chèn nội dung của tập tin đó vào ngay vị trí *#include* xuất hiện, nếu không sẽ báo lỗi.
 
-C hay C++ có vài tính năng như một phần của ngôn ngữ, một số khác như một phần của thư viện chuẩn (*standard library*), là một kho lưu trữ code có sẵn cùng với việc tuân thủ chuẩn của C-compiler. Khi compiler biên dịch chương trình, nó cũng thường liên kết với thư viện chuẩn. Ví du, khi bắt gặp chỉ thị `#include <stdio.h>`, nó sẽ thay thế chỉ thị bằng nội dung của file header *stdio.h*. Và ~~stdio.h~~ là một trong các thư viện chuẩn của C.
+C hay C++ có vài tính năng như một phần của ngôn ngữ, một số khác như một phần của thư viện chuẩn (*standard library*), là một kho lưu trữ code có sẵn cùng với việc tuân thủ chuẩn của C-compiler. Khi compiler biên dịch chương trình, nó cũng thường liên kết với thư viện chuẩn. Ví du, khi bắt gặp chỉ thị `#include <stdio.h>`, nó sẽ thay thế chỉ thị bằng nội dung của file header **stdio.h**. Và **stdio.h** là một trong các thư viện chuẩn của C.
 
 Nếu bạn sử dụng chỉ thị *#include* ở dạng `#include <header_name.h>`, compiler sẽ tìm file *header_name.h* trong đường dẫn tới thư mục *include* của trình biên dịch. Nếu bạn sử dụng ở dạng `#include "other.h"` thì compiler sẽ tìm kiếm file *other.h* trong cả thư mục hiện hành và thư mục *include* của compiler.
 
@@ -46,7 +46,7 @@ int main(){
 
 Các thư viện C chuẩn, bạn có thể tham khảo tại [đây](http://en.cppreference.com/w/c/header).
 
-## #pragma
+## * #pragma
 
 Chỉ thị *#pragma* là phương thức đặc biệt của C standard cho việc cung cấp các thông tin bổ sung cho compiler, nhiều hơn những gì được truyền đạt trong ngôn ngữ đang dùng. Nó dùng để kiểm soát hành vi thực hiện cụ thể, như là disable warning của compiler hoặc thay đổi các alignment requirement. 
 
@@ -87,7 +87,7 @@ Ví dụ, `#pragma warning (disable : 4101)` sẽ bỏ qua warning 4101.
 Còn nhiều thứ hay ho về **#pragma** nữa bạn có thể tìm hiểu thêm trên mạng
 
 
-## macro definitions (#define, #undef)
+## * macro definitions (#define, #undef)
 
 Macro là một đoạn code được tượng trưng bởi 1 cái tên, tên này thường được viết hoa, khi compiler bắt gặp tên đã được **#define**, nó sẽ thay thế tên bằng đoạn code được định nghĩa. 
 
@@ -170,11 +170,11 @@ int table1[SIZE]; //tương đương int table1[100];
 int table2[SIZE]; //tương đương int table2[200];
 ```
 
-## Conditonal inclusions(#ifdef, #ifndef, #if, #endif, #else, #elif)
+## * Conditonal inclusions(#ifdef, #ifndef, #if, #endif, #else, #elif)
 
 Mình sẽ chia làm 2 nhóm: 
 
-Nhóm **#if,#else, #elif, #endif**, các chỉ thị này là conditional directives, nó cũng khá tương đồng với các conditional operators trong C. Cú pháp:
+Nhóm `#if, #else, #elif, #endif`, các chỉ thị này là conditional directives, nó cũng khá tương đồng với các conditional operators trong C. Cú pháp:
 
 ```
 #if constant-expression-1
@@ -226,7 +226,7 @@ Ví dụ sau bạn sẽ rất hay gặp:
 ```
 Nếu bạn đã thử debug chương trình bằng việc chèn thêm các dòng lệnh in ra trạng thái của tiến trình thì conditional directives cực kỳ hữu dụng. (Trong trường hợp chương trình của bạn không thể debug bằng **gdb**, chẳng hạn như các chương trình về giao thức truyền thông mạng)
 
-## Line control (#line)
+## * Line control (#line)
 
 **#line** dùng để chỉ định line numbers trong một chương trình đối với việc tham chiếu chéo (cross-reference) và báo lỗi (erro reporting). Cú pháp:
 
@@ -243,7 +243,7 @@ int a?;
 
 Đoạn code này sẽ sinh ra một lỗi sẽ được show như một lỗi trong file "assigning variable", dòng 20.
 
-## Error directives(#error)
+## * Error directives(#error)
 
 Chỉ thị này hủy bỏ việc compile khi nó được tìm thấy, sinh ra compilation error. Ví dụ:
 
@@ -255,7 +255,7 @@ Chỉ thị này hủy bỏ việc compile khi nó được tìm thấy, sinh ra
 
 Ví dụ này hủy bỏ việc biên dịch nếu tên macro *__cplusplus* không được định nghĩa. 
 
-## Predefined macro names
+## * Predefined macro names
 
 Các tên macro điển hình dưới đây luôn luôn đã được định nghĩa.
 

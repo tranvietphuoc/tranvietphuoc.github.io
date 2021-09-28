@@ -1,18 +1,18 @@
-title: Read/Write trong C
+title: Read and Write in C
 date: 27-09-2021
-tags: C, system
+tags: c, system
 name: read-write
 summary: Các hàm read()/write() hoạt động ra sao?
 ------------------
 
 
-# Hoạt động của các hàm read()/write() và sự khác nhau với các hàm đọc/ghi trong thư viện stdio.h.
+# 1. Hoạt động của các hàm read()/write() và sự khác nhau với các hàm đọc/ghi trong thư viện stdio.h.
 
 Trước hết mình nói qua về khái niệm file. File là một tập có cấu trúc của dữ liệu. Một physical file (file vật lý) đề cập đến cách lưu trữ file trên phần cứng (ví dụ: trên đĩa, file được lưu trữ thành các blocks được tạo thành từ các tracks và sectors). Một logical file là cách lập trình viên tổ chức cấu trúc file, chứa một đặc tả (description) các bản ghi (record) đặc tính được tìm thấy trong một hoặc nhiều file.
 
 Mọi thiết bị trên hệ thống UNIX đều được xem là file, các file được quản lý bởi kernel thông qua các file descriptor. Khi bạn muốn truy cập thiết bị nào, hệ thống sẽ cấp cho bạn file desciptor của thiết bị đó, bạn sẽ tương tác với thiết bị thông qua file descriptor.
 
-## Hàm read()/write().
+## * Hàm read()/write().
 
 Các hàm read(), write() là một lời gọi tới hệ thống nằm trong thư viện unistd.h. Dùng để đọc dữ liệu từ physical file hoặc ghi dữ liệu ra physical file.
 
@@ -52,13 +52,13 @@ Chương trình trên đơn giản là đọc dữ liệu từ bạn phím, sau 
 
 Bởi vì read()/write) đọc dữ liệu từ thiết bị ngoại vi hay ghi dữ liệu ra thiết bị đều không qua bộ đệm dữ liệu nên chúng là **unbuffered**.
 
-## Các hàm đọc/ghi file trong thư viện stdio.h
+## * Các hàm đọc/ghi file trong thư viện stdio.h
 
 Các hàm đọc/ghi file trong stdio.h ở một mức trừu tượng cao hơn so với các lời gọi hệ thống read()/write()/ Và cấc thao tác đoc/ghi trong stdio.h được thực hiện thông qua một bộ đệm.
 
 Buffer hay bộ đệm alf một vùng nhớ tạm.
 
-Trong stdio.h có một cấu trúc dữ liệu là FILE được định nghĩa như sau (trích ~~*The C Programming Language*~~):
+Trong stdio.h có một cấu trúc dữ liệu là FILE được định nghĩa như sau (trích `*The C Programming Language*`):
 
 ```c
 typedef struct _iobuf{
@@ -94,7 +94,7 @@ int setvbuf(FILE* stream, char* buf, int mode, size_t size);
 
 Hàm này điều khiển bộ đệm của stream, luôn được gọi trước các thao tác đoc/ghi file. **mode** có các giá trị *_IOFBF* nếu full buffering hoặc *_IOFBF* nếu buffering dòng cho các text files, hoặc *_IONBF* nếu không dùng buffer. Nếu **buf** không phải là *NULL* thì nó được dùng như buffer. **size** xác định kích thước của bộ đệm.
 
-## Lợi ích của đọc/ghi file thông qua buffer
+## * Lợi ích của đọc/ghi file thông qua buffer
 
 Việc dùng bộ đệm với các thao tác đọc/ghi sẽ làm tăng tốc độ. Tuy nhiên việc dùng bộ đệm sẽ gây ra các side effect, chẳng hạn như khi ghi dữ liệu ra file thì dữ liệu vẫn nằm trên bộ đệm cho tới khi đầy mới được đưa ra, trong thời điểm này nếu có các thao tác đọc vào thì dữ liệu sẽ được đưa vào input. Dẫn tới kết quả sai lêch, etc.
 

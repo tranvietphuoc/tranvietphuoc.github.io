@@ -17,27 +17,34 @@
       <div class="col-sm-10">
         
 <div class="row">
-  <h1 class="col-sm-4">Chủ đề:</h1>
-  <h1 class="col-sm-6">Read/Write trong C</h1>
+  <h1><span style="color:lightgrey"># </span>
+    Read and Write in C
+  </h1>
 </div>
+<br>
+
 <div class="row">
-  <small class='post-meta'>Ngày: 27-09-2021</small>
-  <small class="post-meta">Tags: 
-    
-    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
-    
-    <a href="../tags/system.html" style="text-decoration: none; color: orchid">system</a>,
-    
-  </small>
+  <div style="display: flex; flex-direction: column;">
+      <small class='post-meta'>Ngày: 27-09-2021</small>
+      <small class="post-meta">Tags: 
+        
+          <a href="../tags/c.html" style="text-decoration: none; color: orangered; background-color: lightgray">c</a>,
+        
+          <a href="../tags/system.html" style="text-decoration: none; color: orangered; background-color: lightgray">system</a>,
+        
+      </small>
+    </div>
 </div>
+<br>
+
 <p class="post-content">
-  <h1>Hoạt động của các hàm read()/write() và sự khác nhau với các hàm đọc/ghi trong thư viện stdio.h.</h1>
+  <h1>1. Hoạt động của các hàm read()/write() và sự khác nhau với các hàm đọc/ghi trong thư viện stdio.h.</h1>
 
 <p>Trước hết mình nói qua về khái niệm file. File là một tập có cấu trúc của dữ liệu. Một physical file (file vật lý) đề cập đến cách lưu trữ file trên phần cứng (ví dụ: trên đĩa, file được lưu trữ thành các blocks được tạo thành từ các tracks và sectors). Một logical file là cách lập trình viên tổ chức cấu trúc file, chứa một đặc tả (description) các bản ghi (record) đặc tính được tìm thấy trong một hoặc nhiều file.</p>
 
 <p>Mọi thiết bị trên hệ thống UNIX đều được xem là file, các file được quản lý bởi kernel thông qua các file descriptor. Khi bạn muốn truy cập thiết bị nào, hệ thống sẽ cấp cho bạn file desciptor của thiết bị đó, bạn sẽ tương tác với thiết bị thông qua file descriptor.</p>
 
-<h2>Hàm read()/write().</h2>
+<h2>* Hàm read()/write().</h2>
 
 <p>Các hàm read(), write() là một lời gọi tới hệ thống nằm trong thư viện unistd.h. Dùng để đọc dữ liệu từ physical file hoặc ghi dữ liệu ra physical file.</p>
 
@@ -74,13 +81,13 @@ int main(){
 
 <p>Bởi vì read()/write) đọc dữ liệu từ thiết bị ngoại vi hay ghi dữ liệu ra thiết bị đều không qua bộ đệm dữ liệu nên chúng là <strong>unbuffered</strong>.</p>
 
-<h2>Các hàm đọc/ghi file trong thư viện stdio.h</h2>
+<h2>* Các hàm đọc/ghi file trong thư viện stdio.h</h2>
 
 <p>Các hàm đọc/ghi file trong stdio.h ở một mức trừu tượng cao hơn so với các lời gọi hệ thống read()/write()/ Và cấc thao tác đoc/ghi trong stdio.h được thực hiện thông qua một bộ đệm.</p>
 
 <p>Buffer hay bộ đệm alf một vùng nhớ tạm.</p>
 
-<p>Trong stdio.h có một cấu trúc dữ liệu là FILE được định nghĩa như sau (trích <strike><em>The C Programming Language</em></strike>):</p>
+<p>Trong stdio.h có một cấu trúc dữ liệu là FILE được định nghĩa như sau (trích <code>*The C Programming Language*</code>):</p>
 
 <pre><code>typedef struct _iobuf{
     int cnt;    /* character left*/
@@ -112,7 +119,7 @@ int main(){
 
 <p>Hàm này điều khiển bộ đệm của stream, luôn được gọi trước các thao tác đoc/ghi file. <strong>mode</strong> có các giá trị <em>_IOFBF</em> nếu full buffering hoặc <em>_IOFBF</em> nếu buffering dòng cho các text files, hoặc <em>_IONBF</em> nếu không dùng buffer. Nếu <strong>buf</strong> không phải là <em>NULL</em> thì nó được dùng như buffer. <strong>size</strong> xác định kích thước của bộ đệm.</p>
 
-<h2>Lợi ích của đọc/ghi file thông qua buffer</h2>
+<h2>* Lợi ích của đọc/ghi file thông qua buffer</h2>
 
 <p>Việc dùng bộ đệm với các thao tác đọc/ghi sẽ làm tăng tốc độ. Tuy nhiên việc dùng bộ đệm sẽ gây ra các side effect, chẳng hạn như khi ghi dữ liệu ra file thì dữ liệu vẫn nằm trên bộ đệm cho tới khi đầy mới được đưa ra, trong thời điểm này nếu có các thao tác đọc vào thì dữ liệu sẽ được đưa vào input. Dẫn tới kết quả sai lêch, etc.</p>
 
@@ -131,7 +138,9 @@ int main(){
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4 author">
-          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+          <span class="text-muted">Powered by
+            <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Trần Việt Phước</a>
+          </span>
         </div>
         <div class="col-sm-4"></div>
       </div>
@@ -147,6 +156,8 @@ int main(){
         async>
   </script>
 
+  <script src="../static//script.js" type="text/javascript">
+  </script>
 </body>
 
 </html>

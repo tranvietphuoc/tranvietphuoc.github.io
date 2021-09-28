@@ -17,21 +17,28 @@
       <div class="col-sm-10">
         
 <div class="row">
-  <h1 class="col-sm-4">Chủ đề:</h1>
-  <h1 class="col-sm-6">sizeof struct trong C</h1>
+  <h1><span style="color:lightgrey"># </span>
+    Sizeof structs in C
+  </h1>
 </div>
+<br>
+
 <div class="row">
-  <small class='post-meta'>Ngày: 27-09-2021</small>
-  <small class="post-meta">Tags: 
-    
-    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
-    
-    <a href="../tags/struct.html" style="text-decoration: none; color: orchid">struct</a>,
-    
-  </small>
+  <div style="display: flex; flex-direction: column;">
+      <small class='post-meta'>Ngày: 27-09-2021</small>
+      <small class="post-meta">Tags: 
+        
+          <a href="../tags/c.html" style="text-decoration: none; color: orangered; background-color: lightgray">c</a>,
+        
+          <a href="../tags/struct.html" style="text-decoration: none; color: orangered; background-color: lightgray">struct</a>,
+        
+      </small>
+    </div>
 </div>
+<br>
+
 <p class="post-content">
-  <h1>sizeof của struct</h1>
+  <h1>1. sizeof của struct</h1>
 
 <p>Có khi nào bạn thắc mắc dữ liệu của một struct trong C hay C++ được tổ chức như thế nào không? Vì sao kích thước một struct khi chạy một chương trình đôi khi lại không giống những gì ta đã tính ở ngoài? Bài viết này sẽ đề cập đến các vấn đề trên.</p>
 
@@ -155,7 +162,7 @@ int main(){
 
 <p>Trở lại các ví dụ trên, bạn có thắc mắc tại sao lại phải padding không?</p>
 
-<h1>Data alignment</h1>
+<h1>2. Data alignment</h1>
 
 <p>Như bạn đã biết, bộ nhớ máy tính là một dãy các ô nhớ liên tiếp nhau mỗi ô nhớ có kích thước 1 byte. Tuy nhiên khi chương trình chạy, các vi xử lý hiện nay sẽ không đọc từng ô nhớ một mà là một nhóm các ô nhớ là bội của 2, 4 hoặc 8 (tức là đọc 2, 4, hoặc 8 bytes liên tiếp). Mục đích của việc này là tăng hiệu suất đọc/ghi của hệ thống.</p>
 
@@ -175,7 +182,7 @@ int main(){
 <li>Hệ thống 64 bit: 1 word = 8 bytes (64 bit)</li>
 </ul>
 
-<p><strong>Kết luận</strong>: <strike>Mục đích của việc padding dữ liệu là để các khối dữ liệu luôn rơi vào vị trí các bytes địa chỉ chẵn nhằm tăng tốc độ đọc của CPU với bộ nhớ</strike>.</p>
+<p><strong>Kết luận</strong>: <u>Mục đích của việc padding dữ liệu là để các <strike>khối dữ liệu</strike> luôn rơi vào vị trí các bytes địa chỉ chẵn nhằm tăng tốc độ đọc của CPU với bộ nhớ</u>.</p>
 
 </p>
 
@@ -190,7 +197,9 @@ int main(){
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4 author">
-          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+          <span class="text-muted">Powered by
+            <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Trần Việt Phước</a>
+          </span>
         </div>
         <div class="col-sm-4"></div>
       </div>
@@ -206,6 +215,8 @@ int main(){
         async>
   </script>
 
+  <script src="../static//script.js" type="text/javascript">
+  </script>
 </body>
 
 </html>

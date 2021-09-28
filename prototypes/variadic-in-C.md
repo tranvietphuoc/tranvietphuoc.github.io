@@ -1,13 +1,13 @@
-title: variadic function trong C
+title: Variadic function in C
 date: 27-09-2021
-tags: C, functions
+tags: c, functions
 name: variadic-function-c
 summary: Về variadic functions và variadic macros trong C
 ---------------------------
 
-~~Bài này mình bàn về variadic functions và variadic macros trong C~~
+<u>Bài này mình bàn về variadic functions và variadic macros trong C</u>
 
-# Variadic functions
+# 1. Variadic functions
 
 Variadic functions tạm dịch là các hàm tham lượng động, là các hàm có các tham số không cố định,nó có thể được gọi với một số các tham số khác nhau, chẳng hạn họ hàm [printf](http://en.cppreference.com/w/c/io/fprintf).
 
@@ -79,7 +79,7 @@ int main(void)
 }
 ```
 
-# Variadic macro
+# 2. Variadic macro
 
 Variadic macro là một tính năng của vài ngôn ngữ lập trình máy tính, đặc biệt là C preprocessor, theo đó một macro có thể được khai báo để chấp nhận một số đa dạng các tham số. Ví dụ:
 

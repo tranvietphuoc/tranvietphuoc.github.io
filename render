@@ -1,6 +1,11 @@
 #! /bin/bash
 
 # clean html files in posts folder and index.html file
+
+if ! command -v poetry &> /dev/null; then
+    curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
+fi
+
 rm index.html
 rm ./posts/*.html
 rm ./tags/*.html

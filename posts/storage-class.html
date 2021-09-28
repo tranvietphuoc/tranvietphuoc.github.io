@@ -17,23 +17,30 @@
       <div class="col-sm-10">
         
 <div class="row">
-  <h1 class="col-sm-4">Chủ đề:</h1>
-  <h1 class="col-sm-6">storage classes trong C</h1>
+  <h1><span style="color:lightgrey"># </span>
+    Storage classes in C
+  </h1>
 </div>
+<br>
+
 <div class="row">
-  <small class='post-meta'>Ngày: 27-09-2021</small>
-  <small class="post-meta">Tags: 
-    
-    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
-    
-  </small>
+  <div style="display: flex; flex-direction: column;">
+      <small class='post-meta'>Ngày: 27-09-2021</small>
+      <small class="post-meta">Tags: 
+        
+          <a href="../tags/c.html" style="text-decoration: none; color: orangered; background-color: lightgray">c</a>,
+        
+      </small>
+    </div>
 </div>
+<br>
+
 <p class="post-content">
-  <h1>Các lớp lưu trữ trong C</h1>
+  <h1>1. Các lớp lưu trữ trong C</h1>
 
 <p>Trong lập trình C bạn sẽ hay gặp các storage classes còn gọi là các lớp lưu trữ. Điển hình hay gặp là <strong>extern</strong>, <strong>static</strong>, <strong>register</strong> và <strong>auto</strong>.</p>
 
-<h2>extern</h2>
+<h2>* extern</h2>
 
 <p>Lúc lập trình bạn có thể gặp trường hợp khai báo biến với từ khóa <strong>extern</strong> ở trong 1 hoặc vài file của chương trình, ví dụ:</p>
 
@@ -46,7 +53,7 @@
 
 <p>Trong một chương trình có nhiều file, một biến global trong một file có thể được truy cập từ một file khác bằng cách sử dụng lớp lưu trữ <strong>extern</strong>.</p>
 
-<h2>static</h2>
+<h2>* static</h2>
 
 <p>Lớp lưu trữ <strong>static</strong> được dùng cho cả các biến global và local trong chương trình, ví dụ:</p>
 
@@ -59,7 +66,7 @@
 
 <p><strong><em>Tóm lại</em></strong>, dù là biến <strong>static</strong> toàn cục hay cục bộ, phạm vi truy cập của chúng đều chỉ giới hạn trong file nơi chúng được khai báo, nhưng tồn tại tới khi chương trình kết thúc.</p>
 
-<h2>register</h2>
+<h2>* register</h2>
 
 <p>Khi tiếp xúc với lập trình vi điều khiển - lập trình nhúng, bạn hay gặp từ khóa <strong>register</strong>. Đây là một lớp lưu trữ mà khi khai báo biến với từ khóa <strong>register</strong>, biến sẽ được lưu trong một trong các thanh ghi của CPU. Các thanh ghi được điều khiển trực tiếp bởi CPU, vì vậy dữ liệu trong biến với lớp lưu trữ <strong>register</strong> có thể được truy cập và xử lý với tốc độ nhanh hơn so với biến được lưu trữ trong bộ nhớ chính.</p>
 
@@ -72,7 +79,7 @@
 
 <p><strong><em>Tuy nhiên</em></strong>, trình tối ưu của compiler sẽ lờ đi các biến khai báo <strong>register</strong> nếu như số lượng thanh ghi trong CPU không đủ.</p>
 
-<h2>auto</h2>
+<h2>* auto</h2>
 
 <p>Khi một biến được khai báo với lớp lưu trữ <strong>auto</strong>, phạm vi truy cập của biến là cục bộ trong hàm hoặc block code nó được khai báo, thời gian tồn tại của biến tới khi hàm hoặc một block code kết thúc. Ví dụ:</p>
 
@@ -94,7 +101,9 @@
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4 author">
-          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+          <span class="text-muted">Powered by
+            <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Trần Việt Phước</a>
+          </span>
         </div>
         <div class="col-sm-4"></div>
       </div>
@@ -110,6 +119,8 @@
         async>
   </script>
 
+  <script src="../static//script.js" type="text/javascript">
+  </script>
 </body>
 
 </html>

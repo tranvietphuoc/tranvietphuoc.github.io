@@ -17,33 +17,40 @@
       <div class="col-sm-10">
         
 <div class="row">
-  <h1 class="col-sm-4">Chủ đề:</h1>
-  <h1 class="col-sm-6">preprocessor trong C</h1>
+  <h1><span style="color:lightgrey"># </span>
+    Preprocessor in C
+  </h1>
 </div>
+<br>
+
 <div class="row">
-  <small class='post-meta'>Ngày: 27-09-2021</small>
-  <small class="post-meta">Tags: 
-    
-    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
-    
-  </small>
+  <div style="display: flex; flex-direction: column;">
+      <small class='post-meta'>Ngày: 27-09-2021</small>
+      <small class="post-meta">Tags: 
+        
+          <a href="../tags/c.html" style="text-decoration: none; color: orangered; background-color: lightgray">c</a>,
+        
+      </small>
+    </div>
 </div>
+<br>
+
 <p class="post-content">
-  <p><strike>Bài này mình chỉ nói về Preprocessor Directives trong C, trong C++, khái niệm này cũng tương tự.</strike></p>
+  <p><u>Bài này mình chỉ nói về Preprocessor Directives trong C, trong C++, khái niệm này cũng tương tự.</u></p>
 
-<h1>Bạn đã nghe qua khái niệm preprocessor directives chưa?</h1>
+<h1>1. Khái niệm preprocessor directives?</h1>
 
-<h2>preprocessor directives</h2>
+<h2>* preprocessor directives</h2>
 
 <p>Tạm dịch là tiền xử lý, là một phần của compiler C/C++, hướng dẫn cho compiler thực hiện một số thao tác sơ bộ (như biên dịch mã có điều kiện, include file,...) trước khi bước vào giai đoạn biên dịch chương trình. Chúng được bắt đầu bằng ký tự <strong>#</strong> và không phải là lệnh trong chương trình, do đó không có dấu <strong>;</strong> khi kết thúc.</p>
 
 <p>Dưới đây là các preprocessor directives bạn sẽ hay gặp.</p>
 
-<h2>#include</h2>
+<h2>* #include</h2>
 
 <p>Đây là chỉ thị mà code C/C++ bắt buộc phải có, trước khi compile, nếu trình biên dịch bắt gặp chỉ thị <em>#include</em> nó sẽ tìm kiếm tập tin theo tên được ghi trong đoạn lệnh <em>#include</em>. Nếu tìm thấy nó sẽ chèn nội dung của tập tin đó vào ngay vị trí <em>#include</em> xuất hiện, nếu không sẽ báo lỗi.</p>
 
-<p>C hay C++ có vài tính năng như một phần của ngôn ngữ, một số khác như một phần của thư viện chuẩn (<em>standard library</em>), là một kho lưu trữ code có sẵn cùng với việc tuân thủ chuẩn của C-compiler. Khi compiler biên dịch chương trình, nó cũng thường liên kết với thư viện chuẩn. Ví du, khi bắt gặp chỉ thị <code>#include &lt;stdio.h&gt;</code>, nó sẽ thay thế chỉ thị bằng nội dung của file header <em>stdio.h</em>. Và <strike>stdio.h</strike> là một trong các thư viện chuẩn của C.</p>
+<p>C hay C++ có vài tính năng như một phần của ngôn ngữ, một số khác như một phần của thư viện chuẩn (<em>standard library</em>), là một kho lưu trữ code có sẵn cùng với việc tuân thủ chuẩn của C-compiler. Khi compiler biên dịch chương trình, nó cũng thường liên kết với thư viện chuẩn. Ví du, khi bắt gặp chỉ thị <code>#include &lt;stdio.h&gt;</code>, nó sẽ thay thế chỉ thị bằng nội dung của file header <strong>stdio.h</strong>. Và <strong>stdio.h</strong> là một trong các thư viện chuẩn của C.</p>
 
 <p>Nếu bạn sử dụng chỉ thị <em>#include</em> ở dạng <code>#include &lt;header_name.h&gt;</code>, compiler sẽ tìm file <em>header_name.h</em> trong đường dẫn tới thư mục <em>include</em> của trình biên dịch. Nếu bạn sử dụng ở dạng <code>#include "other.h"</code> thì compiler sẽ tìm kiếm file <em>other.h</em> trong cả thư mục hiện hành và thư mục <em>include</em> của compiler.</p>
 
@@ -67,7 +74,7 @@ int main(){
 
 <p>Các thư viện C chuẩn, bạn có thể tham khảo tại <a href="http://en.cppreference.com/w/c/header">đây</a>.</p>
 
-<h2>#pragma</h2>
+<h2>* #pragma</h2>
 
 <p>Chỉ thị <em>#pragma</em> là phương thức đặc biệt của C standard cho việc cung cấp các thông tin bổ sung cho compiler, nhiều hơn những gì được truyền đạt trong ngôn ngữ đang dùng. Nó dùng để kiểm soát hành vi thực hiện cụ thể, như là disable warning của compiler hoặc thay đổi các alignment requirement. </p>
 
@@ -114,7 +121,7 @@ int main(){
 
 <p>Còn nhiều thứ hay ho về <strong>#pragma</strong> nữa bạn có thể tìm hiểu thêm trên mạng</p>
 
-<h2>macro definitions (#define, #undef)</h2>
+<h2>* macro definitions (#define, #undef)</h2>
 
 <p>Macro là một đoạn code được tượng trưng bởi 1 cái tên, tên này thường được viết hoa, khi compiler bắt gặp tên đã được <strong>#define</strong>, nó sẽ thay thế tên bằng đoạn code được định nghĩa. </p>
 
@@ -190,11 +197,11 @@ int table1[SIZE]; //tương đương int table1[100];
 int table2[SIZE]; //tương đương int table2[200];
 </code></pre>
 
-<h2>Conditonal inclusions(#ifdef, #ifndef, #if, #endif, #else, #elif)</h2>
+<h2>* Conditonal inclusions(#ifdef, #ifndef, #if, #endif, #else, #elif)</h2>
 
 <p>Mình sẽ chia làm 2 nhóm: </p>
 
-<p>Nhóm <strong>#if,#else, #elif, #endif</strong>, các chỉ thị này là conditional directives, nó cũng khá tương đồng với các conditional operators trong C. Cú pháp:</p>
+<p>Nhóm <code>#if, #else, #elif, #endif</code>, các chỉ thị này là conditional directives, nó cũng khá tương đồng với các conditional operators trong C. Cú pháp:</p>
 
 <pre><code>#if constant-expression-1
     &lt;section-1&gt;
@@ -248,7 +255,7 @@ int table2[SIZE]; //tương đương int table2[200];
 
 <p>Nếu bạn đã thử debug chương trình bằng việc chèn thêm các dòng lệnh in ra trạng thái của tiến trình thì conditional directives cực kỳ hữu dụng. (Trong trường hợp chương trình của bạn không thể debug bằng <strong>gdb</strong>, chẳng hạn như các chương trình về giao thức truyền thông mạng)</p>
 
-<h2>Line control (#line)</h2>
+<h2>* Line control (#line)</h2>
 
 <p><strong>#line</strong> dùng để chỉ định line numbers trong một chương trình đối với việc tham chiếu chéo (cross-reference) và báo lỗi (erro reporting). Cú pháp:</p>
 
@@ -263,7 +270,7 @@ int a?;
 
 <p>Đoạn code này sẽ sinh ra một lỗi sẽ được show như một lỗi trong file "assigning variable", dòng 20.</p>
 
-<h2>Error directives(#error)</h2>
+<h2>* Error directives(#error)</h2>
 
 <p>Chỉ thị này hủy bỏ việc compile khi nó được tìm thấy, sinh ra compilation error. Ví dụ:</p>
 
@@ -274,7 +281,7 @@ int a?;
 
 <p>Ví dụ này hủy bỏ việc biên dịch nếu tên macro <em>__cplusplus</em> không được định nghĩa. </p>
 
-<h2>Predefined macro names</h2>
+<h2>* Predefined macro names</h2>
 
 <p>Các tên macro điển hình dưới đây luôn luôn đã được định nghĩa.</p>
 
@@ -330,7 +337,9 @@ int a?;
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4 author">
-          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+          <span class="text-muted">Powered by
+            <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Trần Việt Phước</a>
+          </span>
         </div>
         <div class="col-sm-4"></div>
       </div>
@@ -346,6 +355,8 @@ int a?;
         async>
   </script>
 
+  <script src="../static//script.js" type="text/javascript">
+  </script>
 </body>
 
 </html>

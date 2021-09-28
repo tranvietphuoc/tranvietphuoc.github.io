@@ -1,13 +1,13 @@
-title: bitfield trong C
+title: Bit field in C
 date: 27-09-2021
-tags: C, struct, bitfield
+tags: c, struct, bitfield
 name: bitfield-c
 summary: Bitfield? Nó là gì?
 -----------------
 
 
 
-# Bit field là gì?
+# 1. Bit field là gì?
 
 Trong lập trình C hay C++, bạn sẽ gặp một struct có dạng như thế này:
 
@@ -32,9 +32,9 @@ struct foo{
 };
 ```
 
-Ở đây, **type** là *int* (giả sử *int* được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ -2^32 -- 2^32-1. Tuy nhiên, ***int a: 2;*** nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của **a** sẽ từ -2 đến 1 (tức 2^2 giá trị).
+Ở đây, **type** là *int* (giả sử *int* được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ `-2^32 -- 2^32-1`. Tuy nhiên, ***int a: 2;*** nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của **a** sẽ từ -2 đến 1 (tức 2^2 giá trị).
 
-**Vậy**, bit field là một khai báo các thành viên của struct  với độ rộng rõ ràng theo các bit. Nhưng ~~độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu~~
+**Vậy**, bit field là một khai báo các thành viên của struct  với độ rộng rõ ràng theo các bit. Nhưng <u>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</u>
 
 Công dụng của bit field là tiết kiệm không gian nhớ. Việc này rất hữu dụng khi bạn lập trình cho các hệ thống có ít tài nguyên như hệ thống nhúng.
 
@@ -47,7 +47,7 @@ Công dụng của bit field là tiết kiệm không gian nhớ. Việc này r�
 
 Mở rộng ra, type của các bit field là các kiểu nguyên như *int*, *long*, *short*, *char*, *long long* có thể kèm theo **signed** hoặc **unsigned**. ~~Đặc biệt là không phải kiểu dấu chấm động như *float*, *double*~~ 
 
-# Một số ví dụ
+# 2. Một số ví dụ
 
 Giả gử bạn cho các bit field giá trị vượt quá giá trị tối đa mà bit field có thể lưu trữ thì thế nào? Xét ví dụ:
 

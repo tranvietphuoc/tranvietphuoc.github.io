@@ -31,6 +31,9 @@ a:visited {
   color: gray;
   font-size: 15px;
 }
+.post-meta > a:hover{
+  color: yellowgreen;
+}
 
 .home-meta {
   font-size: 13px;
@@ -60,4 +63,4 @@ a:visited {
 
 .post-content {
   text-align: justify;
-,}
+}

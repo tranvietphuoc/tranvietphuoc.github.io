@@ -17,23 +17,30 @@
       <div class="col-sm-10">
         
 <div class="row">
-  <h1 class="col-sm-4">Chủ đề:</h1>
-  <h1 class="col-sm-6">bitfield trong C</h1>
+  <h1><span style="color:lightgrey"># </span>
+    Bit field in C
+  </h1>
 </div>
+<br>
+
 <div class="row">
-  <small class='post-meta'>Ngày: 27-09-2021</small>
-  <small class="post-meta">Tags: 
-    
-    <a href="../tags/C.html" style="text-decoration: none; color: orchid">C</a>,
-    
-    <a href="../tags/struct.html" style="text-decoration: none; color: orchid">struct</a>,
-    
-    <a href="../tags/bitfield.html" style="text-decoration: none; color: orchid">bitfield</a>,
-    
-  </small>
+  <div style="display: flex; flex-direction: column;">
+      <small class='post-meta'>Ngày: 27-09-2021</small>
+      <small class="post-meta">Tags: 
+        
+          <a href="../tags/c.html" style="text-decoration: none; color: orangered; background-color: lightgray">c</a>,
+        
+          <a href="../tags/struct.html" style="text-decoration: none; color: orangered; background-color: lightgray">struct</a>,
+        
+          <a href="../tags/bitfield.html" style="text-decoration: none; color: orangered; background-color: lightgray">bitfield</a>,
+        
+      </small>
+    </div>
 </div>
+<br>
+
 <p class="post-content">
-  <h1>Bit field là gì?</h1>
+  <h1>1. Bit field là gì?</h1>
 
 <p>Trong lập trình C hay C++, bạn sẽ gặp một struct có dạng như thế này:</p>
 
@@ -56,9 +63,9 @@
 };
 </code></pre>
 
-<p>Ở đây, <strong>type</strong> là <em>int</em> (giả sử <em>int</em> được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ -2^32 -- 2^32-1. Tuy nhiên, <strong><em>int a: 2;</em></strong> nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của <strong>a</strong> sẽ từ -2 đến 1 (tức 2^2 giá trị).</p>
+<p>Ở đây, <strong>type</strong> là <em>int</em> (giả sử <em>int</em> được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ <code>-2^32 -- 2^32-1</code>. Tuy nhiên, <strong><em>int a: 2;</em></strong> nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của <strong>a</strong> sẽ từ -2 đến 1 (tức 2^2 giá trị).</p>
 
-<p><strong>Vậy</strong>, bit field là một khai báo các thành viên của struct  với độ rộng rõ ràng theo các bit. Nhưng <strike>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</strike></p>
+<p><strong>Vậy</strong>, bit field là một khai báo các thành viên của struct  với độ rộng rõ ràng theo các bit. Nhưng <u>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</u></p>
 
 <p>Công dụng của bit field là tiết kiệm không gian nhớ. Việc này rất hữu dụng khi bạn lập trình cho các hệ thống có ít tài nguyên như hệ thống nhúng.</p>
 
@@ -73,7 +80,7 @@
 
 <p>Mở rộng ra, type của các bit field là các kiểu nguyên như <em>int</em>, <em>long</em>, <em>short</em>, <em>char</em>, <em>long long</em> có thể kèm theo <strong>signed</strong> hoặc <strong>unsigned</strong>. <strike>Đặc biệt là không phải kiểu dấu chấm động như <em>float</em>, <em>double</em></strike> </p>
 
-<h1>Một số ví dụ</h1>
+<h1>2. Một số ví dụ</h1>
 
 <p>Giả gử bạn cho các bit field giá trị vượt quá giá trị tối đa mà bit field có thể lưu trữ thì thế nào? Xét ví dụ:</p>
 
@@ -209,7 +216,9 @@ int main(){
       <div class="row">
         <div class="col-sm-4"></div>
         <div class="col-sm-4 author">
-          <span class="text-muted">Powered by <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Tran Viet Phuoc</a></span>
+          <span class="text-muted">Powered by
+            <a style="text-decoration: none; color: orangered" href="https://github.com/tranvietphuoc">Trần Việt Phước</a>
+          </span>
         </div>
         <div class="col-sm-4"></div>
       </div>
@@ -225,6 +234,8 @@ int main(){
         async>
   </script>
 
+  <script src="../static//script.js" type="text/javascript">
+  </script>
 </body>
 
 </html>

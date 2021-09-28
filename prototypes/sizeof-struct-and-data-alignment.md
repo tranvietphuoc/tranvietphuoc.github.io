@@ -1,11 +1,11 @@
-title: sizeof struct trong C
+title: Sizeof structs in C
 date: 27-09-2021
-tags: C, struct
+tags: c, struct
 name: sizeof-struct
 summary: Dữ liệu của một struct trong C/C++ được tổ chức như thế nào? 
 ------------------
 
-# sizeof của struct
+# 1. sizeof của struct
 
 Có khi nào bạn thắc mắc dữ liệu của một struct trong C hay C++ được tổ chức như thế nào không? Vì sao kích thước một struct khi chạy một chương trình đôi khi lại không giống những gì ta đã tính ở ngoài? Bài viết này sẽ đề cập đến các vấn đề trên.
 
@@ -136,7 +136,7 @@ struct foo2{
 
 Trở lại các ví dụ trên, bạn có thắc mắc tại sao lại phải padding không?
 
-# Data alignment
+# 2. Data alignment
 
 Như bạn đã biết, bộ nhớ máy tính là một dãy các ô nhớ liên tiếp nhau mỗi ô nhớ có kích thước 1 byte. Tuy nhiên khi chương trình chạy, các vi xử lý hiện nay sẽ không đọc từng ô nhớ một mà là một nhóm các ô nhớ là bội của 2, 4 hoặc 8 (tức là đọc 2, 4, hoặc 8 bytes liên tiếp). Mục đích của việc này là tăng hiệu suất đọc/ghi của hệ thống.
 
@@ -154,7 +154,7 @@ Một số vi xử lý cũ bắt buộc chương trình C của bạn vi phạm 
 * Hệ thống 32 bit: 1 word = 4 bytes (32 bit)
 * Hệ thống 64 bit: 1 word = 8 bytes (64 bit)
 
-**Kết luận**: ~~Mục đích của việc padding dữ liệu là để các khối dữ liệu luôn rơi vào vị trí các bytes địa chỉ chẵn nhằm tăng tốc độ đọc của CPU với bộ nhớ~~.
+**Kết luận**: <u>Mục đích của việc padding dữ liệu là để các ~~khối dữ liệu~~ luôn rơi vào vị trí các bytes địa chỉ chẵn nhằm tăng tốc độ đọc của CPU với bộ nhớ</u>.
 
 
 
