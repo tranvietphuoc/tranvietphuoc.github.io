@@ -115,9 +115,9 @@ if __name__ == "__main__":
 
     # get template environment
     env = Environment(loader=FileSystemLoader(searchpath="./templates"))
-    home_template = env.get_template("home.html")
-    post_template = env.get_template("post.html")
-    tag_template = env.get_template("tags.html")
+    home_template = env.get_template(name="home.html")
+    post_template = env.get_template(name="post.html")
+    tag_template = env.get_template(name="tags.html")
 
     posts_metadata = [posts[p].metadata for p in posts]  # all posts metadata
 
@@ -131,6 +131,21 @@ if __name__ == "__main__":
 
     posts_folder = root.joinpath("posts/").resolve()
     # render all html files
-    render_home(posts_metadata, root.resolve(), tags, home_template)
-    render_posts(posts, tags, posts_folder, post_template)
-    render_tags(posts_metadata, tags, root.resolve(), tag_template)
+    render_home(
+        posts_metadata=posts_metadata,
+        render_folder=root.resolve(),
+        tags=tags,
+        template=home_template,
+    )
+    render_posts(
+        posts=posts,
+        tags=tags,
+        render_folder=posts_folder,
+        template=post_template,
+    )
+    render_tags(
+        posts_metadata=posts_metadata,
+        tags=tags,
+        render_folder=root.resolve(),
+        template=tag_template,
+    )
