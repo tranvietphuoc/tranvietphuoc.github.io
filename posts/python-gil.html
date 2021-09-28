@@ -111,7 +111,7 @@ hệ điều hành. Quá trình thực thi của các Python thread được th�
 2. Chỉ cho phép một thread chạy trong interpreter tại một thời điểm
 3. Đơn giản hóa các chi tiết ở mức low-level (VD: Quản lý  bộ nhớ, Python interpreter sẽ gọi các extensions được viết trong <code>C</code>, etc)</p>
 
-<p><img src="https://imgur.com/gallery/8SYCgGP" alt="Mô hình thực thi các thread" /></p>
+<p><img src="https://imgur.com/bJQ65QH" alt="Mô hình thực thi các thread" /></p>
 
 <pre><code>* Khi thread chạy, nó sẽ giữ GIL
 * GIL giải phóng với các tác vụ I/O
@@ -188,13 +188,13 @@ Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để dis
 <li>Thread 1 đang chạy 1 tác vụ I/O (read/write), nó có thể bị chặn. Vì thế nó releases GIL như hình sau:</li>
 </ul>
 
-<p><img src="https://imgur.com/gallery/ohoTB17" alt="I-O" /></p>
+<p><img src="https://imgur.com/ww6Utdm" alt="I-O" /></p>
 
 <ul>
 <li>Kết quả của việc releases GIL trong một signal operation.</li>
 </ul>
 
-<p><img src="https://imgur.com/gallery/oTKQAuk" alt="I-O-2" /></p>
+<p><img src="https://imgur.com/h6aKNVN" alt="I-O-2" /></p>
 
 <ul>
 <li>Được xử lý bởi thread library và hệ điều hành</li>
@@ -204,19 +204,19 @@ Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để dis
 
 <ul>
 <li><p>Thread 1 vẫn đan check.
-<img src="https://imgur.com/gallery/hH9avc9" alt="tricky" /></p></li>
+<img src="https://imgur.com/Pe7YCxu" alt="tricky" /></p></li>
 <li><p>Cả 2 thread đều sẵn sàng chạy</p></li>
 <li>Các biến điều kiện có 1 hàng chờ nội bộ.</li>
 </ul>
 
-<p><img src="https://imgur.com/gallery/PwKv78X" alt="condition-vars" /></p>
+<p><img src="https://imgur.com/svBBNn0" alt="condition-vars" /></p>
 
 <ul>
 <li>Hệ điều hành có một hàng đợi ưu tiên (<code>priority queue</code>) cho threads/processes. HĐH sẽ chạy các threads/processes với mức ưu tiên cao hơn sau khi nhận 1 tín hiệu vào hàng đợi đó.</li>
 <li>thread switching sẽ thực hiện theo hình sau:</li>
 </ul>
 
-<p><img src="https://imgur.com/gallery/Hd9zP2F" alt="thread-switching" /></p>
+<p><img src="https://imgur.com/um90Yzy" alt="thread-switching" /></p>
 
 <p>Sơ lược và vậy, bạn có thể tìm hiểu sâu hơn trong bài của bác David Beazley.</p>
 

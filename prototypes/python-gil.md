@@ -72,7 +72,7 @@ Trong GIL:
 2. Chỉ cho phép một thread chạy trong interpreter tại một thời điểm
 3. Đơn giản hóa các chi tiết ở mức low-level (VD: Quản lý  bộ nhớ, Python interpreter sẽ gọi các extensions được viết trong `C`, etc)
 
-![Mô hình thực thi các thread](https://imgur.com/gallery/8SYCgGP)
+![Mô hình thực thi các thread](https://imgur.com/bJQ65QH)
     
     * Khi thread chạy, nó sẽ giữ GIL
     * GIL giải phóng với các tác vụ I/O
@@ -144,28 +144,28 @@ Giả sử bạn đang có 2 thread:
 
 * Thread 1 đang chạy 1 tác vụ I/O (read/write), nó có thể bị chặn. Vì thế nó releases GIL như hình sau:
 
-![I-O](https://imgur.com/gallery/ohoTB17)
+![I-O](https://imgur.com/ww6Utdm)
 
 * Kết quả của việc releases GIL trong một signal operation.
 
-![I-O-2](https://imgur.com/gallery/oTKQAuk)
+![I-O-2](https://imgur.com/h6aKNVN)
 
 * Được xử lý bởi thread library và hệ điều hành
 
 **Trường hợp 1: tricky:**
 
 * Thread 1 vẫn đan check.
-![tricky](https://imgur.com/gallery/hH9avc9)
+![tricky](https://imgur.com/Pe7YCxu)
 
 * Cả 2 thread đều sẵn sàng chạy
 * Các biến điều kiện có 1 hàng chờ nội bộ.
 
-![condition-vars](https://imgur.com/gallery/PwKv78X)
+![condition-vars](https://imgur.com/svBBNn0)
 
 * Hệ điều hành có một hàng đợi ưu tiên (`priority queue`) cho threads/processes. HĐH sẽ chạy các threads/processes với mức ưu tiên cao hơn sau khi nhận 1 tín hiệu vào hàng đợi đó.
 * thread switching sẽ thực hiện theo hình sau:
 
-![thread-switching](https://imgur.com/gallery/Hd9zP2F)
+![thread-switching](https://imgur.com/um90Yzy)
 
 Sơ lược và vậy, bạn có thể tìm hiểu sâu hơn trong bài của bác David Beazley.
 
