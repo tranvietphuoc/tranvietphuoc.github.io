@@ -49,3 +49,8 @@ a:visited {
   flex-flow: row;
 
 }
+
+.post-content {
+  text-align: justify;
+
+}
