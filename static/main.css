@@ -39,6 +39,14 @@ a:visited {
   color: gray;
 }
 
+.home-page {
+  font-size: 2em;
+}
+
+.home-link {
+  text-decoration: none; color: orchid;
+}
+
 .right {
   padding-left: 10px;
 
@@ -52,5 +60,4 @@ a:visited {
 
 .post-content {
   text-align: justify;
-
-}
+,}
