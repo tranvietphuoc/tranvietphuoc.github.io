@@ -57,7 +57,10 @@ def render_home(
 
 # render posts
 def render_posts(
-    posts: dict, tags: t.Set[str], render_folder: Path, template: Template
+    posts: t.Dict[str, str],
+    tags: t.Set[str],
+    render_folder: Path,
+    template: Template,
 ):
     """Render post_metadata['name'].html file to outputs/ folder."""
 
@@ -112,6 +115,8 @@ if __name__ == "__main__":
     root = Path(__file__).parent.resolve()  # project's path
 
     posts = create_posts(root)  # get all posts in ./posts/ folder
+    # for key, value in posts.items():
+    #     print(key, value.metadata)
 
     # get template environment
     env = Environment(loader=FileSystemLoader(searchpath="./templates"))
