@@ -58,8 +58,7 @@ Tuy nhiên, không phải `Python` không có khả năng `multithreading`; `GIL
 đòi hỏi `CPU-intensive` phân phối trên nhiều `cores`.
 
 Thông thường, `GIL` ít gây ra bottleneck, bởi vì hiếm có ai dùng `Python` cho các tác vụ nặng về CPU.
-Thay vào đó người ta sẽ dùng `Python` để
-gọi các hàm hay các thư viện chuyên biệt được implemented bởi các ngôn ngữ khác như `C/C++`, `Fortran`, `Rust`,...
+Thay vào đó người ta sẽ dùng `Python` để gọi các hàm hay các thư viện chuyên biệt được implemented bởi các ngôn ngữ khác như `C/C++`, `Fortran`, `Rust`,...
 Lúc này, `Python` codes trong thread khác
 có thể được thực thi trong khi vẫn gọi hàm từ các thư viện chuyên biệt kể trên.
 
@@ -83,7 +82,12 @@ Trong GIL:
 
 Với các tác vụ CPU-Bound:
 
+* Các CPU-bound theads mà không xử lý các tác vụ I/O thì sẽ được xử lý như một trường hợp đặc biệt.
+
 * Các tác vụ CPU-bound sẽ được check mỗi 100 `**ticks**`.
+
+<img src="https://i.imgur.com/nmBzsEC.png" alt="ticks" width=400 height=200/>
+
 * Có thể thay đổi nó sử dụng `sys.setcheckinterval()` trong module `sys`.
 
 **Vậy `ticks` là giống gì?
@@ -95,9 +99,9 @@ def countdown(n):
         print(n)
         n -= 1
 ```
-
+Ticks ánh xạ tới các lệnh thực thi trong interpreter.
 Đây là những gì xảy ra trong `Python Virtual Machine`.
-Các số 2, 3, 4 tương ứng với từng dòng của hàm `countdown` đã định nghĩa ở trên.
+Các số 2, 3, 4 tương ứng với từng dòng lệnh của hàm `countdown` đã định nghĩa ở trên.
 Nhân tiện mình giới thiệu luôn module  `dis` dùng để disassembly code trong CPython.
 
     - Tick 1 sẽ từ dòng đầu tiên đến lệnh POP_JUMP_IF_FALSE
@@ -128,23 +132,39 @@ Nhân tiện mình giới thiệu luôn module  `dis` dùng để disassembly co
 
 ```
 
-**Check định kỳ (Periodic check)**
+**Check việc released/acquired lock định kỳ (Periodic check)**
+Thread đang chạy hiện tại sẽ hoạt động theo quy trình sau đây:
 
-Thread đang chạy hiện tại sẽ:
     * Reset tick counter
     * Chạy signal handlers nếu là thread chính (main thread)
     * Giải phóng GIL (Release)
     * Reacquires GIL
 
 ## * Python locks
+
 * Python interpreter chỉ có một loại khóa đơn (single lock type) được sử dụng để build các 
 thread đồng bộ hóa nguyên thủy (thread synchronization primitives)
 
-* Nó không đơn giản là `**mutex**` lock
+* Nó không đơn giản chỉ là `**mutex**` lock
 
-* Nó là một semaphore nhị phân (Binary semaphore) được dựng từ `pthread mutex` và biến điều kiện (condition variable)
+* Nó là một semaphore nhị phân (Binary semaphore) được dựng lên từ `pthread mutex` và biến điều kiện (condition variable)
 
 * GIL thực ra là một instance của loại lock này.
+
+* Phân tích locks
+    
+    * Locks chứa 3 phần:
+
+    ```
+    locked = 0   # lock status
+    mutex = pthreads_mutex()  # Lock đối với status
+    cond = pthreads_cond()  # được sử dụng để waiting/wakup
+    ```
+
+    * Đây là cách mà hàm release() và acquire() hoạt động:
+
+    <img src="https://i.imgur.com/6kpn9gA.png" alt="release-acquire" width=400 height=200 />
+
 
 ## * Thread switching.
 
@@ -175,13 +195,19 @@ Giả sử bạn đang có 2 thread:
 
 
 * Cả 2 thread đều sẵn sàng chạy
-* Các biến điều kiện có 1 hàng chờ nội bộ.
+
+* Các biến điều kiện có 1 hàng chờ nội bộ (internal wait queue)
 
 <img src="https://i.imgur.com/svBBNn0.png" alt="cond-var" width=400 height=200/>
 
 
 * Hệ điều hành có một hàng đợi ưu tiên (`priority queue`) cho threads/processes.
-HĐH sẽ chạy các threads/processes với mức ưu tiên cao hơn sau khi nhận 1 tín hiệu vào hàng đợi đó.
+
+* Các signalled threads đi vào hàng đợi đó
+
+* HĐH sẽ chạy các threads/processes với mức ưu tiên cao hơn sau khi nhận 1 tín hiệu vào hàng đợi đó.
+
+* Signalled threads là các thread mà nó sẽ không cần phải đợi để được thực thi
 
 * thread switching sẽ thực hiện theo hình sau:
 
@@ -274,8 +300,8 @@ Tác giả của Python cũng đã nói trong bài [It isn't Easy to remove the 
 Python 3 mà không có GIL thì hiệu năng lại tệ hơn Python 2 trong chương trình single-threaded. Ưu điểm lớn nhất của GIL chính là hiệu năng của chương trình
 single-threaded, cho nên GIL vẫn còn được dùng trong Python 3.
 
-Với chương trình vừa có các threads I/O bound lẫn CPU-bound thì Python buộc các threads
-giải phóng GIL <u>sau mỗi khoảng nhất định gọi là ticks</u>
+Với chương trình vừa có các threads I/O bound lẫn CPU-bound thì Python buộc các thread đang chạy phải
+giải phóng GIL cho các theads khác <u>sau mỗi khoảng nhất định gọi là ticks</u>. Cơ chế của `ticks` cũng đã được trình bày ở trên.
 
 # 7. Cách làm việc với GIL.
 Nếu bắt buộc phải làm việc multi-threaded trên Python, bạn nên:
