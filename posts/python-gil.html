@@ -88,23 +88,26 @@ print(f"thread {thread_end - thread_start}")
 <li>hiệu năng nếu 1 CPU bị disabled: 2 threads: 11.3s; 4 threads: 11.6s (Nhanh hơn ~35% nếu so với chạy threads trên cả 4 nhân)</li>
 </ul>
 
-<p><strong>Vì sao?</strong></p>
+<p><strong>Vì sao lại có sự khác biệt trên?</strong></p>
 
-<p>Như bạn đã biết <code>CPython</code> được implemented bằng <code>C</code> và <code>Python</code>. <code>CPython</code> là một <em>compiler</em> lẫn <em>interpreter</em>. Đầu tiên nó sẽ biên dịch
-<code>Python</code> code sang dạng <code>bytecode</code>, sau đó nó sẽ thông dịch các mã <code>bytecode</code> đã được biên dịch sẵn.
-Tuy nhiên, không phải <code>Python</code> không có khả năng <code>multithreading</code>; <code>GIL</code> cũng không có nghĩa <code>CPython</code> không phù hợp cho các tác vụ đòi hỏi
-<code>CPU-intensive</code> phân phối trên nhiều <code>cores</code>.</p>
+<p>Như bạn đã biết <code>CPython</code> được implemented bằng <code>C</code> và <code>Python</code>. <code>CPython</code> là một <em>compiler</em> lẫn <em>interpreter</em>.
+Đầu tiên nó sẽ biên dịch <code>Python</code> code sang dạng <code>bytecode</code>, sau đó nó sẽ thông dịch các mã <code>bytecode</code> đã được biên dịch sẵn.
+Tuy nhiên, không phải <code>Python</code> không có khả năng <code>multithreading</code>; <code>GIL</code> cũng không có nghĩa <code>CPython</code> không phù hợp cho các tác vụ
+đòi hỏi <code>CPU-intensive</code> phân phối trên nhiều <code>cores</code>.</p>
 
-<p>Thông thường, <code>GIL</code> ít gây ra bottleneck, bởi vì hiếm có ai dùng <code>Python</code> cho các tác vụ nặng về CPU. Thay vào đó người ta sẽ dùng <code>Python</code> để
-gọi các hàm hay các thư viện chuyên biệt được implemented bởi các ngôn ngữ khác như <code>C/C++</code>, <code>Fortran</code>, <code>Rust</code>,... Lúc này, <code>Python</code> codes trong thread khác
+<p>Thông thường, <code>GIL</code> ít gây ra bottleneck, bởi vì hiếm có ai dùng <code>Python</code> cho các tác vụ nặng về CPU.
+Thay vào đó người ta sẽ dùng <code>Python</code> để
+gọi các hàm hay các thư viện chuyên biệt được implemented bởi các ngôn ngữ khác như <code>C/C++</code>, <code>Fortran</code>, <code>Rust</code>,...
+Lúc này, <code>Python</code> codes trong thread khác
 có thể được thực thi trong khi vẫn gọi hàm từ các thư viện chuyên biệt kể trên.</p>
 
 <p>Lang man cũng nhiều rồi, giờ ta sẽ vào phần chính...</p>
 
 <h2>* Python threads và GIL.</h2>
 
-<p><code>Python threads</code>, cũng giống như system threads (<code>POSIX threads</code> hay còn gọi là pthreads, và <code>windows threads</code>). Các Python threads được quản lý hoàn toàn bởi
-hệ điều hành. Quá trình thực thi của các Python thread được thực hiện bởi trình thông dịch Python.</p>
+<p><code>Python threads</code>, cũng giống như system threads (<code>POSIX threads</code> hay còn gọi là pthreads, và <code>windows threads</code>).
+Các Python threads được quản lý hoàn toàn bởi hệ điều hành.
+Quá trình thực thi của các Python thread được thực hiện bởi trình thông dịch Python.</p>
 
 <p>Trong GIL:
 1. Thực thi song song (parallel) bị cấm
@@ -132,11 +135,13 @@ Chúng ta sẽ xét ví dụ sau:</p>
 
 <p>Đây là những gì xảy ra trong <code>Python Virtual Machine</code>.
 Các số 2, 3, 4 là số dòng trên hàm <code>countdown</code> đã định nghĩa ở trên.
-Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để disassembly code trong CPython.
-    * <em>Tick 1</em> sẽ từ dòng đầu tiên đến lệnh <strong>POP_JUMP_IF_FALSE</strong>
-    * <em>Tick 2</em> chạy từ lệnh <strong>LOAD_GLOBAL</strong>
-    * <em>Tick 3</em> sẽ chạy từ lệnh <strong>INPLACE_SUBTRACT</strong>
-    * <em>Tick 4</em> sẽ từ <strong>JUMP_ABSOLUTE</strong> trở xuống.</p>
+Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để disassembly code trong CPython.</p>
+
+<pre><code>* *Tick 1* sẽ từ dòng đầu tiên đến lệnh **POP_JUMP_IF_FALSE**
+* *Tick 2* chạy từ lệnh **LOAD_GLOBAL**
+* *Tick 3* sẽ chạy từ lệnh **INPLACE_SUBTRACT**
+* *Tick 4* sẽ từ **JUMP_ABSOLUTE** trở xuống.
+</code></pre>
 
 <pre><code>&gt;&gt;&gt; import dis
 &gt;&gt;&gt; dis.dis(countdown)
@@ -160,8 +165,9 @@ Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để dis
 
 </code></pre>
 
-<p><strong>Check định kỳ (Periodic check)</strong>
-* Thread đang chạy hiện tại sẽ:
+<p><strong>Check định kỳ (Periodic check)</strong></p>
+
+<p>Thread đang chạy hiện tại sẽ:
     * Reset tick counter
     * Chạy signal handlers nếu là thread chính (main thread)
     * Giải phóng GIL (Release)
@@ -170,17 +176,21 @@ Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để dis
 <h2>* Python locks</h2>
 
 <ul>
-<li>Python interpreter chỉ có một loại khóa đơn (single lock type) được sử dụng để build các thread đồng bộ hóa nguyên thủy (thread synchronization primitives)</li>
-<li>Nó không đơn giản là <code>**mutex**</code> lock</li>
-<li>Nó là một semaphore nhị phân (Binary semaphore) được dựng từ <code>pthread mutex</code> và biến điều kiện (condition variable)</li>
-<li>GIL thực ra là một instance của loại lock này.</li>
+<li><p>Python interpreter chỉ có một loại khóa đơn (single lock type) được sử dụng để build các 
+thread đồng bộ hóa nguyên thủy (thread synchronization primitives)</p></li>
+<li><p>Nó không đơn giản là <code>**mutex**</code> lock</p></li>
+<li><p>Nó là một semaphore nhị phân (Binary semaphore) được dựng từ <code>pthread mutex</code> và biến điều kiện (condition variable)</p></li>
+<li><p>GIL thực ra là một instance của loại lock này.</p></li>
 </ul>
 
 <h2>* Thread switching.</h2>
 
-<p>Giả sử bạn đang có 2 thread:
-* Thread 1 đang chạy
-* Thread 2 sẵn sàng chạy (đang chờ GIL)</p>
+<p>Giả sử bạn đang có 2 thread:</p>
+
+<ul>
+<li><p>Thread 1 đang chạy</p></li>
+<li><p>Thread 2 sẵn sàng chạy (đang chờ GIL)</p></li>
+</ul>
 
 <p><strong>Trường hợp 1: đơn giản:</strong></p>
 
@@ -216,8 +226,9 @@ Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để dis
 <p><img src="https://i.imgur.com/svBBNn0.png" alt="cond-var" width=400 height=200/></p>
 
 <ul>
-<li>Hệ điều hành có một hàng đợi ưu tiên (<code>priority queue</code>) cho threads/processes. HĐH sẽ chạy các threads/processes với mức ưu tiên cao hơn sau khi nhận 1 tín hiệu vào hàng đợi đó.</li>
-<li>thread switching sẽ thực hiện theo hình sau:</li>
+<li><p>Hệ điều hành có một hàng đợi ưu tiên (<code>priority queue</code>) cho threads/processes.
+HĐH sẽ chạy các threads/processes với mức ưu tiên cao hơn sau khi nhận 1 tín hiệu vào hàng đợi đó.</p></li>
+<li><p>thread switching sẽ thực hiện theo hình sau:</p></li>
 </ul>
 
 <p><img src="https://i.imgur.com/um90Yzy.png" alt="thread-switching" width=400 height=200 /></p>
@@ -226,9 +237,10 @@ Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để dis
 
 <h1>3. GIL đã giải quyết những vấn đề gì?</h1>
 
-<p>Python sử dụng reference counting để quản lý bộ nhớ. Phần này mình sẽ trình bài ở bài sau. Tạm hiểu là các đối tượng được tạo trong Python
-có một thuộc tính reference count, thuộc tính này giúp interpreter theo dõi số references trỏ tới đối tượng.
-Khi thuộc tính này về 0, vùng nhớ được chiếm bởi đối tượng sẽ được giải phóng.</p>
+<p>Python sử dụng reference counting để quản lý bộ nhớ. Phần này mình sẽ trình bài ở bài sau.
+Tạm hiểu là các đối tượng được tạo trong Pythoncó một thuộc tính reference count,
+thuộc tính này giúp interpreter theo dõi số references trỏ tới đối tượng. Khi thuộc tính này về 0,
+vùng nhớ được chiếm bởi đối tượng sẽ được released.</p>
 
 <p>VD:</p>
 
@@ -240,51 +252,64 @@ Khi thuộc tính này về 0, vùng nhớ được chiếm bởi đối tượn
 </code></pre>
 
 <ul>
-<li><p>Với GIL. Vấn đề ở đây là cái reference counting ở trên phải được bảo vệ khỏi <code>race condition</code> - một cơn ác mộng trong parallel programming, khi 2 hay nhiều threads tăng hay giảm giá trị của nó một cách đồng thời.
-Nếu điều này xảy ra, nó có thể gây <code>leaked memory</code>, và object đó sẽ không bao giờ được released, hoặc tệ hơn là nó được released trong khi vẫn còn các reference counting khác.
-Nó sẽ gây <em>crashed</em> chương trình hoặc undefined behavior. Cái này bạn nào code C/C++ làm việc với con trỏ sẽ rõ nó đau đầu ra sao :)</p></li>
-<li><p>Vấn đề này có thể được giải quyết bằng việc thêm locks vào tất cả các cấu trúc dữ liệu mà nó được shared giữa các threads. Tuy nhiên, thêm locks
-vào những object hay nhóm các object có nghĩa nhiều locks sẽ tồn tại - gây ra một cơn đau đầu khác <code>**Deadlocks**</code> (deadlocks có thể chỉ xảy ra nếu có nhiều hơn 1 lock)
+<li><p>Với GIL. Vấn đề ở đây là cái reference counting ở trên phải được bảo vệ khỏi <code>race condition</code>, 
+một cơn ác mộng trong parallel programming, khi 2 hay nhiều threads tăng hay giảm giá trị của nó một cách đồng thời.
+Nếu điều này xảy ra, nó có thể gây <code>leaked memory</code>, và object đó sẽ không bao giờ được released,
+hoặc tệ hơn là nó được released trong khi vẫn còn các reference counting khác. Nó sẽ gây <em>crashed</em> chương trình
+hoặc undefined behavior. Cái này bạn nào code C/C++ làm việc với con trỏ sẽ rõ nó đau đầu ra sao :)</p></li>
+<li><p>Vấn đề này có thể được giải quyết bằng việc thêm locks vào tất cả các cấu trúc dữ liệu mà nó được shared giữa các threads.
+Tuy nhiên, thêm locks vào những object hay nhóm các object có nghĩa nhiều locks sẽ tồn tại - gây ra một cơn đau đầu khác <code>**Deadlocks**</code> (deadlocks có thể chỉ xảy ra nếu có nhiều hơn 1 lock)
 Một side effect khác sẽ làm giảm performance bằng việc lặp lại acquisition và release các locks</p></li>
-<li><p>Như đã nói sơ qua ở trên. GIL là một khóa đơn trên interpreter, nó thêm một rule thực thi là Python bytecode yêu cầu cung cấp interpreter lock.
-Điều này sẽ chống được deadlocks mà không cải thiện được nhiều hiệu suất chương trình.
-Nhưng những chương trình đòi hỏi các tác vụ CPU-bound đơn luồng (single threaded) lại hoạt động hiệu quả. Như ví dụ đầu bài.</p></li>
+<li><p>Như đã nói sơ qua ở trên. GIL là một khóa đơn trên interpreter, nó thêm một rule thực thi là
+Python bytecode yêu cầu cung cấp interpreter lock. Điều này sẽ chống được deadlocks
+mà không cải thiện được nhiều hiệu suất chương trình.
+Nhưng những chương trình đòi hỏi các tác vụ CPU-bound đơn luồng (single threaded) lại hoạt động hiệu quả.
+Như ví dụ đầu bài.</p></li>
 <li><p>GIL mặc dù được sử dụng trong các ngôn ngữ thông dịch khác như Ruby không chỉ giải quyết vấn đề trên. vài ngôn ngữ chống lại yêu cầu của GIL cho các
 thread-safe memory management bằng việc dùng các cách tiếp cận khác như garbage collection.</p></li>
-<li>Mặc khác, vài ngôn ngữ có một sự đền bù cho việc vắng mặt hiệu năng đơn luồng của GIL bằng việc sử dụng các tính năng khác như JIT</li>
+<li><p>Mặc khác, vài ngôn ngữ có một sự đền bù cho việc vắng mặt hiệu năng đơn luồng của GIL bằng việc sử dụng các tính năng khác như JIT</p></li>
 </ul>
 
 <h1>4. Tại sao GIL được chọn để giải quyết vấn đề?</h1>
 
 <p>Chính quyết định chọn GIL là một trong những thứ làm cho Python cực kì phổ biến ngày nay.
-Python đã có từ thời máy tính và hệ điều hành còn chưa có khái niệm thread. Python được thiết kế để dễ sử dụng và nhanh chóng để phát triển ứng dụng.
-Nhiều extensions đang được viết cho các thư viện <code>C</code> đã tồn tại các tính năng cần thiết trong Python. Để chống lại các sự thay đổi không nhất quán,
-các C extensions được yêu cầu quản lý bộ nhớ kiểu thread-safe mà GIL đã cung cấp.</p>
+Python đã có từ thời máy tính và hệ điều hành còn chưa có khái niệm thread. Python được thiết kế để dễ sử dụng
+và nhanh chóng để phát triển ứng dụng. Nhiều extensions đang được viết cho các thư viện <code>C</code> đã tồn tại các tính năng cần thiết
+trong Python. Để chống lại các sự thay đổi không nhất quán, các C extensions được yêu cầu quản lý bộ nhớ kiểu thread-safe mà GIL đã cung cấp.</p>
 
 <p>GIL giúp tăng hiệu năng với các chương trình đơn luồng, nơi mà chỉ cần 1 lock để quản lý.</p>
 
-<p>Các thư viện <code>C</code> mà không phải thread-safe đã trở nên dễ dàng tích hợp. Và các C extensions đã trở thành một trong các lý do Python dễ dàng thích nghi bởi nhiều cộng đồng khác nhau</p>
+<p>Các thư viện <code>C</code> mà không phải thread-safe đã trở nên dễ dàng tích hợp.
+Và các C extensions đã trở thành một trong các lý do Python dễ dàng thích nghi bởi nhiều cộng đồng khác nhau</p>
 
-<p>Cho nên, GIL không phải 1 điểm yếu. Nó là một giải pháp thực tiễn cho các vấn đề khó mà các <code>CPython</code> developers đã đối mặt trong quá khứ.</p>
+<p>Cho nên, GIL không phải 1 điểm yếu. Nó là một giải pháp thực tiễn cho các vấn đề khó mà các <code>CPython</code> developers đã đối mặt
+trong quá khứ.</p>
 
 <h1>5. Tác động đến chương trình multi-threaded</h1>
 
-<p>Trở lại với ví dụ đầu bài. Khi chạy single-thread, comment out tất cả dòng code bên dưới, chương trình sẽ in ra <code>Time taken in seconds - 6.20024037361145</code>
+<p>Trở lại với ví dụ đầu bài. Khi chạy single-thread, comment out tất cả dòng code bên dưới,
+chương trình sẽ in ra <code>Time taken in seconds - 6.20024037361145</code>
 Sau đó, comment out đoạn code ở trên phần multi-threaded, chương trình sẽ in ra <code>Time taken in seconds - 6.924342632293701</code></p>
 
-<p>Như bạn đã thấy đó, thời gian khá tương đồng ở hai phiên bản. Trong phiên bản multi-threaded, GIL chống lại các CPU-bound threads thực thi song song.</p>
+<p>Như bạn đã thấy đó, thời gian khá tương đồng ở hai phiên bản. Trong phiên bản multi-threaded,
+GIL chống lại các CPU-bound threads thực thi song song.</p>
 
-<p>GIL không tác động nhiều trên hiệu năng của các chương trình I/O-bound multi-threaded như khóa được shared giữa các threads trong khi chờ I/O như cách hoạt động của GIL mình đã trình bày ở trên
-Đối với các chương trình mà toàn là các CPU-bound threads, eg: chương trình xử lý ảnh,.. sẽ trở thành single threaded do lock. Nhưng cũng sẽ thấy thời gian thực thi tăng.</p>
+<p>GIL không tác động nhiều trên hiệu năng của các chương trình I/O-bound multi-threaded
+như lock được shared giữa các threads trong khi chờ I/O như cách hoạt động của GIL mình đã trình bày ở trên
+Đối với các chương trình mà toàn là các CPU-bound threads, eg: chương trình xử lý ảnh,..
+sẽ trở thành single threaded do lock. Nhưng cũng sẽ thấy thời gian thực thi tăng.</p>
 
 <p>Sự tăng lên này là kết quả của việc acquire và release tài nguyên liên tục giữa các thread được thêm vào bởi lock.</p>
 
 <h1>6. Vậy, tại sao GIL vẫn còn tồn tại ở CPython?</h1>
 
-<p>Bạn có thể thấy, hầu hết các diễn đàn về Python đều phàn nàn về GIL trong Python. Tuy nhiên các Python developers phải cân nhắc kỹ lưỡng rằng một ngôn ngữ phổ biến như Python nếu có một sự thay đổi lớn
+<p>Bạn có thể thấy, hầu hết các diễn đàn về Python đều phàn nàn về GIL trong Python.
+Tuy nhiên các Python developers phải cân nhắc kỹ lưỡng rằng một ngôn ngữ phổ biến như Python nếu có một sự thay đổi lớn
 như việc remove GIL ra khỏi interpreter như vậy có gây ra các vấn đề tương thích ngược hay không.</p>
 
-<p>Rõ ràng là GIL không thể bị loại bỏ khỏi CPython, sự cố gắng này của các nhà nghiên cứu và phát triển Python đã được thực hiện nhiều lần trong quá khứ rồi, bởi ai mà không muốn một tính năng tốt hơn phải không :D
+<p>Rõ ràng là GIL không thể bị loại bỏ khỏi CPython,
+sự cố gắng này của các nhà nghiên cứu và phát triển Python đã được thực hiện nhiều lần trong quá khứ rồi,
+bởi ai mà không muốn một tính năng tốt hơn phải không :D
 tuy nhiên nó đã phá vỡ các C extensions phụ thuộc rất lớn vào giải pháp của GIL cung cấp trước đó.</p>
 
 <p>Dù GIL đã xử lý rất tốt các vấn đề, nhưng vài trong số chúng cũng giảm hiệu năng của các chương trình single-threaded và multi-threaded I/O-bound.</p>
@@ -294,7 +319,8 @@ tuy nhiên nó đã phá vỡ các C extensions phụ thuộc rất lớn vào g
 <p>Python 3 mà không có GIL thì hiệu năng lại tệ hơn Python 2 trong chương trình single-threaded. Ưu điểm lớn nhất của GIL chính là hiệu năng của chương trình
 single-threaded, cho nên GIL vẫn còn được dùng trong Python 3.</p>
 
-<p>Với chương trình vừa có các threads I/O bound lẫn CPU-bound thì Python ép các threads giải phóng GIL <u>sau mỗi khoảng nhất định gọi là tick</u></p>
+<p>Với chương trình vừa có các threads I/O bound lẫn CPU-bound thì Python buộc các threads
+giải phóng GIL <u>sau mỗi khoảng nhất định gọi là ticks</u></p>
 
 <h1>7. Cách làm việc với GIL.</h1>
 
@@ -306,7 +332,7 @@ single-threaded, cho nên GIL vẫn còn được dùng trong Python 3.</p>
 <li>và chờ... :D</li>
 </ul>
 
-<p>Bài viết này hơi dài và lang mang. Mình xin kết bài ở đây.
+<p>Bài viết này hơi dài và lang mang rồi. Mình xin kết bài ở đây.
 Nguồn: <a href="http://www.dabeaz.com/">David Beazley,</a> và <a href="https://realpython.com/">realpython</a>.</p>
 
 </p>
