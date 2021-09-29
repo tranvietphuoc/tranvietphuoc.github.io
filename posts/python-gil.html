@@ -109,10 +109,13 @@ có thể được thực thi trong khi vẫn gọi hàm từ các thư viện c
 Các Python threads được quản lý hoàn toàn bởi hệ điều hành.
 Quá trình thực thi của các Python thread được thực hiện bởi trình thông dịch Python.</p>
 
-<p>Trong GIL:
-1. Thực thi song song (parallel) bị cấm
-2. Chỉ cho phép một thread chạy trong interpreter tại một thời điểm
-3. Đơn giản hóa các chi tiết ở mức low-level (VD: Quản lý  bộ nhớ, Python interpreter sẽ gọi các extensions được viết trong <code>C</code>, etc)</p>
+<p>Trong GIL:</p>
+
+<ol>
+<li>Thực thi song song (parallel) bị cấm</li>
+<li>Chỉ cho phép một thread chạy trong interpreter tại một thời điểm</li>
+<li>Đơn giản hóa các chi tiết ở mức low-level (VD: Quản lý  bộ nhớ, Python interpreter sẽ gọi các extensions được viết trong <code>C</code>, etc)</li>
+</ol>
 
 <p><img src="https://i.imgur.com/bJQ65QH.png" alt="Mô hình thực thi các thread" width=400 height=200/></p>
 
@@ -120,9 +123,12 @@ Quá trình thực thi của các Python thread được thực hiện bởi tr�
 * GIL giải phóng với các tác vụ I/O
 </code></pre>
 
-<p>Với các tác vụ CPU-Bound:
-* Các tác vụ CPU-bound sẽ được check mỗi 100 <code>**ticks**</code>.
-* Có thể thay đổi nó sử dụng <code>sys.setcheckinterval()</code> trong module <code>sys</code>.</p>
+<p>Với các tác vụ CPU-Bound:</p>
+
+<ul>
+<li>Các tác vụ CPU-bound sẽ được check mỗi 100 <code>**ticks**</code>.</li>
+<li>Có thể thay đổi nó sử dụng <code>sys.setcheckinterval()</code> trong module <code>sys</code>.</li>
+</ul>
 
 <p>**Vậy <code>ticks</code> là giống gì?
 Chúng ta sẽ xét ví dụ sau:</p>

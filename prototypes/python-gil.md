@@ -71,6 +71,7 @@ Các Python threads được quản lý hoàn toàn bởi hệ điều hành.
 Quá trình thực thi của các Python thread được thực hiện bởi trình thông dịch Python.
 
 Trong GIL:
+
 1. Thực thi song song (parallel) bị cấm
 2. Chỉ cho phép một thread chạy trong interpreter tại một thời điểm
 3. Đơn giản hóa các chi tiết ở mức low-level (VD: Quản lý  bộ nhớ, Python interpreter sẽ gọi các extensions được viết trong `C`, etc)
@@ -81,6 +82,7 @@ Trong GIL:
     * GIL giải phóng với các tác vụ I/O
 
 Với các tác vụ CPU-Bound:
+
 * Các tác vụ CPU-bound sẽ được check mỗi 100 `**ticks**`.
 * Có thể thay đổi nó sử dụng `sys.setcheckinterval()` trong module `sys`.
 
