@@ -280,7 +280,7 @@ Nếu bắt buộc phải làm việc multi-threaded trên Python, bạn nên:
 
 * dùng **multiprocessing** thay vì *multithreading*
 * dùng một interpreter khác `CPython` như `PyPy`, `JPython`,...
-* và chờ... :D
+* và chờ...những thay đổi mới từ `Python` :D
 
 Bài viết này hơi dài và lang mang rồi. Mình xin kết bài ở đây.
 Nguồn: [David Beazley,](http://www.dabeaz.com/) và [realpython](https://realpython.com/).
