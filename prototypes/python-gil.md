@@ -97,13 +97,13 @@ def countdown(n):
 ```
 
 Đây là những gì xảy ra trong `Python Virtual Machine`.
-Các số 2, 3, 4 là số dòng trên hàm `countdown` đã định nghĩa ở trên.
+Các số 2, 3, 4 tương ứng với từng dòng của hàm `countdown` đã định nghĩa ở trên.
 Nhân tiện mình giới thiệu luôn module  `dis` dùng để disassembly code trong CPython.
 
-    * *Tick 1* sẽ từ dòng đầu tiên đến lệnh **POP_JUMP_IF_FALSE**
-    * *Tick 2* chạy từ lệnh **LOAD_GLOBAL**
-    * *Tick 3* sẽ chạy từ lệnh **INPLACE_SUBTRACT**
-    * *Tick 4* sẽ từ **JUMP_ABSOLUTE** trở xuống.
+    - Tick 1 sẽ từ dòng đầu tiên đến lệnh POP_JUMP_IF_FALSE
+    - Tick 2 chạy từ lệnh LOAD_GLOBAL
+    - Tick 3 sẽ chạy từ lệnh INPLACE_SUBTRACT
+    - Tick 4 sẽ từ JUMP_ABSOLUTE trở xuống.
 
 ```python
 >>> import dis

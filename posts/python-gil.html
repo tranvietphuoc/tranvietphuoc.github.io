@@ -140,13 +140,13 @@ Chúng ta sẽ xét ví dụ sau:</p>
 </code></pre>
 
 <p>Đây là những gì xảy ra trong <code>Python Virtual Machine</code>.
-Các số 2, 3, 4 là số dòng trên hàm <code>countdown</code> đã định nghĩa ở trên.
+Các số 2, 3, 4 tương ứng với từng dòng của hàm <code>countdown</code> đã định nghĩa ở trên.
 Nhân tiện mình giới thiệu luôn module  <code>dis</code> dùng để disassembly code trong CPython.</p>
 
-<pre><code>* *Tick 1* sẽ từ dòng đầu tiên đến lệnh **POP_JUMP_IF_FALSE**
-* *Tick 2* chạy từ lệnh **LOAD_GLOBAL**
-* *Tick 3* sẽ chạy từ lệnh **INPLACE_SUBTRACT**
-* *Tick 4* sẽ từ **JUMP_ABSOLUTE** trở xuống.
+<pre><code>- Tick 1 sẽ từ dòng đầu tiên đến lệnh POP_JUMP_IF_FALSE
+- Tick 2 chạy từ lệnh LOAD_GLOBAL
+- Tick 3 sẽ chạy từ lệnh INPLACE_SUBTRACT
+- Tick 4 sẽ từ JUMP_ABSOLUTE trở xuống.
 </code></pre>
 
 <pre><code>&gt;&gt;&gt; import dis
