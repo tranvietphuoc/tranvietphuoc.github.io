@@ -106,7 +106,9 @@ def render_tags(
         tag_html = template.render(posts=value, tag=key)
 
         tag_path = (
-            render_folder.joinpath("tags").joinpath(f"{key}.html").resolve()
+            render_folder.joinpath("tags")
+            .joinpath(f"{key.lower()}.html")
+            .resolve()
         )
         with open(tag_path, "w") as f:
             f.write(tag_html)
