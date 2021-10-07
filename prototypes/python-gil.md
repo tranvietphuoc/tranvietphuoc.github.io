@@ -10,7 +10,7 @@ Nói đơn giản, Python GIL là một [mutex](https://en.wikipedia.org/wiki/Mu
 điều khiển Python Interpreter tại một thời điểm
 
 Điều này có nghĩa chỉ một *thread* có thể xử lý `Python` bytecode tại một thời điểm, cho đến khi thread đó thực hiện xong.
-Với các developer không quan tâm tới lập trình đa luồng thì GIL không có ảnh hưởng gì mấy. Nhưng nó sẽ là một nút cổ chai kinh khủng
+Với các developer không quan tâm tới lập trình đa luồng thì GIL không có ảnh hưởng gì mấy. Nhưng nó sẽ trở thành một nút cổ chai
 đối với hiệu năng đa luồng hoặc các tác vụ đòi hỏi nặng về `CPU-bound`.
 
 **Trong bài này, mình sẽ trình bày cơ chế hoạt động của GIL cũng như những ảnh hưởng của nó đối với một chương trình chạy bằng `Python`**
@@ -33,6 +33,7 @@ countdown(100000000)
 end = time.perf_counter()
 print(f"single {end - start}")
 
+# multithread
 thread_start = time.perf_counter()
 t1 = Thread(target=countdown, args=(100_000_000//2,))
 t2 = Thread(target=countdown, args=(100_000_00//2),))
@@ -46,7 +47,7 @@ print(f"thread {thread_end - thread_start}")
 
 
 ```
-* hiệu năng trên máy MacPro 4 nhân: chạy tuần tự: 7.8s; threaded (2 threads): 15.4s
+* hiệu năng trên máy MacPro 4 nhân: chạy tuần tự (comment đoạn code sau mulitithread): 7.8s; threaded (2 threads): 15.4s (comment code trước multithread).
 * hiệu năng nếu chạy trên 4 threads: 15.7s
 * hiệu năng nếu 1 CPU bị disabled: 2 threads: 11.3s; 4 threads: 11.6s (Nhanh hơn ~35% nếu so với chạy threads trên cả 4 nhân)
 
@@ -54,7 +55,7 @@ print(f"thread {thread_end - thread_start}")
 
 Như bạn đã biết `CPython` được implemented bằng `C` và `Python`. `CPython` là một *compiler* lẫn *interpreter*.
 Đầu tiên nó sẽ biên dịch `Python` code sang dạng `bytecode`, sau đó nó sẽ thông dịch các mã `bytecode` đã được biên dịch sẵn.
-Tuy nhiên, không phải `Python` không có khả năng `multithreading`; `GIL` cũng không có nghĩa `CPython` không phù hợp cho các tác vụ
+Không phải `Python` không có khả năng `multithreading`;`CPython` sử dụng `GIL` cũng không có nghĩa `CPython` không phù hợp cho các tác vụ
 đòi hỏi `CPU-intensive` phân phối trên nhiều `cores`.
 
 Thông thường, `GIL` ít gây ra bottleneck, bởi vì hiếm có ai dùng `Python` cho các tác vụ nặng về CPU.
@@ -62,25 +63,30 @@ Thay vào đó người ta sẽ dùng `Python` để gọi các hàm hay các th
 Lúc này, `Python` codes trong thread khác
 có thể được thực thi trong khi vẫn gọi hàm từ các thư viện chuyên biệt kể trên.
 
-Lang man cũng nhiều rồi, giờ ta sẽ vào phần chính...
+Lang man cũng nhiều rồi, giờ ta sẽ vào phần chính.
 
 ## * Python threads và GIL.
 `Python threads`, cũng giống như system threads (`POSIX threads` hay còn gọi là pthreads, và `windows threads`).
 Các Python threads được quản lý hoàn toàn bởi hệ điều hành.
-Quá trình thực thi của các Python thread được thực hiện bởi trình thông dịch Python.
+Quá trình thực thi của các Python thread được thực hiện bởi Python interpreter.
 
 Trong GIL:
 
-1. Thực thi song song (parallel) bị cấm
-2. Chỉ cho phép một thread chạy trong interpreter tại một thời điểm
-3. Đơn giản hóa các chi tiết ở mức low-level (VD: Quản lý  bộ nhớ, Python interpreter sẽ gọi các extensions được viết trong `C`, etc)
+1. Chạy song song (parallel) hay nhiều threads đồng thời bị cấm.
+2. Có một lock chung (global) cho tất cả các threads.
+3. Chỉ cho phép một thread chạy trong interpreter tại một thời điểm.
+4. Đơn giản hóa các chi tiết ở mức low-level (VD: Quản lý  bộ nhớ, Python interpreter sẽ gọi các extensions được viết trong `C`, etc).
+
+**=>Mô hình chạy các threads trong Python.**
+
 
 <img src="https://i.imgur.com/bJQ65QH.png" alt="Mô hình thực thi các thread" width=400 height=200/>
-    
-    * Khi thread chạy, nó sẽ giữ GIL
-    * GIL giải phóng với các tác vụ I/O
 
-Với các tác vụ CPU-Bound:
+    * Với GIL, bạn sẽ có được khả năng coperative multitasking.   
+    * Khi thread chạy, nó sẽ giữ GIL
+    * GIL giải phóng khi gặp các tác vụ I/O
+
+**Với các tác vụ CPU-Bound:**
 
 * Các CPU-bound theads mà không xử lý các tác vụ I/O thì sẽ được xử lý như một trường hợp đặc biệt.
 
@@ -88,9 +94,10 @@ Với các tác vụ CPU-Bound:
 
 <img src="https://i.imgur.com/nmBzsEC.png" alt="ticks" width=400 height=200/>
 
-* Có thể thay đổi nó sử dụng `sys.setcheckinterval()` trong module `sys`.
+* Có thể thay đổi nó bằng việc sử dụng hàm sử dụng `sys.setcheckinterval()` trong module `sys`.
 
-**Vậy `ticks` là giống gì?
+**Vậy `ticks` là giống gì?**
+
 Chúng ta sẽ xét ví dụ sau:
 
 ```python
@@ -99,6 +106,7 @@ def countdown(n):
         print(n)
         n -= 1
 ```
+
 Ticks ánh xạ tới các lệnh thực thi trong interpreter.
 Đây là những gì xảy ra trong `Python Virtual Machine`.
 Các số 2, 3, 4 tương ứng với từng dòng lệnh của hàm `countdown` đã định nghĩa ở trên.
@@ -145,7 +153,7 @@ Thread đang chạy hiện tại sẽ hoạt động theo quy trình sau đây:
 * Python interpreter chỉ có một loại khóa đơn (single lock type) được sử dụng để build các 
 thread đồng bộ hóa nguyên thủy (thread synchronization primitives)
 
-* Nó không đơn giản chỉ là `**mutex**` lock
+* Nó không chỉ đơn giản là `**mutex**` lock
 
 * Nó là một semaphore nhị phân (Binary semaphore) được dựng lên từ `pthread mutex` và biến điều kiện (condition variable)
 
@@ -174,7 +182,7 @@ Giả sử bạn đang có 2 thread:
 
 * Thread 2 sẵn sàng chạy (đang chờ GIL)
 
-**Trường hợp 1: đơn giản:**
+**Trường hợp 1 - đơn giản:**
 
 * Thread 1 đang chạy 1 tác vụ I/O (read/write), nó có thể bị chặn. Vì thế nó releases GIL như hình sau.
 
@@ -187,9 +195,9 @@ Giả sử bạn đang có 2 thread:
 
 * Được xử lý bởi thread library và hệ điều hành
 
-**Trường hợp 1: tricky:**
+**Trường hợp 2 - tricky:**
 
-* Thread 1 vẫn đan check.
+* Thread 1 vẫn đang check.
 
 <img src="https://i.imgur.com/ww6Utdm.png" alt="thread" width=400 height=200/>
 
@@ -216,8 +224,9 @@ Giả sử bạn đang có 2 thread:
 Sơ lược và vậy, bạn có thể tìm hiểu sâu hơn trong bài của bác David Beazley.
 
 # 3. GIL đã giải quyết những vấn đề gì?
+
 Python sử dụng reference counting để quản lý bộ nhớ. Phần này mình sẽ trình bài ở bài sau.
-Tạm hiểu là các đối tượng được tạo trong Pythoncó một thuộc tính reference count,
+Tạm hiểu là các đối tượng được tạo trong Python có một thuộc tính gọi là `reference count`,
 thuộc tính này giúp interpreter theo dõi số references trỏ tới đối tượng. Khi thuộc tính này về 0,
 vùng nhớ được chiếm bởi đối tượng sẽ được released.
 
@@ -231,26 +240,27 @@ VD:
 3
 ```
 
-* Với GIL. Vấn đề ở đây là cái reference counting ở trên phải được bảo vệ khỏi `race condition`, 
-một cơn ác mộng trong parallel programming, khi 2 hay nhiều threads tăng hay giảm giá trị của nó một cách đồng thời.
-Nếu điều này xảy ra, nó có thể gây `leaked memory`, và object đó sẽ không bao giờ được released,
-hoặc tệ hơn là nó được released trong khi vẫn còn các reference counting khác. Nó sẽ gây *crashed* chương trình
-hoặc undefined behavior. Cái này bạn nào code C/C++ làm việc với con trỏ sẽ rõ nó đau đầu ra sao :)
+* Trởi lại với GIL. Vấn đề ở đây là cái reference counting ở trên phải được bảo vệ khỏi `race condition`, 
+khi mà 2 hay nhiều threads tăng hay giảm giá trị của nó một cách đồng thời.
+Nếu điều này xảy ra, nó có thể gây `leaked memory` do không được released, hoặc object đó sẽ không bao giờ được released,
+hoặc tệ hơn là nó được released trong khi vẫn còn các reference counting khác. Điều này sẽ gây ra các undefined behaviors,
+hoặc tệ hơn là crash chương trình. Cái này bạn nào code C/C++ làm việc với con trỏ sẽ rõ nó đau đầu ra sao :)
 
-* Vấn đề này có thể được giải quyết bằng việc thêm locks vào tất cả các cấu trúc dữ liệu mà nó được shared giữa các threads.
-Tuy nhiên, thêm locks vào những object hay nhóm các object có nghĩa nhiều locks sẽ tồn tại - gây ra một cơn đau đầu khác `**Deadlocks**` (deadlocks có thể chỉ xảy ra nếu có nhiều hơn 1 lock)
-Một side effect khác sẽ làm giảm performance bằng việc lặp lại acquisition và release các locks
+* Vấn đề này có thể được giải quyết bằng việc thêm các locks vào tất cả các cấu trúc dữ liệu mà nó được shared giữa các threads để giữ
+các biến reference counting này `safe`.
+Tuy nhiên, thêm lock vào mỗi object hay nhóm các object có nghĩa nhiều locks đồng thời tồn tại - gây ra một vấn đề to bự khác là `Deadlocks`
+(deadlocks có thể chỉ xảy ra nếu có nhiều hơn 1 lock).Một side effect khác sẽ làm giảm performance bằng việc lặp lại acquisition và release các locks.
 
-* Như đã nói sơ qua ở trên. GIL là một khóa đơn trên interpreter, nó thêm một rule thực thi là
-Python bytecode yêu cầu cung cấp interpreter lock. Điều này sẽ chống được deadlocks
-mà không cải thiện được nhiều hiệu suất chương trình.
-Nhưng những chương trình đòi hỏi các tác vụ CPU-bound đơn luồng (single threaded) lại hoạt động hiệu quả.
-Như ví dụ đầu bài.
+* Như đã nói sơ qua ở trên, GIL là một khóa đơn trên interpreter, nó thêm một rule là sự thực thi của bất cứ
+Python bytecode nào cũng đều yêu cầu cung cấp interpreter lock. Điều này sẽ chống được deadlocks (vì chỉ có một khóa đơn duy nhất)
+mà không mất nhiều hiệu suất chương trình.
+Nhưng với những chương trình đòi hỏi các tác vụ CPU-bound đơn luồng (single threaded) GIL lại là một giải pháp hiệu quả. Như ví dụ đầu bài.
 
-* GIL mặc dù được sử dụng trong các ngôn ngữ thông dịch khác như Ruby không chỉ giải quyết vấn đề trên. vài ngôn ngữ chống lại yêu cầu của GIL cho các
-thread-safe memory management bằng việc dùng các cách tiếp cận khác như garbage collection.
+* GIL mặc dù được sử dụng trong các ngôn ngữ thông dịch khác như Ruby  nhưng nó không chỉ là giải pháp duy nhất để giải quyết vấn đề.
+Vài ngôn ngữ tránh sử GIL cho các chương trình yêu cầu thread-safe memory management bằng việc dùng các cách tiếp cận khác
+ngoài cách dùng bộ đếm reference counting như `garbage collection`.
 
-* Mặc khác, vài ngôn ngữ có một sự đền bù cho việc vắng mặt hiệu năng đơn luồng của GIL bằng việc sử dụng các tính năng khác như JIT
+* Mặc khác, có thể bù lại hiệu năng đơn luồng thấp của các interpreter không dùng GIL bằng việc sử dụng các tính năng khác như JIT.
 
 # 4. Tại sao GIL được chọn để giải quyết vấn đề?
 
@@ -262,7 +272,7 @@ trong Python. Để chống lại các sự thay đổi không nhất quán, cá
 GIL giúp tăng hiệu năng với các chương trình đơn luồng, nơi mà chỉ cần 1 lock để quản lý.
 
 Các thư viện `C` mà không phải thread-safe đã trở nên dễ dàng tích hợp.
-Và các C extensions đã trở thành một trong các lý do Python dễ dàng thích nghi bởi nhiều cộng đồng khác nhau
+Và các C extensions đã trở thành một trong các lý do Python dễ dàng thích nghi trong nhiều cộng đồng khác nhau
 
 Cho nên, GIL không phải 1 điểm yếu. Nó là một giải pháp thực tiễn cho các vấn đề khó mà các `CPython` developers đã đối mặt
 trong quá khứ.
@@ -276,14 +286,16 @@ Sau đó, comment out đoạn code ở trên phần multi-threaded, chương tr�
 Như bạn đã thấy đó, thời gian khá tương đồng ở hai phiên bản. Trong phiên bản multi-threaded,
 GIL chống lại các CPU-bound threads thực thi song song.
 
-GIL không tác động nhiều trên hiệu năng của các chương trình I/O-bound multi-threaded
-như lock được shared giữa các threads trong khi chờ I/O như cách hoạt động của GIL mình đã trình bày ở trên
+GIL không tác động nhiều trên hiệu năng của các chương trình đa luồng nặng về I/O-bound
+vì lock được shared giữa các threads trong khi chờ I/O như cách hoạt động của GIL mình đã trình bày ở trên.
+
 Đối với các chương trình mà toàn là các CPU-bound threads, eg: chương trình xử lý ảnh,..
 sẽ trở thành single threaded do lock. Nhưng cũng sẽ thấy thời gian thực thi tăng.
 
 Sự tăng lên này là kết quả của việc acquire và release tài nguyên liên tục giữa các thread được thêm vào bởi lock.
 
 # 6. Vậy, tại sao GIL vẫn còn tồn tại ở CPython?
+
 Bạn có thể thấy, hầu hết các diễn đàn về Python đều phàn nàn về GIL trong Python.
 Tuy nhiên các Python developers phải cân nhắc kỹ lưỡng rằng một ngôn ngữ phổ biến như Python nếu có một sự thay đổi lớn
 như việc remove GIL ra khỏi interpreter như vậy có gây ra các vấn đề tương thích ngược hay không.
