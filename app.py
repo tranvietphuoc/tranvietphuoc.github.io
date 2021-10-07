@@ -40,8 +40,6 @@ def create_posts(root_path: Path):
     }
 
     # convert tags in posts metadata from string to list
-    for p in posts_for_rendering:
-        print(posts_for_rendering[p])
 
     posts_metadata = [
         posts_for_rendering[p].metadata for p in posts_for_rendering
