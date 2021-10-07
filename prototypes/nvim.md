@@ -49,21 +49,22 @@ Nói vui thôi, thật ra `lua` là một ngôn ngữ scripting mạnh mẽ, g�
 Nên nếu có thời gian thì cũng đáng để học ^^.
 
 Bạn sẽ phải cần cài đặt các chương trình sau trên máy của mình:
-- gcc/clang
-- libuv
-- treesitter
-- universal ctags
-- python
-- pyenv
-- gitui
-- rust-analyzer
-- lua-language-server
-- gopls
-- clangd
-- stylua
-- nodejs
-- git
-- vscode-lldb
+
+* gcc/clang
+* libuv
+* treesitter
+* universal ctags
+* python
+* pyenv
+* gitui
+* rust-analyzer
+* lua-language-server
+* gopls
+* clangd
+* stylua
+* nodejs
+* git
+* vscode-lldb
 
 
 Mình đã push sẵn các configs của mình trên [đây](https://github.com/tranvietphuoc/nvim). Bạn có thể cài đặt bằng 1 script `install.sh` hoặc clone project về rồi copy vào thư mục
@@ -82,15 +83,15 @@ Sau đó chạy comand:
 để cài đặt các lsp servers.
 
 Trong các configs trên. Mình sử dụng:
-- [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) để làm LSP client.
-- [nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall) để cài đặt lsp servers.
-- [nvim-dap](https://github.com/mfussenegger/nvim-dap) để làm debuger adapters
-- [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) để làm languages auto-completion.
-- [toggle-term](https://github.com/akinsho/toggleterm.nvim) để bật/tắt terminal trong vim
-- [fugitive](https://github.com/tpope/vim-fugitive) để tích hợp các `git` commands trong editor.
-- [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) để tích hợp `treesitter` vào `nvim` để có syntax highlighting.
-- [formatters](https://github.com/mhartington/formatter.nvim) để format code.
-- Và các plugins hữu ích khác.
+* [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) để làm LSP client.
+* [nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall) để cài đặt lsp servers.
+* [nvim-dap](https://github.com/mfussenegger/nvim-dap) để làm debuger adapters
+* [nvim-cmp](https://github.com/hrsh7th/nvim-cmp) để làm languages auto-completion.
+* [toggle-term](https://github.com/akinsho/toggleterm.nvim) để bật/tắt terminal trong vim
+* [fugitive](https://github.com/tpope/vim-fugitive) để tích hợp các `git` commands trong editor.
+* [nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter) để tích hợp `treesitter` vào `nvim` để có syntax highlighting.
+* [formatters](https://github.com/mhartington/formatter.nvim) để format code.
+* Và các plugins hữu ích khác.
 
 **Các phím tắt mình cũng đã giới thiệu ở phần readme**
 
