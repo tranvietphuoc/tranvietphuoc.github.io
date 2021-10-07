@@ -53,7 +53,7 @@ def create_posts(root_path: Path):
     # convert tags from list to set
     tags = set([i for tag in tags for i in tag])
 
-    return posts_for_rendering, tags
+    return posts_for_rendering, posts_metadata, tags
 
 
 # render homepage
@@ -134,7 +134,8 @@ if __name__ == "__main__":
     # path
     root = Path(__file__).parent.resolve()  # project's path
 
-    posts, tags = create_posts(root)  # get all posts in ./posts/ folder
+    # get all posts in ./posts/ folder
+    posts, metadata, tags = create_posts(root)
     # for key, value in posts.items():
     #     print(key, value.metadata)
 
@@ -144,12 +145,10 @@ if __name__ == "__main__":
     post_template = env.get_template(name="post.html")
     tag_template = env.get_template(name="tags.html")
 
-    posts_metadata = [posts[p].metadata for p in posts]  # all posts metadata
-
     posts_folder = root.joinpath("posts/").resolve()
     # render all html files
     render_home(
-        posts_metadata=posts_metadata,
+        posts_metadata=metadata,
         render_folder=root.resolve(),
         tags=tags,
         template=home_template,
@@ -161,7 +160,7 @@ if __name__ == "__main__":
         template=post_template,
     )
     render_tags(
-        posts_metadata=posts_metadata,
+        posts_metadata=metadata,
         tags=tags,
         render_folder=root.resolve(),
         template=tag_template,
