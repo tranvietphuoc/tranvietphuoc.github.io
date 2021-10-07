@@ -39,15 +39,15 @@ def create_posts(root_path: Path):
         )
     }
 
-    # convert tags in posts metadata from string to list
-
+    # get posts_metata - a list from posts dict
     posts_metadata = [
         posts_for_rendering[p].metadata for p in posts_for_rendering
     ]
-    # convert tags from string to list in-place
+    # convert tags from string to list in-place in posts_metadata list
     for m in posts_metadata:
         m["tags"] = [element.strip() for element in m["tags"].split(",")]
-    # get post's tags
+
+    # get posts's tags
     tags = [m["tags"] for m in posts_metadata]
 
     # convert tags from list to set
