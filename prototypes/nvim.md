@@ -83,6 +83,7 @@ Sau đó chạy comand:
 để cài đặt các lsp servers.
 
 Trong các configs trên. Mình sử dụng:
+
 * [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) để làm LSP client.
 * [nvim-lspinstall](https://github.com/kabouzeid/nvim-lspinstall) để cài đặt lsp servers.
 * [nvim-dap](https://github.com/mfussenegger/nvim-dap) để làm debuger adapters
