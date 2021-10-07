@@ -28,7 +28,7 @@ def create_posts(root_path: Path):
             )
 
     # return a dict with sorted following date created
-    return {
+    posts_for_rendering = {
         p: posts[p]
         for p in sorted(
             posts,
@@ -38,6 +38,24 @@ def create_posts(root_path: Path):
             reverse=True,
         )
     }
+
+    # convert tags in posts metadata from string to list
+    for p in posts_for_rendering:
+        print(posts_for_rendering[p])
+
+    posts_metadata = [
+        posts_for_rendering[p].metadata for p in posts_for_rendering
+    ]
+    # convert tags from string to list in-place
+    for m in posts_metadata:
+        m["tags"] = [element.strip() for element in m["tags"].split(",")]
+    # get post's tags
+    tags = [m["tags"] for m in posts_metadata]
+
+    # convert tags from list to set
+    tags = set([i for tag in tags for i in tag])
+
+    return posts_for_rendering, tags
 
 
 # render homepage
@@ -118,7 +136,7 @@ if __name__ == "__main__":
     # path
     root = Path(__file__).parent.resolve()  # project's path
 
-    posts = create_posts(root)  # get all posts in ./posts/ folder
+    posts, tags = create_posts(root)  # get all posts in ./posts/ folder
     # for key, value in posts.items():
     #     print(key, value.metadata)
 
@@ -129,14 +147,6 @@ if __name__ == "__main__":
     tag_template = env.get_template(name="tags.html")
 
     posts_metadata = [posts[p].metadata for p in posts]  # all posts metadata
-
-    # convert tags of posts_metadata from str to list
-    for meta in posts_metadata:
-        meta["tags"] = [i.strip() for i in meta["tags"].split(",")]
-
-    # get posts's tags
-    tags = [meta["tags"] for meta in posts_metadata]
-    tags = set([i for tag in tags for i in tag])  # is a set
 
     posts_folder = root.joinpath("posts/").resolve()
     # render all html files
