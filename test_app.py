@@ -1,4 +1,3 @@
-from re import search
 import pytest
 from app import create_posts, render_home, render_posts, render_tags
 from jinja2 import Environment, FileSystemLoader
@@ -6,7 +5,6 @@ import pathlib
 from datetime import datetime
 
 
-# @pytest.fixture
 def write_test_content():
     test = (
         pathlib.Path(__file__)
@@ -25,7 +23,6 @@ def write_test_content():
         f.write("test content")
 
 
-# @pytest.fixture
 def test_create_posts():
     root = pathlib.Path(__file__).parent.joinpath("tests").resolve()
     write_test_content()
