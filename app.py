@@ -121,11 +121,7 @@ def render_tags(
     for key, value in tags_data.items():
         tag_html = template.render(posts=value, tag=key)
 
-        tag_path = (
-            render_folder.joinpath("tags")
-            .joinpath(f"{key.lower()}.html")
-            .resolve()
-        )
+        tag_path = render_folder.joinpath(f"{key.lower()}.html").resolve()
         with open(tag_path, "w") as f:
             f.write(tag_html)
 
@@ -145,23 +141,22 @@ if __name__ == "__main__":
     post_template = env.get_template(name="post.html")
     tag_template = env.get_template(name="tags.html")
 
-    posts_folder = root.joinpath("posts/").resolve()
     # render all html files
     render_home(
         posts_metadata=metadata,
-        render_folder=root.resolve(),
+        render_folder=root,
         tags=tags,
         template=home_template,
     )
     render_posts(
         posts=posts,
         tags=tags,
-        render_folder=posts_folder,
+        render_folder=root.joinpath("posts").resolve(),
         template=post_template,
     )
     render_tags(
         posts_metadata=metadata,
         tags=tags,
-        render_folder=root.resolve(),
+        render_folder=root.joinpath("tags").resolve(),
         template=tag_template,
     )
