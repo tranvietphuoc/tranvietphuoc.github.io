@@ -125,7 +125,7 @@ def test_close_temp_folder():
 
     for p in path.parent.iterdir():
         try:
-            p.unlink()
-        except PermissionError:
-            # p.joinpath("test.md").unlink()
-            break
+            p.rmdir()
+        except OSError:
+            p.joinpath("test.md").unlink()
+            p.rmdir()
