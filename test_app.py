@@ -11,7 +11,7 @@ import os
 def test_write_md_content():
     path = tempfile.mkdtemp()
     prototypes_path = pathlib.Path(path).joinpath("prototypes").resolve()
-    prototypes_path.mkdir(mode=511, parents=True, exist_ok=False)
+    prototypes_path.mkdir(mode=511, parents=True, exist_ok=True)
     test_md = prototypes_path.joinpath("test.md").resolve()
     # test = (
     #     pathlib.Path(__file__)
@@ -127,5 +127,5 @@ def test_close_temp_folder():
         try:
             p.unlink()
         except PermissionError:
-            p.joinpath("test.md").unlink()
+            # p.joinpath("test.md").unlink()
             break
