@@ -4,7 +4,7 @@
 
 * I create a tool to render from markdown file to static site by `Python` for my self.
 * To use this template, you need to clone the repo first.
-* Directory structure:
+* Project structure:
 ```
     |_ prototypes/       # contains .md file, you will write your posts in here.
     |_ posts/            # contains all html posts file after run ./render
