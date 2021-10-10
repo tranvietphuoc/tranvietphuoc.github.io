@@ -1,4 +1,3 @@
-from os import pathconf
 import pytest
 from app import create_posts, render_home, render_posts, render_tags
 from jinja2 import Environment, FileSystemLoader
@@ -9,11 +8,11 @@ import os
 
 
 # @pytest.fixture
-def write_test_content():
+def test_write_md_content():
     path = tempfile.mkdtemp()
-    test_path = pathlib.Path(path).joinpath("prototypes").resolve()
-    test_path.mkdir(mode=511, parents=True, exist_ok=False)
-    test_md = test_path.joinpath("test.md").resolve()
+    prototypes_path = pathlib.Path(path).joinpath("prototypes").resolve()
+    prototypes_path.mkdir(mode=511, parents=True, exist_ok=False)
+    test_md = prototypes_path.joinpath("test.md").resolve()
     # test = (
     #     pathlib.Path(__file__)
     #     .parent.joinpath("tests/prototypes/test.md")
@@ -30,12 +29,12 @@ def write_test_content():
         f.write("#test header\n")
         f.write("test content")
 
-    return test_path
+    return prototypes_path
 
 
 def test_create_posts():
     # root = pathlib.Path(__file__).parent.joinpath("tests").resolve()
-    path = write_test_content()
+    path = test_write_md_content()
     # path.parent.parent.resolve()
     test_metadata = [
         {
@@ -57,7 +56,7 @@ def test_create_posts():
 
 
 def test_render_home():
-    path = write_test_content()
+    path = test_write_md_content()
     # mk tests folder
 
     _, metadata, tags = create_posts(path.parent.resolve())
@@ -78,7 +77,7 @@ def test_render_home():
 
 
 def test_render_posts():
-    path = write_test_content()
+    path = test_write_md_content()
 
     # create posts folder in temp folder
     path.parent.joinpath("posts").mkdir(mode=511, parents=True, exist_ok=True)
@@ -101,7 +100,7 @@ def test_render_posts():
 
 
 def test_render_tags():
-    path = write_test_content()
+    path = test_write_md_content()
     _, metadata, tags = create_posts(root_path=path.parent.resolve())
 
     # create tags folder in temp folder
@@ -121,7 +120,12 @@ def test_render_tags():
     assert test_tag_content == tag_content
 
 
-def close_temp_folder():
-    path = write_test_content()
+def test_close_temp_folder():
+    path = test_write_md_content()
 
-    os.unlink(path)
+    for p in path.parent.iterdir():
+        try:
+            p.unlink()
+        except PermissionError:
+            p.joinpath("test.md").unlink()
+            p.rmdir()
