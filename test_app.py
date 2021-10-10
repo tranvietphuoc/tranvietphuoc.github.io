@@ -128,4 +128,4 @@ def test_close_temp_folder():
             p.unlink()
         except PermissionError:
             p.joinpath("test.md").unlink()
-            p.rmdir()
+            break
