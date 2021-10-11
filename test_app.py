@@ -121,7 +121,7 @@ def test_render_tags(test_write_md_content):
 
 
 @pytest.fixture
-def test_close_temp_folder():
+def test_close_temp_folder(test_write_md_content):
     path = test_write_md_content
 
     for p in path.parent.iterdir():
