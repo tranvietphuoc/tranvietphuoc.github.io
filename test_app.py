@@ -4,10 +4,9 @@ from jinja2 import Environment, FileSystemLoader
 import pathlib
 from datetime import datetime
 import tempfile
-import os
 
 
-# @pytest.fixture
+@pytest.fixture
 def test_write_md_content():
     path = tempfile.mkdtemp()
     prototypes_path = pathlib.Path(path).joinpath("prototypes").resolve()
@@ -32,10 +31,10 @@ def test_write_md_content():
     return prototypes_path
 
 
-def test_create_posts():
-    # root = pathlib.Path(__file__).parent.joinpath("tests").resolve()
-    path = test_write_md_content()
-    # path.parent.parent.resolve()
+def test_create_posts(test_write_md_content):
+
+    path = test_write_md_content
+
     test_metadata = [
         {
             "title": "test",
@@ -55,8 +54,8 @@ def test_create_posts():
     assert tags == test_tags
 
 
-def test_render_home():
-    path = test_write_md_content()
+def test_render_home(test_write_md_content):
+    path = test_write_md_content
     # mk tests folder
 
     _, metadata, tags = create_posts(path.parent.resolve())
@@ -76,8 +75,8 @@ def test_render_home():
     assert test_index_content == index_content
 
 
-def test_render_posts():
-    path = test_write_md_content()
+def test_render_posts(test_write_md_content):
+    path = test_write_md_content
 
     # create posts folder in temp folder
     path.parent.joinpath("posts").mkdir(mode=511, parents=True, exist_ok=True)
@@ -99,8 +98,9 @@ def test_render_posts():
     assert test_post_content == post_content
 
 
-def test_render_tags():
-    path = test_write_md_content()
+def test_render_tags(test_write_md_content):
+    path = test_write_md_content
+
     _, metadata, tags = create_posts(root_path=path.parent.resolve())
 
     # create tags folder in temp folder
@@ -120,8 +120,9 @@ def test_render_tags():
     assert test_tag_content == tag_content
 
 
+@pytest.fixture
 def test_close_temp_folder():
-    path = test_write_md_content()
+    path = test_write_md_content
 
     for p in path.parent.iterdir():
         try:
