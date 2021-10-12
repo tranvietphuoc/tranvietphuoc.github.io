@@ -33,4 +33,6 @@ summary: ....
 
 * Finnally. Run `./render` to render `html` files. All `html` files of posts will go to `posts` and `tags` folder.
 * To publish your blog. Read [this guide](https://pages.github.com/)
-* In addition, you can add a comment plugin your self call [utterances](https://utteranc.es/?installation_id=19767855&setup_action=install)
+* In addition, you can add a comment plugin your self call [utterances](https://utteranc.es/?installation_id=19767855&setup_action=install). After that, go to
+`templates/post.html` and replace the script in `{% block script %}{% endblock %}` with your script.
+* Cheers.
