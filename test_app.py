@@ -120,7 +120,6 @@ def test_render_tags(test_write_md_content):
     assert test_tag_content == tag_content
 
 
-@pytest.fixture
 def test_close_temp_folder(test_write_md_content):
     path = test_write_md_content
 
