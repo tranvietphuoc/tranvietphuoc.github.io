@@ -4,6 +4,7 @@ from markdown2 import markdown
 from pathlib import Path
 from datetime import datetime
 import typing as t
+from concurrent.futures import ThreadPoolExecutor
 
 
 # read markdown file then write to a dict
