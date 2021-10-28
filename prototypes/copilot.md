@@ -34,9 +34,11 @@ So với `Kites` hay `Tabnine`, ngoài việc models được cài đặt local 
 
 # Cài đặt Copilot.
 
+Sau 1 tuần chờ đợi, Github sẽ gửi cho bạn một mail dẫn tới [trang cài đặt](https://github.com/github/copilot-docs).
+
 Để cài đặt extension này, bạn cần chọn editor tương ứng với 3 loại trên, nếu dùng `Visual Studio Code` hay `JetBrains` bạn chỉ cần cài vào là sử dụng được thì với `Neovim` sẽ hơi mất công một chút.
 
-Contributor nổi tiếng trong giới `Vim` là **tpope** đã viết hẳn 1 plugin cho `Neovim`, để cài đặt bạn copy và paste command sau vào terminal:
+Với `Neovim`, contributor nổi tiếng trong giới là **tpope** đã viết hẳn 1 plugin cho `Neovim`, để cài đặt bạn copy và paste command sau vào terminal:
 
 ```bash
 git clone https://github.com/github/copilot.vim.git \
