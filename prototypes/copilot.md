@@ -37,11 +37,12 @@ Bạn có thể tìm hiểu nhiều hơn về OpenAI Codex [tại đây](https:/
 Vì copilot trains các models trên internet và cung cấp các đoạn code gợi ý thông qua các services dưới dạng các API,
 nên tài nguyên máy tiêu hao hầu như không có gì nhiều.
 So với `Kites` hay `Tabnine`, ngoài việc models được cài đặt local trên máy (tốn dung lượng ổ cứng),
-mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót đến trào nước mắt thì Copilot quá tuyệt vời phải không nào?
+mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót đến trào nước mắt thì Copilot với mình như một vị cứu tinh vậy.
 
-Nó sẽ giảm số lần bạn phải tra google, chỉ cần 1 vài dòng comments, codes. Copilot sẽ **chỉ gửi lại cho bạn gợi ý** những dòng code tiếp theo.
-**Bạn phải là người quyết định những dòng code nào phù hợp trong context của mình**. Nó là một trình tổng hợp mã và đưa ra những gợi ý
-code phù hợp với bạn nhất chứ không phải đơn thuần là một search engine.
+Nó là một trình tổng hợp mã và đưa ra những gợi ý
+code phù hợp với bạn nhất chứ không phải đơn thuần là một search engine, nên sẽ giảm số lần bạn phải tra google,
+chỉ cần 1 vài dòng comments, codes. Copilot sẽ **gửi lại cho bạn gợi ý** những dòng code tiếp theo.
+**Bạn phải là người quyết định những dòng code nào phù hợp trong context của mình**.
 
 
 # Cài đặt Copilot.
@@ -85,10 +86,14 @@ Thay vì dùng `<Tab>`, ta sẽ đổi thành `<S-j>` và `<S-k>` để `select_
 Qua các thống kê về mức độ hiệu quả của người bạn *Github Copilot* của chúng ta, những gợi ý sẽ phù hợp với code context của bạn là 43% cho lần thử đầu tiên, nhưng sau 10 lần thử kế tiếp,
 hiệu năng sẽ tăng lên 57%, quá tuyệt phải không nào?
 
-Hi vọng trong tương lai gần mức độ chính xác sẽ tăng lên cao hơn nữa và hỗ trợ thêm nhiều ngôn ngữ lập trình cũng như ngôn ngữ tự nhiên (có cả tiếng Việt)
+Và vì người anh em này chỉ đang trong giai đoạn technical preview, chưa release chính thức,
+nên hi vọng trong tương lai gần mức độ chính xác sẽ tăng lên cao hơn nữa và
+hỗ trợ thêm nhiều ngôn ngữ lập trình cũng như ngôn ngữ tự nhiên (có cả tiếng Việt)
 cho giới lập trình chúng mình.
 
 Dù trang chủ của `OpenAI Codex` nói hiện tại chỉ hỗ trợ 1 vài ngôn ngữ lập trình phổ biến nhưng mình đã test thử với `Rust` và nó vẫn hoạt động ổn.
+
+Theo mình, sau khi cài đặt xong, chúng ta nên sử dụng Copilot mỗi ngày, nếu có trục trặc gì thì có thể gửi feedback lại. Rất đáng để thử đấy.
 
 Cuối cùng, Github Copilot giảm đáng kể việc code của bạn chứ không phải tự code thay bạn đâu nên là sẽ còn lâu nữa mình mới lo mất việc về tay AI nhé :D.
 
