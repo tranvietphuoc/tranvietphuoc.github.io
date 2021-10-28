@@ -22,7 +22,7 @@ giúp bạn code nhanh hơn, gõ ít hơn.
 
 `OpenAI Codex` là một model đa mục đích, hậu duệ của `GPT-3`, nó trains các data gồm cả ngôn ngữ tự nhiên và cả hàng tỉ dòng code được public trên Github.
 Nhưng hiện tại model này chỉ hỗ trợ tiếng Anh và các ngôn ngữ phổ biến như `Python`, `Javascript`, `Go`, `Perl`, `PHP`, `Ruby`, `Swift`, `Typescript` và `Shell`.
-Theo như giới thiệu thì nó chỉ tốn 14KB bộ nhớ cho Python code, và nhanh hơn gấp 3 lần và hỗ trợ nhiều ngôn ngữ tự nhiên hơn so với GPT-3.
+Theo như giới thiệu thì nó chỉ tốn 14KB bộ nhớ cho Python code, dù sử dụng nhiều bộ nhớ hơn nhưng nó nhanh hơn gấp 3 lần và hỗ trợ nhiều ngôn ngữ tự nhiên hơn so với GPT-3.
 
 Bạn có thể tìm hiểu nhiều hơn về OpenAI Codex [tại đây](https://openai.com/blog/openai-codex/). 
 
@@ -34,8 +34,10 @@ Bạn có thể tìm hiểu nhiều hơn về OpenAI Codex [tại đây](https:/
 <img src="https://copilot.github.com/diagram.png" alt="copilot mechanism" width=80% height=auto/><br>
 
 
-Vì copilot trains các models trên internet và cung cấp các đoạn code gợi ý thông qua các services nên tài nguyên máy tiêu hao hầu như không có gì nhiều.
-So với `Kites` hay `Tabnine`, ngoài việc models được cài đặt local trên máy (tốn dung lượng ổ cứng), mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) đau xót đến trào nước mắt thì Copilot quá tuyệt vời phải không nào?
+Vì copilot trains các models trên internet và cung cấp các đoạn code gợi ý thông qua các services dưới dạng các API,
+nên tài nguyên máy tiêu hao hầu như không có gì nhiều.
+So với `Kites` hay `Tabnine`, ngoài việc models được cài đặt local trên máy (tốn dung lượng ổ cứng),
+mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót đến trào nước mắt thì Copilot quá tuyệt vời phải không nào?
 
 
 # Cài đặt Copilot.
