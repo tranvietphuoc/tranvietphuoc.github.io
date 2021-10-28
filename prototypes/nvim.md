@@ -1,6 +1,6 @@
 title: Cá nhân hóa NeoVim
 date: 05-10-2021
-tags: nvim, editor
+tags: neovim, editor
 name: nvim-preconfig
 summary: Mình đã cấu hình NeoVim như thế nào?
 -------------------------------------------
