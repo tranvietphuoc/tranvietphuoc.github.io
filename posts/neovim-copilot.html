@@ -103,6 +103,10 @@ nên tài nguyên máy tiêu hao hầu như không có gì nhiều.
 So với <code>Kites</code> hay <code>Tabnine</code>, ngoài việc models được cài đặt local trên máy (tốn dung lượng ổ cứng),
 mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót đến trào nước mắt thì Copilot quá tuyệt vời phải không nào?</p>
 
+<p>Nó sẽ giảm số lần bạn phải tra google, chỉ cần 1 vài dòng comments, codes. Copilot sẽ <strong>chỉ gửi lại cho bạn gợi ý</strong> những dòng code tiếp theo.
+<strong>Bạn phải là người quyết định những dòng code nào phù hợp trong context của mình</strong>. Nó là một trình tổng hợp mã và đưa ra những gợi ý
+code phù hợp với bạn nhất chứ không phải đơn thuần là một search engine.</p>
+
 <h1>Cài đặt Copilot.</h1>
 
 <p>Sau 2 tuần chờ đợi, Github sẽ gửi cho bạn một mail dẫn tới <a href="https://github.com/github/copilot-docs">trang cài đặt</a>.</p>
@@ -121,26 +125,31 @@ mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót 
 mình sẽ sử dụng trình quản lý gói <code>packer</code> bằng cách thêm <code>use({'github/copilot.vim'})</code> vào file <code>~/.config/nvim/lua/plugins.lua</code>.
 Sau đó restart <code>Neovim</code> và chạy command <code>:PackerInstall</code> để cài đặt.</p>
 
-<ul>
-<li>Lưu ý 1: ở đây giả sử bạn đã cài <code>Node</code> và đang dùng <code>Neovim</code> bản prerelease.</li>
-</ul>
-
 <p>Sau khi cài đặt xong, bạn restart lại <code>Neovim</code> và paste command này vào để config: <code>:Copilot setup</code>.</p>
 
-<p>Và bắt đầu test thôi nào...</p>
+<p>Và bắt đầu test thôi...</p>
 
 <iframe title="vimeo-player" src="https://player.vimeo.com/video/639997594?h=560476b35c" width="640" height="400" frameborder="0" allowfullscreen></iframe>
 
 <p>It works :D</p>
 
+<ul>
+<li><p>Lưu ý 1: ở đây giả sử bạn đã cài <code>Node</code> và đang dùng <code>Neovim</code> bản prerelease.</p></li>
+<li><p>Lưu ý 2: Vì <code>copilot</code> sẽ dùng <code>&lt;Tab&gt;</code> để complete code, nên bạn cần phải sửa lại keymap của <code>nvim-cmp</code> trong file <code>~/.config/nvim/lua/ext/cmp.lua</code> một chút để tránh xung đột.
+Thay vì dùng <code>&lt;Tab&gt;</code>, ta sẽ đổi thành <code>&lt;S-j&gt;</code> và <code>&lt;S-k&gt;</code> để <code>select_next_item()</code> và <code>select_prev_item()</code>.</p></li>
+</ul>
+
+<h1>Đánh giá Github Copilot.</h1>
+
+<p>Qua các thống kê về mức độ hiệu quả của người bạn <em>Github Copilot</em> của chúng ta, những gợi ý sẽ phù hợp với code context của bạn là 43% cho lần thử đầu tiên, nhưng sau 10 lần thử kế tiếp,
+hiệu năng sẽ tăng lên 57%, quá tuyệt phải không nào?</p>
+
+<p>Hi vọng trong tương lai gần mức độ chính xác sẽ tăng lên cao hơn nữa và hỗ trợ thêm nhiều ngôn ngữ lập trình cũng như ngôn ngữ tự nhiên (có cả tiếng Việt)
+cho giới lập trình chúng mình.</p>
+
 <p>Dù trang chủ của <code>OpenAI Codex</code> nói hiện tại chỉ hỗ trợ 1 vài ngôn ngữ lập trình phổ biến nhưng mình đã test thử với <code>Rust</code> và nó vẫn hoạt động ổn.</p>
 
-<p>Hy vọng rằng tương lai gần <em>partner</em> <code>Copilot</code> của chúng ta sẽ hỗ trợ tất cả các ngôn ngữ lập trình và luôn cả tiếng Việt nhỉ :D</p>
-
-<ul>
-<li>Lưu ý 2: Vì <code>copilot</code> sẽ dùng <code>&lt;Tab&gt;</code> để complete code, nên bạn cần phải sửa lại keymap của <code>nvim-cmp</code> trong file <code>~/.config/nvim/lua/ext/cmp.lua</code> một chút để tránh xung đột.
-Thay vì dùng <code>&lt;Tab&gt;</code>, ta sẽ đổi thành <code>&lt;S-j&gt;</code> và <code>&lt;S-k&gt;</code> để <code>select_next_item()</code> và <code>select_prev_item()</code>.</li>
-</ul>
+<p>Cuối cùng, Github Copilot giảm đáng kể việc code của bạn chứ không phải tự code thay bạn đâu nên là sẽ còn lâu nữa mình mới lo mất việc về tay AI nhé :D.</p>
 
 <p>Cảm ơn bạn đã đọc bài. Mình sẽ kết ở đây.</p>
 

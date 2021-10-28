@@ -39,6 +39,10 @@ nên tài nguyên máy tiêu hao hầu như không có gì nhiều.
 So với `Kites` hay `Tabnine`, ngoài việc models được cài đặt local trên máy (tốn dung lượng ổ cứng),
 mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót đến trào nước mắt thì Copilot quá tuyệt vời phải không nào?
 
+Nó sẽ giảm số lần bạn phải tra google, chỉ cần 1 vài dòng comments, codes. Copilot sẽ **chỉ gửi lại cho bạn gợi ý** những dòng code tiếp theo.
+**Bạn phải là người quyết định những dòng code nào phù hợp trong context của mình**. Nó là một trình tổng hợp mã và đưa ra những gợi ý
+code phù hợp với bạn nhất chứ không phải đơn thuần là một search engine.
+
 
 # Cài đặt Copilot.
 
@@ -59,12 +63,9 @@ Tuy nhiên mình không thích cài trong folder `~/.config/nvim/pack/`,
 mình sẽ sử dụng trình quản lý gói `packer` bằng cách thêm `use({'github/copilot.vim'})` vào file `~/.config/nvim/lua/plugins.lua`.
 Sau đó restart `Neovim` và chạy command `:PackerInstall` để cài đặt.
 
-
-* Lưu ý 1: ở đây giả sử bạn đã cài `Node` và đang dùng `Neovim` bản prerelease.
-
 Sau khi cài đặt xong, bạn restart lại `Neovim` và paste command này vào để config: `:Copilot setup`.
 
-Và bắt đầu test thôi nào...
+Và bắt đầu test thôi...
 
 
 <iframe title="vimeo-player" src="https://player.vimeo.com/video/639997594?h=560476b35c" width="640" height="400" frameborder="0" allowfullscreen></iframe>
@@ -72,12 +73,25 @@ Và bắt đầu test thôi nào...
 
 It works :D
 
-Dù trang chủ của `OpenAI Codex` nói hiện tại chỉ hỗ trợ 1 vài ngôn ngữ lập trình phổ biến nhưng mình đã test thử với `Rust` và nó vẫn hoạt động ổn.
+* Lưu ý 1: ở đây giả sử bạn đã cài `Node` và đang dùng `Neovim` bản prerelease.
 
-Hy vọng rằng tương lai gần *partner* `Copilot` của chúng ta sẽ hỗ trợ tất cả các ngôn ngữ lập trình và luôn cả tiếng Việt nhỉ :D
 
 * Lưu ý 2: Vì `copilot` sẽ dùng `<Tab>` để complete code, nên bạn cần phải sửa lại keymap của `nvim-cmp` trong file `~/.config/nvim/lua/ext/cmp.lua` một chút để tránh xung đột.
 Thay vì dùng `<Tab>`, ta sẽ đổi thành `<S-j>` và `<S-k>` để `select_next_item()` và `select_prev_item()`.
+
+
+# Đánh giá Github Copilot.
+
+Qua các thống kê về mức độ hiệu quả của người bạn *Github Copilot* của chúng ta, những gợi ý sẽ phù hợp với code context của bạn là 43% cho lần thử đầu tiên, nhưng sau 10 lần thử kế tiếp,
+hiệu năng sẽ tăng lên 57%, quá tuyệt phải không nào?
+
+Hi vọng trong tương lai gần mức độ chính xác sẽ tăng lên cao hơn nữa và hỗ trợ thêm nhiều ngôn ngữ lập trình cũng như ngôn ngữ tự nhiên (có cả tiếng Việt)
+cho giới lập trình chúng mình.
+
+Dù trang chủ của `OpenAI Codex` nói hiện tại chỉ hỗ trợ 1 vài ngôn ngữ lập trình phổ biến nhưng mình đã test thử với `Rust` và nó vẫn hoạt động ổn.
+
+Cuối cùng, Github Copilot giảm đáng kể việc code của bạn chứ không phải tự code thay bạn đâu nên là sẽ còn lâu nữa mình mới lo mất việc về tay AI nhé :D.
+
 
 Cảm ơn bạn đã đọc bài. Mình sẽ kết ở đây.
 
