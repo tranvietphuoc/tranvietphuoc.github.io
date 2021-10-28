@@ -14,7 +14,7 @@ Kết quả là...ngoài sức tưởng tượng ^^
 
 Thông tin đầy đủ bạn có thể tìm hiểu tại [copilot](https://copilot.github.com/).
 Hiện tại chỉ có `Visual Studio Code`, `JetBrains`, và tất nhiên là `Neovim` hỗ trợ extension này.
-Vì vẫn đang trong giai đoạn technical preview nên để sử dụng bạn phải đăng ký và sau khoảng 1 tuần `Github` sẽ gửi mail hướng dẫn cài đặt cho từng editors cụ thể.
+Vì vẫn đang trong giai đoạn technical preview nên để sử dụng bạn phải đăng ký và sau khoảng 2 tuần `Github` sẽ gửi mail hướng dẫn cài đặt cho từng editors cụ thể.
 
 Sơ qua thì `Github copilot` là "một đôi bạn cùng tiến" trong việc lập trình với bạn.
 Nó dựa trên nền tảng `OpenAI Codex` được cung cấp bởi `OpenAI` để train models lấy từ các source codes public trên internet (gồm cả github), từ đó sẽ đưa ra gợi ý phù hợp
@@ -42,7 +42,7 @@ mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót 
 
 # Cài đặt Copilot.
 
-Sau 1 tuần chờ đợi, Github sẽ gửi cho bạn một mail dẫn tới [trang cài đặt](https://github.com/github/copilot-docs).
+Sau 2 tuần chờ đợi, Github sẽ gửi cho bạn một mail dẫn tới [trang cài đặt](https://github.com/github/copilot-docs).
 
 Để cài đặt extension này, bạn cần chọn editor tương ứng với 3 loại trên, nếu dùng `Visual Studio Code` hay `JetBrains` bạn chỉ cần cài vào là sử dụng được thì với `Neovim` sẽ hơi mất công một chút.
 
