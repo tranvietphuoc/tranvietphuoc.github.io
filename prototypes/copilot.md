@@ -2,6 +2,7 @@ title: Cài đặt github copilot trên neovim
 date: 28-10-2021
 tags: neovim, github
 name: neovim-copilot
+summary: Tìm hiểu copilot trên Neovim
 --------------------------------
 
 # Github Copilot?
