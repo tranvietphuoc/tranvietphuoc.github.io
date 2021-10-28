@@ -20,6 +20,12 @@ Sơ qua thì `Github copilot` là "một đôi bạn cùng tiến" trong việc 
 Nó dựa trên nền tảng `OpenAI Codex` được cung cấp bởi `OpenAI` để train models lấy từ các source codes public trên internet (gồm cả github), từ đó sẽ đưa ra gợi ý phù hợp
 giúp bạn code nhanh hơn, gõ ít hơn.
 
+`OpenAI Codex` là một model đa mục đích, hậu duệ của `GPT-3`, nó trains các data gồm cả ngôn ngữ tự nhiên và cả hàng tỉ dòng code được public trên Github.
+Nhưng hiện tại model này chỉ hỗ trợ tiếng Anh và các ngôn ngữ phổ biến như `Python`, `Javascript`, `Go`, `Perl`, `PHP`, `Ruby`, `Swift`, `Typescript` và `Shell`.
+Theo như giới thiệu thì nó chỉ tốn 14KB bộ nhớ cho Python code, và nhanh hơn gấp 3 lần và hỗ trợ nhiều ngôn ngữ tự nhiên hơn so với GPT-3.
+
+Bạn có thể tìm hiểu nhiều hơn về OpenAI Codex [tại đây](https://openai.com/blog/openai-codex/). 
+
 
 # Cơ chế hoạt động của Copilot?
 
@@ -56,6 +62,10 @@ Và bắt đầu test thôi nào...
 
 
 It works :D
+
+Dù trang chủ của `OpenAI Codex` nói hiện tại chỉ hỗ trợ 1 vài ngôn ngữ lập trình phổ biến nhưng mình đã test thử với `Rust` và nó vẫn hoạt động ổn.
+
+Hy vọng rằng tương lai gần *partner* `Copilot` của chúng ta sẽ hỗ trợ tất cả các ngôn ngữ lập trình và luôn cả tiếng Việt nhỉ :D
 
 * Lưu ý 2: Vì `copilot` sẽ dùng `<Tab>` để complete code, nên bạn cần phải sửa lại keymap của `nvim-cmp` trong file `~/.config/nvim/lua/ext/cmp.lua` một chút để tránh xung đột.
 Thay vì dùng `<Tab>`, ta sẽ đổi thành `<S-j>` và `<S-k>` để `select_next_item()` và `select_prev_item()`.

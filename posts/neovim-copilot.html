@@ -86,6 +86,12 @@ Vì vẫn đang trong giai đoạn technical preview nên để sử dụng bạ
 Nó dựa trên nền tảng <code>OpenAI Codex</code> được cung cấp bởi <code>OpenAI</code> để train models lấy từ các source codes public trên internet (gồm cả github), từ đó sẽ đưa ra gợi ý phù hợp
 giúp bạn code nhanh hơn, gõ ít hơn.</p>
 
+<p><code>OpenAI Codex</code> là một model đa mục đích, hậu duệ của <code>GPT-3</code>, nó trains các data gồm cả ngôn ngữ tự nhiên và cả hàng tỉ dòng code được public trên Github.
+Nhưng hiện tại model này chỉ hỗ trợ tiếng Anh và các ngôn ngữ phổ biến như <code>Python</code>, <code>Javascript</code>, <code>Go</code>, <code>Perl</code>, <code>PHP</code>, <code>Ruby</code>, <code>Swift</code>, <code>Typescript</code> và <code>Shell</code>.
+Theo như giới thiệu thì nó chỉ tốn 14KB bộ nhớ cho Python code, và nhanh hơn gấp 3 lần và hỗ trợ nhiều ngôn ngữ tự nhiên hơn so với GPT-3.</p>
+
+<p>Bạn có thể tìm hiểu nhiều hơn về OpenAI Codex <a href="https://openai.com/blog/openai-codex/">tại đây</a>. </p>
+
 <h1>Cơ chế hoạt động của Copilot?</h1>
 
 <p>Đây là hình thể hiện cơ chế hoạt động của <code>Copilot</code>:</p>
@@ -118,6 +124,10 @@ So với <code>Kites</code> hay <code>Tabnine</code>, ngoài việc models đư�
 <iframe title="vimeo-player" src="https://player.vimeo.com/video/639997594?h=560476b35c" width="640" height="400" frameborder="0" allowfullscreen></iframe>
 
 <p>It works :D</p>
+
+<p>Dù trang chủ của <code>OpenAI Codex</code> nói hiện tại chỉ hỗ trợ 1 vài ngôn ngữ lập trình phổ biến nhưng mình đã test thử với <code>Rust</code> và nó vẫn hoạt động ổn.</p>
+
+<p>Hy vọng rằng tương lai gần <em>partner</em> <code>Copilot</code> của chúng ta sẽ hỗ trợ tất cả các ngôn ngữ lập trình và luôn cả tiếng Việt nhỉ :D</p>
 
 <ul>
 <li>Lưu ý 2: Vì <code>copilot</code> sẽ dùng <code>&lt;Tab&gt;</code> để complete code, nên bạn cần phải sửa lại keymap của <code>nvim-cmp</code> trong file <code>~/.config/nvim/lua/ext/cmp.lua</code> một chút để tránh xung đột.
