@@ -53,9 +53,16 @@ git clone https://github.com/github/copilot.vim.git \
   ~/.config/nvim/pack/github/start/copilot.vim
 ```
 
+Command này sẽ clone repo về thư mục `~/.config/nvim/pack/`.
+
+Tuy nhiên mình không thích cài trong folder `~/.config/nvim/pack/`,
+mình sẽ sử dụng trình quản lý gói `packer` bằng cách thêm `use({'github/copilot.vim'})` vào file `~/.config/nvim/lua/plugins.lua`.
+Sau đó restart `Neovim` và chạy command `:PackerInstall` để cài đặt.
+
+
 * Lưu ý 1: ở đây giả sử bạn đã cài `Node` và đang dùng `Neovim` bản prerelease.
 
-Sau khi cài đặt xong, bạn mở `neovim` và paste command này vào để config: `:Copilot setup`.
+Sau khi cài đặt xong, bạn restart lại `Neovim` và paste command này vào để config: `:Copilot setup`.
 
 Và bắt đầu test thôi nào...
 

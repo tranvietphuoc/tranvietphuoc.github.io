@@ -115,11 +115,17 @@ mỗi lần code máy nóng, quạt kêu (ngốn CPU, RAM) làm mình đau xót 
   ~/.config/nvim/pack/github/start/copilot.vim
 </code></pre>
 
+<p>Command này sẽ clone repo về thư mục <code>~/.config/nvim/pack/</code>.</p>
+
+<p>Tuy nhiên mình không thích cài trong folder <code>~/.config/nvim/pack/</code>,
+mình sẽ sử dụng trình quản lý gói <code>packer</code> bằng cách thêm <code>use({'github/copilot.vim'})</code> vào file <code>~/.config/nvim/lua/plugins.lua</code>.
+Sau đó restart <code>Neovim</code> và chạy command <code>:PackerInstall</code> để cài đặt.</p>
+
 <ul>
 <li>Lưu ý 1: ở đây giả sử bạn đã cài <code>Node</code> và đang dùng <code>Neovim</code> bản prerelease.</li>
 </ul>
 
-<p>Sau khi cài đặt xong, bạn mở <code>neovim</code> và paste command này vào để config: <code>:Copilot setup</code>.</p>
+<p>Sau khi cài đặt xong, bạn restart lại <code>Neovim</code> và paste command này vào để config: <code>:Copilot setup</code>.</p>
 
 <p>Và bắt đầu test thôi nào...</p>
 
