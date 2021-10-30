@@ -137,7 +137,7 @@ Trong khi Pool class thì lại phù hợp nhất với một lượng lớn cá
 
 Bạn có thể tìm hiểu sâu hơn về `multiprocessing` [tại đây](https://docs.python.org/3/library/multiprocessing.html).
 
-Bonus, còn một chỗ đáng lưu tâm là khi sử dụng `multiprocessing`, khi nào nên sử dụng *fork*, khi nào sử dụng *spawn* để tránh chương trình bị kẹt (stuck).
+**Bonus, còn một chỗ đáng lưu tâm là khi sử dụng `multiprocessing`, khi nào nên sử dụng `fork`, khi nào sử dụng `spawn` để tránh chương trình bị kẹt (stuck).**
 
 Mình có đọc 1 [bài viết](https://pythonspeed.com/articles/python-multiprocessing/) rất hay về vấn đề này. Ngoài ra còn bài của [Dr John A Stevenson](https://britishgeologicalsurvey.github.io/science/python-forking-vs-spawn/).
 
