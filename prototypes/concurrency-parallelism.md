@@ -5,8 +5,8 @@ name: concurrency-parallelism
 summary: Tìm hiểu về concurrency và parallelism trong Python
 --------------------------------------------------
 
-Bài trước chúng ta đã biết về threads, processes và các thư viện *multithreading*, *multiprocessing* cũng như *concurrent.futures*
-Ở bài này, mình sẽ giới thiệu:
+Ở chủ đề về threads và processes chúng ta đã biết về threads, processes lfà gì và các thư viện *multithreading*, *multiprocessing* cũng như *concurrent.futures*
+Trong bài này, mình sẽ giới thiệu:
 
 * Concurrency là gì và ứng dụng ra sao với `theading`, `concurrent.futures` và `asyncio`.
 * Parallelism là gì và ứng dụng với `multiprocessing`.
@@ -36,7 +36,7 @@ khi mà HĐH có thể ưu tiên một thread để switch.
 Nó cũng sẽ trở nên khó nhằn bởi vì từ "bất cứ khi nào", sự chuyển đổi này có thể xảy ra ngay cả khi đang thực thi 1 câu lệnh Python.
 Sự switch giữa các threads với nhau được quyết định bởi HĐH**
 
-Asyncio thì khác, nó được gọi là **"cooperative multitasking". Các task phải hợp tác với nhau bằng việc thông báo khi nào
+Asyncio thì khác, nó được gọi là **"cooperative multitasking"**. Các task phải hợp tác với nhau bằng việc thông báo khi nào
 chúng sẵn sàng để được switch. Điều đó có nghĩa là code trong task phải thay đổi 1 chút để nó có thể xảy ra.
 
 Lợi ích của việc làm việc này là bạn sẽ luôn biết nhiệm vụ của mình sẽ được hoán đổi ở đâu. Nó sẽ không chuyển đổi trong khi
@@ -308,7 +308,8 @@ Mỗi task tốn ít tài nguyên hơn và ít thời gian để tạo hơn so v
 Sau khi run:
 
 ```sh
-	
+......
+Downloaded 160 in 0.5527686790308653 seconds
 ```
 
 Sơ đồ thực thi được thể hiện dưới hình sau:

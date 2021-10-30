@@ -66,8 +66,8 @@
 <br />
 
 <p class="post-content">
-  <p>Bài trước chúng ta đã biết về threads, processes và các thư viện <em>multithreading</em>, <em>multiprocessing</em> cũng như <em>concurrent.futures</em>
-Ở bài này, mình sẽ giới thiệu:</p>
+  <p>Ở chủ đề về threads và processes chúng ta đã biết về threads, processes lfà gì và các thư viện <em>multithreading</em>, <em>multiprocessing</em> cũng như <em>concurrent.futures</em>
+Trong bài này, mình sẽ giới thiệu:</p>
 
 <ul>
 <li>Concurrency là gì và ứng dụng ra sao với <code>theading</code>, <code>concurrent.futures</code> và <code>asyncio</code>.</li>
@@ -98,7 +98,7 @@ khi mà HĐH có thể ưu tiên một thread để switch.</p>
 Nó cũng sẽ trở nên khó nhằn bởi vì từ "bất cứ khi nào", sự chuyển đổi này có thể xảy ra ngay cả khi đang thực thi 1 câu lệnh Python.
 Sự switch giữa các threads với nhau được quyết định bởi HĐH</strong></p>
 
-<p>Asyncio thì khác, nó được gọi là **"cooperative multitasking". Các task phải hợp tác với nhau bằng việc thông báo khi nào
+<p>Asyncio thì khác, nó được gọi là <strong>"cooperative multitasking"</strong>. Các task phải hợp tác với nhau bằng việc thông báo khi nào
 chúng sẵn sàng để được switch. Điều đó có nghĩa là code trong task phải thay đổi 1 chút để nó có thể xảy ra.</p>
 
 <p>Lợi ích của việc làm việc này là bạn sẽ luôn biết nhiệm vụ của mình sẽ được hoán đổi ở đâu. Nó sẽ không chuyển đổi trong khi
@@ -375,7 +375,8 @@ Mỗi task tốn ít tài nguyên hơn và ít thời gian để tạo hơn so v
 
 <p>Sau khi run:</p>
 
-<pre><code>
+<pre><code>......
+Downloaded 160 in 0.5527686790308653 seconds
 </code></pre>
 
 <p>Sơ đồ thực thi được thể hiện dưới hình sau:</p>
