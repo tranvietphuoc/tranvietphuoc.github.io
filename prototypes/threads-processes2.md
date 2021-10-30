@@ -1,7 +1,7 @@
 title: Threads, Processes Trong Python (Phần 1)
 date: 30-10-2021
 tags: python
-name: threading-processing-1
+name: threading-processing-2
 summary: Tổng quát về Threads, Processes trong Python (tt)
 ---------------------------------------------------------------
 
