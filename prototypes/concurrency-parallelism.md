@@ -69,13 +69,13 @@ nhất giới hạn tốc độ của chương trình là CPU. Xem hình sau đ�
 <img src="https://files.realpython.com/media/CPUBound.d2d32cb2626c.png" alt="cpu" width=80% height="auto" />
 
 Chúng ta sẽ tổng hợp một cách tường minh theo bảng dưới đây:
-			
-----------------------------------------
+
+
 | I/O-bound process | CPU-bound process|
 |:-----------------:|:----------------:|
 | Chương trình tốn nhiều thời gian để giao tiếp với các thiết bị chậm hơn như kết nối mạng, ổ cứng, máy in | Chương trình tốn thời gian cho các hoạt động của CPU |
 | Tăng tốc chương trình đồng nghĩa với việc chồng chéo thời gian chờ ở các thiết bị | Tăng tốc nó liên quan đến việc tìm cách để thực hiện nhiều phép tính hơn trong một khoảng thời gian |
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 ## Bắt đầu với I/O-bound.
 
