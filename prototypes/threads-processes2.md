@@ -141,7 +141,7 @@ Bonus, còn một chỗ đáng lưu tâm là khi sử dụng `multiprocessing`, 
 
 Mình có đọc 1 [bài viết](https://pythonspeed.com/articles/python-multiprocessing/) rất hay về vấn đề này. Ngoài ra còn bài của [Dr John A Stevenson](https://britishgeologicalsurvey.github.io/science/python-forking-vs-spawn/).
 
-*fork* và *spawn* là 2 phương thức bắt đầu tạo processes mới. **Fork** mặc định trên **Linux*, trong khi **Windows** và **MacOS** dùng **Spawn**.
+*fork* và *spawn* là 2 phương thức bắt đầu tạo processes mới. **Fork** mặc định trên **Linux**, trong khi **Windows** và **MacOS** dùng **Spawn**.
 
 Khi *fork*, một process con kế thừa các biến, module-level configurations, threads và trạng thái của các biến như nhau từ process cha. Mỗi process con sau đó tiếp tục công việc của chúng 1 cách độc lập,
 *pool* sẽ chia các args giữa các process con và chúng hoạt động một cách tuần tự.

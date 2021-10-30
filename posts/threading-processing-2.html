@@ -12,6 +12,11 @@
     />
     <link
       rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css"
+    />
+
+    <link
+      rel="stylesheet"
       type="text/css"
       href="//fonts.googleapis.com/css?family=Droid+Sans+Mono"
     />
@@ -192,7 +197,7 @@ Trong khi Pool class thì lại phù hợp nhất với một lượng lớn cá
 
 <p>Mình có đọc 1 <a href="https://pythonspeed.com/articles/python-multiprocessing/">bài viết</a> rất hay về vấn đề này. Ngoài ra còn bài của <a href="https://britishgeologicalsurvey.github.io/science/python-forking-vs-spawn/">Dr John A Stevenson</a>.</p>
 
-<p><em>fork</em> và <em>spawn</em> là 2 phương thức bắt đầu tạo processes mới. <strong>Fork</strong> mặc định trên <strong>Linux<em>, trong khi *</em>Windows</strong> và <strong>MacOS</strong> dùng <strong>Spawn</strong>.</p>
+<p><em>fork</em> và <em>spawn</em> là 2 phương thức bắt đầu tạo processes mới. <strong>Fork</strong> mặc định trên <strong>Linux</strong>, trong khi <strong>Windows</strong> và <strong>MacOS</strong> dùng <strong>Spawn</strong>.</p>
 
 <p>Khi <em>fork</em>, một process con kế thừa các biến, module-level configurations, threads và trạng thái của các biến như nhau từ process cha. Mỗi process con sau đó tiếp tục công việc của chúng 1 cách độc lập,
 <em>pool</em> sẽ chia các args giữa các process con và chúng hoạt động một cách tuần tự.</p>
@@ -655,6 +660,7 @@ bắt tay vào code chúng ta mới gặp được. Mong là những phần mìn
   async
 ></script>
 
-    <script src="../static//script.js" type="text/javascript"></script>
+    <script src="../static/script.js" type="text/javascript"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
   </body>
 </html>
