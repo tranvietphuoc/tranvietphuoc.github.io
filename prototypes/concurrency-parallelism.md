@@ -333,7 +333,7 @@ Có thể mình sẽ có một bài viết khác sâu hơn về *asyncio* để 
 
 ## Tiếp theo là cách nào để tăng tốc CPU-bound.
 
-Cũng trong bài [processes]((https://tranvietphuoc.github.io/posts/threading-processing-2.html) mình cũng đã thử một số ví dụ CPU-bound với
+Cũng trong bài [processes](https://tranvietphuoc.github.io/posts/threading-processing-2.html) mình cũng đã thử một số ví dụ CPU-bound với
 multiprocessing rồi nên cũng sẽ không trình bày lại. Nhìn chung với chương trình thực hiện nhiều việc đòi hỏi CPU bound thì ta
 sẽ ưu tiên dùng thư viện `multiprocessing` hoặc `ProcessPoolExecutor` trong `concurrent.futures`.
 
