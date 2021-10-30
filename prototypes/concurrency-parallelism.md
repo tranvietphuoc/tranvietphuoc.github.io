@@ -36,11 +36,11 @@ khi mà HĐH có thể ưu tiên một thread để switch.
 Nó cũng sẽ trở nên khó nhằn bởi vì từ "bất cứ khi nào", sự chuyển đổi này có thể xảy ra ngay cả khi đang thực thi 1 câu lệnh Python.
 Sự switch giữa các threads với nhau được quyết định bởi HĐH**
 
-Asyncio thì khác, nó được gọi là **"cooperative multitasking"**. Các task phải hợp tác với nhau bằng việc thông báo khi nào
-chúng sẵn sàng để được switch. Điều đó có nghĩa là code trong task phải thay đổi 1 chút để nó có thể xảy ra.
+Asyncio thì khác, nó được gọi là **"cooperative multitasking"**. **Các task phải hợp tác với nhau bằng việc thông báo khi nào
+chúng sẵn sàng để được switch. Điều đó có nghĩa là code trong task phải thay đổi 1 chút để nó có thể xảy ra.**
 
-Lợi ích của việc làm việc này là bạn sẽ luôn biết nhiệm vụ của mình sẽ được hoán đổi ở đâu. Nó sẽ không chuyển đổi trong khi
-đang ở giữa một câu lệnh Python trừ khi câu lệnh đó được đánh dấu.**
+*Lợi ích của việc làm việc này là bạn sẽ luôn biết nhiệm vụ của mình sẽ được hoán đổi ở đâu. Nó sẽ không chuyển đổi trong khi
+đang ở giữa một câu lệnh Python trừ khi câu lệnh đó được đánh dấu.*
  
 # Parallelism
 
@@ -243,14 +243,14 @@ tìm hiểu cách hoạt động của nó trên [stack overflow](https://stacko
 
 #### async và await
 
-Khi làm việc với *asyncio* bạn sẽ gặp 2 keyword mới là *async* và *await*.
+Khi làm việc với *asyncio* bạn sẽ gặp 2 keyword mới là `async` và `await`.
 Bạn có thể nhìn *await* như một magic cho phép task kiểm soát thủ công trở lại event loop. Khi code của bạn await một function call,
 nó là một tín hiệu cho biết lời gọi sẽ xảy ra trong một khoảng thời gian và task sẽ từ bỏ quyền kiểm soát.
 
-Đơn giản nhất là nghĩ *async* như một flag để Python nói rằng function đó chuẩn bị được định nghĩa sử dụng *await*. Tuy nhiên trong một số trường
+Đơn giản nhất là nghĩ `async` như một flag để Python nói rằng function đó chuẩn bị được định nghĩa sử dụng `await`. Tuy nhiên trong một số trường
 hợp điều này không đúng.
 
-Một ngoại lệ là với câu lệnh *async with*, nó tạo một context manager từ một object bạn sẽ *await*. Trong khi ngữ nghĩa khác nhau một chút,
+Một ngoại lệ là với câu lệnh `async with`, nó tạo một context manager từ một object bạn sẽ `await`. Trong khi ngữ nghĩa khác nhau một chút,
 nhưng ý tưởng giống nhau là dùng flag cho context manager như vài thứ có thể hoán đổi.
 
 Ở đây sẽ có vài sự phức tạp trong việc quản lý tương tác giữa event loop và tasks, bạn nên đọc documentation từ python.org.
@@ -291,7 +291,7 @@ if __name__ == "__main__":
 
 Vẫn là ý tưởng cũ nhưng ở đây có một số sự thay đổi trong code.
 
-*download_site()* dùng *async* keyword cho việc định nghĩa hàm và trong việc quản lý context manager khi bạn thực sự gọi *session.get()*.
+*download_site()* dùng `async` keyword cho việc định nghĩa hàm và trong việc quản lý context manager khi bạn thực sự gọi *session.get()*.
 
 *download_all_sites()* thay đổi khá nhiều so với những ví dụ trước. Bạn có thể share sessions giữa các tasks với nhau, vì vậy khi session được tạo ở đây như một context manager,
 các tasks có thể share session bởi vì chúng đang chạy trên cùng một thread giống nhau. Không có cách nào để task có thể ngắt task khác trong khi session
@@ -333,7 +333,7 @@ Có thể mình sẽ có một bài viết khác sâu hơn về *asyncio* để 
 
 ## Tiếp theo là cách nào để tăng tốc CPU-bound.
 
-Ở bài về [processes]((https://tranvietphuoc.github.io/posts/threading-processing-2.html) mình cũng đã thử một số ví dụ CPU-bound với
+Cũng trong bài [processes]((https://tranvietphuoc.github.io/posts/threading-processing-2.html) mình cũng đã thử một số ví dụ CPU-bound với
 multiprocessing rồi nên cũng sẽ không trình bày lại. Nhìn chung với chương trình thực hiện nhiều việc đòi hỏi CPU bound thì ta
 sẽ ưu tiên dùng thư viện `multiprocessing` hoặc `ProcessPoolExecutor` trong `concurrent.futures`.
 
