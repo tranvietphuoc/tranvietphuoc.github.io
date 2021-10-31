@@ -29,15 +29,24 @@ thay phiên nhau nhằm tăng tốc toàn bộ tiến trình.
 
 Cách mà các threads, tasks luân phiên nhau cũng khác nhau giữa các thư viện *threading* và *asyncio*. Trong *threading*,
 HĐH thực sự biết mỗi thread đang có những gì và có thể interrupt (ngắt) nó tại bất kỳ thời điểm nào mà bắt đầu chạy một thread khác.
-Đây gọi là "pre-emptive" multitasking, tạm dịch là là đa nhiệm ưu tiên (thực sự trong Computer Sciene tiếng anh dịch ra tiếng việt nó tối nghĩa kiểu gì ấy),
-khi mà HĐH có thể ưu tiên một thread để switch.
+Đây gọi là "[pre-emptive multitasking](https://en.wikipedia.org/wiki/Preemption_%28computing%29)",
+tạm dịch là là đa nhiệm ưu tiên (thực sự trong [CS](https://en.wikipedia.org/wiki/Computer_science)
+tiếng anh dịch ra tiếng việt nó tối nghĩa kiểu gì ấy). Nó sử dụng một cơ chế ngắt (interrupt mechanism) là hoãn lại task đang xử lý và
+gọi lên scheduler để xác định xem task nào sẽ được thực thi tiếp theo. HĐH chịu trách nhiệm khởi tạo một [context switch](https://en.wikipedia.org/wiki/Context_switch)
+thỏa mãn một ràng buộc của chính sách scheduling ưu tiên.
+Kèm theo đó là pre-emptive multitasking chạy trong một [protection ring](https://en.wikipedia.org/wiki/Protection_ring), nên trong quá trình
+interrupting và resuming dữ liệu của task được bảo vệ.
 
-**Pre-emtive multitasking hữu dụng trong trường hợp code trong thread không cần làm gì cả để switch.
-Nó cũng sẽ trở nên khó nhằn bởi vì từ "bất cứ khi nào", sự chuyển đổi này có thể xảy ra ngay cả khi đang thực thi 1 câu lệnh Python.
-Sự switch giữa các threads với nhau được quyết định bởi HĐH**
+**Pre-emtive multitasking hữu dụng trong trường hợp code trong tasks không cần làm gì cả để switch.
+Nó cũng sẽ trở nên khó nhằn bởi vì từ "bất cứ khi nào", sự chuyển đổi này có thể xảy ra ngay cả khi task đó đang thực thi 1 câu lệnh Python.
+Sự switch giữa các tasks với nhau được quyết định bởi HĐH**
 
-Asyncio thì khác, nó được gọi là **"cooperative multitasking"**. **Các task phải hợp tác với nhau bằng việc thông báo khi nào
+Asyncio thì khác, nó được gọi là **"cooperative multitasking"**. Ở đây, HĐH không khởi tạo context switch, thay vào đó
+các tasks tình nguyện trả về sự điều khiển một cách định kỳ, khi nào nghỉ chạy, khi nào bị chặn một cách logic. 
+**Các task phải hợp tác với nhau bằng việc thông báo khi nào
 chúng sẵn sàng để được switch. Điều đó có nghĩa là code trong task phải thay đổi 1 chút để nó có thể xảy ra.**
+Lúc này, chức năng [scheduler](https://en.wikipedia.org/wiki/Scheduling_(computing)) của HĐH sẽ có vai trò giới hạn
+để bắt đầu một task và để task trả về control một cách tự nguyện.
 
 *Lợi ích của việc làm việc này là bạn sẽ luôn biết nhiệm vụ của mình sẽ được hoán đổi ở đâu. Nó sẽ không chuyển đổi trong khi
 đang ở giữa một câu lệnh Python trừ khi câu lệnh đó được đánh dấu.*
@@ -362,4 +371,9 @@ Bạn cũng đã nắm được cách thức để sử dụng từng thư việ
 Mong là những gì được trình bày sẽ có ích cho bạn ít nhiều.
 
 Bài viết mình kết thúc ở đây!
+
+**Nguồn**
+
+* RealPython
+* wikipedia
 

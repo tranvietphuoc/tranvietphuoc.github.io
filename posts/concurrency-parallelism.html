@@ -91,15 +91,24 @@ thay phiên nhau nhằm tăng tốc toàn bộ tiến trình.</p>
 
 <p>Cách mà các threads, tasks luân phiên nhau cũng khác nhau giữa các thư viện <em>threading</em> và <em>asyncio</em>. Trong <em>threading</em>,
 HĐH thực sự biết mỗi thread đang có những gì và có thể interrupt (ngắt) nó tại bất kỳ thời điểm nào mà bắt đầu chạy một thread khác.
-Đây gọi là "pre-emptive" multitasking, tạm dịch là là đa nhiệm ưu tiên (thực sự trong Computer Sciene tiếng anh dịch ra tiếng việt nó tối nghĩa kiểu gì ấy),
-khi mà HĐH có thể ưu tiên một thread để switch.</p>
+Đây gọi là "<a href="https://en.wikipedia.org/wiki/Preemption_%28computing%29">pre-emptive multitasking</a>",
+tạm dịch là là đa nhiệm ưu tiên (thực sự trong <a href="https://en.wikipedia.org/wiki/Computer_science">CS</a>
+tiếng anh dịch ra tiếng việt nó tối nghĩa kiểu gì ấy). Nó sử dụng một cơ chế ngắt (interrupt mechanism) là hoãn lại task đang xử lý và
+gọi lên scheduler để xác định xem task nào sẽ được thực thi tiếp theo. HĐH chịu trách nhiệm khởi tạo một <a href="https://en.wikipedia.org/wiki/Context_switch">context switch</a>
+thỏa mãn một ràng buộc của chính sách scheduling ưu tiên.
+Kèm theo đó là pre-emptive multitasking chạy trong một <a href="https://en.wikipedia.org/wiki/Protection_ring">protection ring</a>, nên trong quá trình
+interrupting và resuming dữ liệu của task được bảo vệ.</p>
 
-<p><strong>Pre-emtive multitasking hữu dụng trong trường hợp code trong thread không cần làm gì cả để switch.
-Nó cũng sẽ trở nên khó nhằn bởi vì từ "bất cứ khi nào", sự chuyển đổi này có thể xảy ra ngay cả khi đang thực thi 1 câu lệnh Python.
-Sự switch giữa các threads với nhau được quyết định bởi HĐH</strong></p>
+<p><strong>Pre-emtive multitasking hữu dụng trong trường hợp code trong tasks không cần làm gì cả để switch.
+Nó cũng sẽ trở nên khó nhằn bởi vì từ "bất cứ khi nào", sự chuyển đổi này có thể xảy ra ngay cả khi task đó đang thực thi 1 câu lệnh Python.
+Sự switch giữa các tasks với nhau được quyết định bởi HĐH</strong></p>
 
-<p>Asyncio thì khác, nó được gọi là <strong>"cooperative multitasking"</strong>. <strong>Các task phải hợp tác với nhau bằng việc thông báo khi nào
-chúng sẵn sàng để được switch. Điều đó có nghĩa là code trong task phải thay đổi 1 chút để nó có thể xảy ra.</strong></p>
+<p>Asyncio thì khác, nó được gọi là <strong>"cooperative multitasking"</strong>. Ở đây, HĐH không khởi tạo context switch, thay vào đó
+các tasks tình nguyện trả về sự điều khiển một cách định kỳ, khi nào nghỉ chạy, khi nào bị chặn một cách logic. 
+<strong>Các task phải hợp tác với nhau bằng việc thông báo khi nào
+chúng sẵn sàng để được switch. Điều đó có nghĩa là code trong task phải thay đổi 1 chút để nó có thể xảy ra.</strong>
+Lúc này, chức năng <a href="https://en.wikipedia.org/wiki/Scheduling_(computing)">scheduler</a> của HĐH sẽ có vai trò giới hạn
+để bắt đầu một task và để task trả về control một cách tự nguyện.</p>
 
 <p><em>Lợi ích của việc làm việc này là bạn sẽ luôn biết nhiệm vụ của mình sẽ được hoán đổi ở đâu. Nó sẽ không chuyển đổi trong khi
 đang ở giữa một câu lệnh Python trừ khi câu lệnh đó được đánh dấu.</em></p>
@@ -430,6 +439,13 @@ multiprocessing, I/O bound thì dùng threading hoặc asyncio tùy vào thực 
 <p>Mong là những gì được trình bày sẽ có ích cho bạn ít nhiều.</p>
 
 <p>Bài viết mình kết thúc ở đây!</p>
+
+<p><strong>Nguồn</strong></p>
+
+<ul>
+<li>RealPython</li>
+<li>wikipedia</li>
+</ul>
 
 </p>
 
