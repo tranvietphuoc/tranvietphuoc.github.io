@@ -66,7 +66,7 @@
 <br />
 
 <p class="post-content">
-  <p>Khi nhắc tới Python, hẳn chúng ta đã phải biết <a href="https://trvph.github.io/posts/python-gil.html">GIL</a> có tầm quan trọng ra sao đối với ngôn ngữ này.
+  <p>Khi nhắc tới Python, hẳn chúng ta đã phải biết <a href="https://tvph.github.io/posts/python-gil.html">GIL</a> có tầm quan trọng ra sao đối với ngôn ngữ này.
 Từ việc sử dụng GIL, các khái niệm về threads, processes cũng có chút đặc biệt mà chúng ta cần lưu tâm khi làm việc với Python.
 Bài này mình sẽ giới thiệu các khái niệm:</p>
 
@@ -78,7 +78,7 @@ Bài này mình sẽ giới thiệu các khái niệm:</p>
 
 <h1>Thread</h1>
 
-<p>Ở <a href="https://trvph.github.io/posts/python-gil.html">bài trước</a> chúng ta đã tìm hiểu kỹ cơ chế hoạt động của GIL, và cũng làm quen qua khái niệm thread.</p>
+<p>Ở <a href="https://tvph.github.io/posts/python-gil.html">bài trước</a> chúng ta đã tìm hiểu kỹ cơ chế hoạt động của GIL, và cũng làm quen qua khái niệm thread.</p>
 
 <p>Thread là một luồng thực thi của chương trình, giả sử chương trình của bạn có 2 hàm thì với thread, chương trình của bạn có thể làm 2 việc cùng một lúc
 thay vì làm từng việc theo thứ tự hàm được gọi.</p>
@@ -345,7 +345,7 @@ Trong Python, nó được gọi là <em>Lock</em>, với các ngôn ngữ khác
 
 <p>Hàm <code>.acquire()</code> và <code>.release()</code> được dùng để nắm và giải phóng Lock. Khi 1 thread muốn nắm Lock, nó sẽ gọi phương thức .acquire(), nếu Lock đang được 
 giữ bởi thread khác, nó sẽ đợi tới khi thread đó giải phóng Lock. Bạn cần chú ý chỗ này, nếu 1 thread giữ Lock nhưng không làm gì cả và cũng không giải phóng
-thì nó sẽ làm chương trình bị đứng, ở bài trước mình đã giới thiệu cơ chế <code>ticks</code> của Python interpreter. Bạn có thể <a href="https://trvph.github.io/posts/python-gil.html">tham khảo lại</a></p>
+thì nó sẽ làm chương trình bị đứng, ở bài trước mình đã giới thiệu cơ chế <code>ticks</code> của Python interpreter. Bạn có thể <a href="https://tvph.github.io/posts/python-gil.html">tham khảo lại</a></p>
 
 <p>Khá là may mắn là Python Lock cũng vận hành như 1 context manager, vì vậy bạn có thể dùng nó với câu lệnh <code>with</code>. Và nó sẽ được giải phóng tự động
 khi thoát ra khỏi with block. Xét ví dụ:</p>
@@ -818,7 +818,7 @@ không thread nào được chạy trước khi tất cả các threads đó ho�
               >Powered by
               <a
                 style="text-decoration: none; color: orangered;"
-                href="https://github.com/trvph"
+                href="https://github.com/tvph"
                 >Trần Việt Phước</a
               >
             </span>
@@ -830,7 +830,7 @@ không thread nào được chạy trước khi tất cả các threads đó ho�
     
 <script
   src="https://utteranc.es/client.js"
-  repo="trvph/trvph.github.io"
+  repo="tvph/tvph.github.io"
   issue-term="url"
   label="Comment"
   theme="github-light"

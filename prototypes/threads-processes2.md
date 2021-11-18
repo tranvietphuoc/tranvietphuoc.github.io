@@ -5,7 +5,7 @@ name: threading-processing-2
 summary: Tổng quát về Threads, Processes trong Python (tt)
 ---------------------------------------------------------------
 
-Ở [bài viết trước](https://trvph.github.io/posts/threading-processing-1.html), mình đã trình bày khá nhiều về *threading* trong Python.
+Ở [bài viết trước](https://tvph.github.io/posts/threading-processing-1.html), mình đã trình bày khá nhiều về *threading* trong Python.
 Với threads, ta đã biết nó sẽ bị ảnh hưởng bởi GIL và chỉ phù hợp cho các tác vụ nặng về xử lý I/O.
 
 Nhưng khi làm việc với các tác vụ nặng về tính toán, đòi hỏi phải tận dụng các lõi CPU thì chúng ta sẽ chạm tới một chủ đề con khác.

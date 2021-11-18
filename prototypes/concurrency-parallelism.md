@@ -218,7 +218,7 @@ Downloaded 160 in 1.1251485347747803 seconds
 
 Nhanh hơn gấp 3 so với chạy tuần tự. Wonderful!!
 
-**Các vấn đề có thể xảy ra với threading là race conditions, bạn có thể tham khảo [bài viết trước](https://trvph.github.io/posts/threading-processing-1.html) hoặc [ví dụ này](https://realpython.com/python-concurrency/#threading-version)**
+**Các vấn đề có thể xảy ra với threading là race conditions, bạn có thể tham khảo [bài viết trước](https://tvph.github.io/posts/threading-processing-1.html) hoặc [ví dụ này](https://realpython.com/python-concurrency/#threading-version)**
 
 ### asyncio
 
@@ -337,12 +337,12 @@ vào một task nếu task không tự trao quyền kiểm soát lại cho event
 
 Có thể mình sẽ có một bài viết khác sâu hơn về *asyncio* để tìm hiểu sâu hơn về thư viện này và lợi ích của nó với multi-tasking.
 
-Ở bài viết về [processes](https://trvph.github.io/posts/threading-processing-2.html) mình đã trình bày tại sao không nên dùng multiprocessing cho I/O task nên mình sẽ không trình bày ở đây.
+Ở bài viết về [processes](https://tvph.github.io/posts/threading-processing-2.html) mình đã trình bày tại sao không nên dùng multiprocessing cho I/O task nên mình sẽ không trình bày ở đây.
 
 
 ## Tiếp theo là cách nào để tăng tốc CPU-bound.
 
-Cũng trong bài [processes](https://trvph.github.io/posts/threading-processing-2.html) mình cũng đã thử một số ví dụ CPU-bound với
+Cũng trong bài [processes](https://tvph.github.io/posts/threading-processing-2.html) mình cũng đã thử một số ví dụ CPU-bound với
 multiprocessing rồi nên cũng sẽ không trình bày lại. Nhìn chung với chương trình thực hiện nhiều việc đòi hỏi CPU bound thì ta
 sẽ ưu tiên dùng thư viện `multiprocessing` hoặc `ProcessPoolExecutor` trong `concurrent.futures`.
 

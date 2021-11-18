@@ -1,6 +1,6 @@
 # This is my personal blog
 
-![Blog generator tool](https://github.com/tranvietphuoc/tranvietphuoc.github.io/actions/workflows/python-app.yml/badge.svg)
+![Blog generator tool](https://github.com/tvph/tvph.github.io/actions/workflows/python-app.yml/badge.svg)
 
 * I've created a tool to render from markdown file to static site by `Python` for my self.
 * To use this template, you need to clone the repo first. Then run `poetry install` to install virtual environment on your local machine.
