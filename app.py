@@ -29,6 +29,7 @@ def create_posts(root_path: Path):
             )
 
     # return a dict with sorted following date created
+
     posts_for_rendering = {
         p: posts[p]
         for p in sorted(

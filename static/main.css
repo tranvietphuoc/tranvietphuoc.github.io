@@ -6,9 +6,14 @@ a:visited {
   color: lightcoral;
 }
 
+.author-info {
+  display: flex;
+  flex-direction: row;
+}
+
 * {
   box-sizing: border-box;
-  font-family: 'droid sans mono', sans-serif;
+  font-family: "droid sans mono", sans-serif;
 }
 
 .author {
