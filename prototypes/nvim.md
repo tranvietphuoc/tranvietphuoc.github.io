@@ -67,7 +67,7 @@ Bạn sẽ phải cần cài đặt các chương trình sau trên máy của m�
 * vscode-lldb
 
 
-Mình đã push sẵn các configs của mình trên [đây](https://github.com/tranvietphuoc/nvim). Bạn có thể cài đặt bằng 1 script `install.sh` hoặc clone project về rồi copy vào thư mục
+Mình đã push sẵn các configs của mình trên [đây](https://github.com/trvph/nvim). Bạn có thể cài đặt bằng 1 script `install.sh` hoặc clone project về rồi copy vào thư mục
 `~/.config/nvim`. Sau đó mở `nvim` lên và chạy command:
 ```
 :PackerInstall

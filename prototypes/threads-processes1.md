@@ -6,7 +6,7 @@ summary: Tổng quát về Threads, Processes trong Python
 ---------------------------------------------------------------
 
 
-Khi nhắc tới Python, hẳn chúng ta đã phải biết [GIL](https://tranvietphuoc.github.io/posts/python-gil.html) có tầm quan trọng ra sao đối với ngôn ngữ này.
+Khi nhắc tới Python, hẳn chúng ta đã phải biết [GIL](https://trvph.github.io/posts/python-gil.html) có tầm quan trọng ra sao đối với ngôn ngữ này.
 Từ việc sử dụng GIL, các khái niệm về threads, processes cũng có chút đặc biệt mà chúng ta cần lưu tâm khi làm việc với Python.
 Bài này mình sẽ giới thiệu các khái niệm:
 
@@ -17,7 +17,7 @@ Bài này mình sẽ giới thiệu các khái niệm:
 
 # Thread
 
-Ở [bài trước](https://tranvietphuoc.github.io/posts/python-gil.html) chúng ta đã tìm hiểu kỹ cơ chế hoạt động của GIL, và cũng làm quen qua khái niệm thread.
+Ở [bài trước](https://trvph.github.io/posts/python-gil.html) chúng ta đã tìm hiểu kỹ cơ chế hoạt động của GIL, và cũng làm quen qua khái niệm thread.
 
 Thread là một luồng thực thi của chương trình, giả sử chương trình của bạn có 2 hàm thì với thread, chương trình của bạn có thể làm 2 việc cùng một lúc
 thay vì làm từng việc theo thứ tự hàm được gọi.
@@ -296,7 +296,7 @@ Chỉ 1 thread được giữ Lock object tại 1 thời điểm, bất cứ thr
 
 Hàm `.acquire()` và `.release()` được dùng để nắm và giải phóng Lock. Khi 1 thread muốn nắm Lock, nó sẽ gọi phương thức .acquire(), nếu Lock đang được 
 giữ bởi thread khác, nó sẽ đợi tới khi thread đó giải phóng Lock. Bạn cần chú ý chỗ này, nếu 1 thread giữ Lock nhưng không làm gì cả và cũng không giải phóng
-thì nó sẽ làm chương trình bị đứng, ở bài trước mình đã giới thiệu cơ chế `ticks` của Python interpreter. Bạn có thể [tham khảo lại](https://tranvietphuoc.github.io/posts/python-gil.html)
+thì nó sẽ làm chương trình bị đứng, ở bài trước mình đã giới thiệu cơ chế `ticks` của Python interpreter. Bạn có thể [tham khảo lại](https://trvph.github.io/posts/python-gil.html)
 
 Khá là may mắn là Python Lock cũng vận hành như 1 context manager, vì vậy bạn có thể dùng nó với câu lệnh `with`. Và nó sẽ được giải phóng tự động
 khi thoát ra khỏi with block. Xét ví dụ:
