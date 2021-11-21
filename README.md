@@ -2,6 +2,14 @@
 
 ![Blog generator tool](https://github.com/tvph/tvph.github.io/actions/workflows/python-app.yml/badge.svg)
 
+## Prerequisite
+
+1. `make`
+2. `python`
+3. `poetry`
+
+## Usage
+
 * I've created a tool to render from markdown file to static site by `Python` for my self.
 * To use this template, you need to clone the repo first. Then run `poetry install` to install virtual environment on your local machine.
 * Project structure:
@@ -31,7 +39,13 @@ name: ....
 summary: ....
 ```
 
-* Finnally. Run `./render` to render `html` files. All `html` files of posts will go to `posts` and `tags` folder.
+* To render blog posts:
+
+	* Run `make install` to install `.venv` on your local machine.
+	* Run `make clean` to delete old html files.
+	* Run `make test` to run test.
+	* Run `make run` to render all html files to `posts` and `tags` folder.
+
 * To publish your blog. Read [this guide](https://pages.github.com/)
 * In addition, you can add a comment plugin your self call [utterances](https://utteranc.es/?installation_id=19767855&setup_action=install). After that, go to
 `templates/post.html` and replace the script in `{% block script %}{% endblock %}` with your script.
