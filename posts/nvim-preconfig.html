@@ -10,38 +10,66 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css"
-    />
 
     <link
       rel="stylesheet"
-      type="text/css"
-      href="//fonts.googleapis.com/css?family=Droid+Sans+Mono"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/solarized-light.min.css"
+      integrity="sha512-ZW2g6Pn2pMbKSyjcA+r4Lc58kcfvOdcsTuCCTl3qz8NqVJwUtAuiN61pDoW3EEfrjwH2CPtkFWMdkzMY1idilA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+
     <title>Phuoc's blog</title>
   </head>
   <body>
-    <br />
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-2">
-          <h1 class="home-page">
-            <a
-              style="text-decoration: none; color: orangered;"
-              href="../index.html"
-              >Trang chủ</a
-            >
-          </h1>
+    <div class="main">
+      <div class="heading">
+        <a href="/"
+          ><img
+            id="home-icon"
+            src="../static/assets/pyo3.png"
+            alt="Python Trioxide"
+        /></a>
+        <div class="info">
+          <a href="https://github.com/tvph" title="Github">
+            <i class="fab fa-github-alt"></i
+          ></a>
+          <a href="https://stackoverflow.com/users/10872420/tran-viet-phuoc" title="Stack Overflow"
+            ><i class="fab fa-stack-overflow"></i
+          ></a>
+          <a href="https://www.linkedin.com/in/tranvietphuoc/" title="LinkedIn"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="mailto: phuoctv.ut@gmail.com" title="Email"
+            ><i class="fas fa-at"></i
+          ></a>
+          <a href="link_to_your_resume" title="Resume"
+            ><i class="fas fa-file"></i
+          ></a>
         </div>
-        <div class="col-sm-10">
-          
+      </div>
+      <div id="container">
+        
 <div class="row">
-  <h1>
-    <span style="color: lightgrey;"># </span>
+  <p><a id="back" href="/"> <-Trang chủ</a></p>
+</div>
+<div class="row">
+  <h2>
+    <span style="color: lightgray;"># </span>
     Cá nhân hóa NeoVim
-  </h1>
+  </h2>
 </div>
 <br />
 
@@ -50,25 +78,9 @@
     <small class="post-meta">Ngày: 05-10-2021</small>
     <small class="post-meta"
       >Tags: 
-      <a
-        href="../tags/neovim.html"
-        style="
-          text-decoration: none;
-          color: orangered;
-          background-color: lightgray;
-        "
-        >neovim</a
-      >
+      <a href="../tags/neovim.html" id="tag-name">neovim</a>
       
-      <a
-        href="../tags/editor.html"
-        style="
-          text-decoration: none;
-          color: orangered;
-          background-color: lightgray;
-        "
-        >editor</a
-      >
+      <a href="../tags/editor.html" id="tag-name">editor</a>
       
     </small>
   </div>
@@ -179,31 +191,7 @@ Nên nếu có thời gian thì cũng đáng để học ^^.</p>
 <p>Bài này mình kết ở đây nhé!</p>
 
 </p>
-
-
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4"></div>
-          <div class="col-sm-4 author">
-            <span class="text-muted"
-              >Powered by
-              <a
-                style="text-decoration: none; color: orangered;"
-                href="https://github.com/tvph"
-                >Trần Việt Phước</a
-              >
-            </span>
-          </div>
-          <div class="col-sm-4"></div>
-        </div>
-      </div>
-    </div>
-    
+ 
 <script
   src="https://utteranc.es/client.js"
   repo="tvph/tvph.github.io"
@@ -214,7 +202,8 @@ Nên nếu có thời gian thì cũng đáng để học ^^.</p>
   async
 ></script>
 
+      </div>
+    </div>
     <script src="../static/script.js" type="text/javascript"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
   </body>
 </html>

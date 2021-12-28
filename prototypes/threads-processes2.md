@@ -60,7 +60,7 @@ if __name__ == "__main__":
 
 Đoạn code trên thực thi trên 1 thread và 1 process duy nhất trên 1 CPU đơn. Có thể biểu diễn theo hình sau:
 
-<img src="https://files.realpython.com/media/CPUBound.d2d32cb2626c.png" alt="synchronize" width="80%" height="auto" />
+<img src="https://files.realpython.com/media/CPUBound.d2d32cb2626c.png" alt="synchronize" width="60%" height="auto" />
 
 Đây là kết quả của đoạn code trên:
 
@@ -100,13 +100,13 @@ if __name__ == "__main__":
 multiprocessing được thiết kế để share khối lượng công việc nặng về tính toán giữa các CPUs.
 Đây là biểu đồ thực thi của chương trình theo thời gian:
 
-<img src="https://files.realpython.com/media/CPUMP.69c1a7fad9c4.png" alt="multprocessing" width="80%" height="auto" />
+<img src="https://files.realpython.com/media/CPUMP.69c1a7fad9c4.png" alt="multprocessing" width="60%" height="auto" />
 
 
 Mặc định, khi tạo ra processes mới. Nó sẽ tự động xác định xem hệ thống của bạn có tối đa bao nhiêu CPUs.
 Có thể hình dung cách hoạt động của nó theo hình sau:
 
-<img src="https://miro.medium.com/max/1400/1*iEE5_Am-9x7iCVnn6F1MGQ.jpeg" alt="multiprocessing works" width="80%" height="auto" />
+<img src="https://miro.medium.com/max/1400/1*iEE5_Am-9x7iCVnn6F1MGQ.jpeg" alt="multiprocessing works" width="60%" height="auto" />
 
 Ở đây, mỗi thread sẽ nằm trên mỗi processes.
 

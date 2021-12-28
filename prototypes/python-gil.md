@@ -80,7 +80,7 @@ Trong GIL:
 **=>Mô hình chạy các threads trong Python.**
 
 
-<img src="https://i.imgur.com/bJQ65QH.png" alt="Mô hình thực thi các thread" width=400 height=200/>
+<img src="https://i.imgur.com/bJQ65QH.png" alt="Mô hình thực thi các thread" width=60% height="auto"/>
 
     * Với GIL, bạn sẽ có được khả năng coperative multitasking.   
     * Khi thread chạy, nó sẽ giữ GIL
@@ -92,7 +92,7 @@ Trong GIL:
 
 * Các tác vụ CPU-bound sẽ được check mỗi 100 `**ticks**`.
 
-<img src="https://i.imgur.com/nmBzsEC.png" alt="ticks" width=400 height=200/>
+<img src="https://i.imgur.com/nmBzsEC.png" alt="ticks" width=60% height="auto"/>
 
 * Có thể thay đổi nó bằng việc sử dụng hàm sử dụng `sys.setcheckinterval()` trong module `sys`.
 
@@ -171,7 +171,7 @@ thread đồng bộ hóa nguyên thủy (thread synchronization primitives)
 
     * Đây là cách mà hàm release() và acquire() hoạt động:
 
-    <img src="https://i.imgur.com/6kpn9gA.png" alt="release-acquire" width=400 height=200 />
+    <img src="https://i.imgur.com/6kpn9gA.png" alt="release-acquire" width=60% height="auto" />
 
 
 ## * Thread switching.
@@ -186,11 +186,11 @@ Giả sử bạn đang có 2 thread:
 
 * Thread 1 đang chạy 1 tác vụ I/O (read/write), nó có thể bị chặn. Vì thế nó releases GIL như hình sau.
 
-<img src="https://i.imgur.com/h6aKNVN.png" alt="I-O" width=400 height=200/>
+<img src="https://i.imgur.com/h6aKNVN.png" alt="I-O" width=60% height="auto"/>
 
 * Kết quả của việc releases GIL trong một signal operation.
 
-<img src="https://i.imgur.com/Pe7YCxu.png" alt="I-O2" width=400 height=200/>
+<img src="https://i.imgur.com/Pe7YCxu.png" alt="I-O2" width=60% height="auto"/>
 
 
 * Được xử lý bởi thread library và hệ điều hành
@@ -199,14 +199,14 @@ Giả sử bạn đang có 2 thread:
 
 * Thread 1 vẫn đang check.
 
-<img src="https://i.imgur.com/ww6Utdm.png" alt="thread" width=400 height=200/>
+<img src="https://i.imgur.com/ww6Utdm.png" alt="thread" width=60% height="auto"/>
 
 
 * Cả 2 thread đều sẵn sàng chạy
 
 * Các biến điều kiện có 1 hàng chờ nội bộ (internal wait queue)
 
-<img src="https://i.imgur.com/svBBNn0.png" alt="cond-var" width=400 height=200/>
+<img src="https://i.imgur.com/svBBNn0.png" alt="cond-var" width=60% height="auto"/>
 
 
 * Hệ điều hành có một hàng đợi ưu tiên (`priority queue`) cho threads/processes.
@@ -219,7 +219,7 @@ Giả sử bạn đang có 2 thread:
 
 * thread switching sẽ thực hiện theo hình sau:
 
-<img src="https://i.imgur.com/um90Yzy.png" alt="thread-switching" width=400 height=200 />
+<img src="https://i.imgur.com/um90Yzy.png" alt="thread-switching" width=60% height="auto" />
 
 Sơ lược và vậy, bạn có thể tìm hiểu sâu hơn trong bài của bác David Beazley.
 

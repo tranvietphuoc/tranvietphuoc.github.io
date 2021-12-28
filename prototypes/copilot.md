@@ -31,7 +31,7 @@ Bạn có thể tìm hiểu nhiều hơn về OpenAI Codex [tại đây](https:/
 
 Đây là hình thể hiện cơ chế hoạt động của `Copilot`:
 
-<img src="https://copilot.github.com/diagram.png" alt="copilot mechanism" width=80% height=auto/><br>
+<img src="https://copilot.github.com/diagram.png" alt="copilot mechanism" width=60% height=auto/><br>
 
 
 Vì copilot trains các models trên internet và cung cấp các đoạn code gợi ý thông qua các services dưới dạng các API,

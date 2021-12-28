@@ -69,13 +69,13 @@ xuyên khi chương trình hay làm việc với những thứ chậm hơn CPU, 
 
 Xem hình dưới đây:
 
-<img src="https://files.realpython.com/media/IOBound.4810a888b457.png" alt="i/o" width="80%" height="auto" />
+<img src="https://files.realpython.com/media/IOBound.4810a888b457.png" alt="i/o" width="60%" height="auto" />
 
 
 CPU-bound ngược với I/O bound, tức là những tác vụ chỉ yêu cầu khả năng tính toán nặng, không phải chờ phản hồi từ I/O. Tác nhân duy 
 nhất giới hạn tốc độ của chương trình là CPU. Xem hình sau đây:
 
-<img src="https://files.realpython.com/media/CPUBound.d2d32cb2626c.png" alt="cpu" width=80% height="auto" />
+<img src="https://files.realpython.com/media/CPUBound.d2d32cb2626c.png" alt="cpu" width=60% height="auto" />
 
 Chúng ta sẽ tổng hợp một cách tường minh theo bảng dưới đây:
 
@@ -84,6 +84,7 @@ Chúng ta sẽ tổng hợp một cách tường minh theo bảng dưới đây:
 |:-----------------:|:----------------:|
 | Chương trình tốn nhiều thời gian để giao tiếp với các thiết bị chậm hơn như kết nối mạng, ổ cứng, máy in | Chương trình tốn thời gian cho các hoạt động của CPU |
 | Tăng tốc chương trình đồng nghĩa với việc chồng chéo thời gian chờ ở các thiết bị | Tăng tốc nó liên quan đến việc tìm cách để thực hiện nhiều phép tính hơn trong một khoảng thời gian |
+
 
 
 ## Bắt đầu với I/O-bound.
@@ -323,7 +324,7 @@ Downloaded 160 in 0.5527686790308653 seconds
 
 Sơ đồ thực thi được thể hiện dưới hình sau:
 
-<img src="https://files.realpython.com/media/Asyncio.31182d3731cf.png" alt="asyncio" width="80%" height="auto" />
+<img src="https://files.realpython.com/media/Asyncio.31182d3731cf.png" alt="asyncio" width="60%" height="auto" />
 
 #### Các vấn đề của asyncio
 

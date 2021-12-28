@@ -10,38 +10,66 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css"
-    />
 
     <link
       rel="stylesheet"
-      type="text/css"
-      href="//fonts.googleapis.com/css?family=Droid+Sans+Mono"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/solarized-light.min.css"
+      integrity="sha512-ZW2g6Pn2pMbKSyjcA+r4Lc58kcfvOdcsTuCCTl3qz8NqVJwUtAuiN61pDoW3EEfrjwH2CPtkFWMdkzMY1idilA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+
     <title>Phuoc's blog</title>
   </head>
   <body>
-    <br />
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-2">
-          <h1 class="home-page">
-            <a
-              style="text-decoration: none; color: orangered;"
-              href="../index.html"
-              >Trang chủ</a
-            >
-          </h1>
+    <div class="main">
+      <div class="heading">
+        <a href="/"
+          ><img
+            id="home-icon"
+            src="../static/assets/pyo3.png"
+            alt="Python Trioxide"
+        /></a>
+        <div class="info">
+          <a href="https://github.com/tvph" title="Github">
+            <i class="fab fa-github-alt"></i
+          ></a>
+          <a href="https://stackoverflow.com/users/10872420/tran-viet-phuoc" title="Stack Overflow"
+            ><i class="fab fa-stack-overflow"></i
+          ></a>
+          <a href="https://www.linkedin.com/in/tranvietphuoc/" title="LinkedIn"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="mailto: phuoctv.ut@gmail.com" title="Email"
+            ><i class="fas fa-at"></i
+          ></a>
+          <a href="link_to_your_resume" title="Resume"
+            ><i class="fas fa-file"></i
+          ></a>
         </div>
-        <div class="col-sm-10">
-          
+      </div>
+      <div id="container">
+        
 <div class="row">
-  <h1>
-    <span style="color: lightgrey;"># </span>
+  <p><a id="back" href="/"> <-Trang chủ</a></p>
+</div>
+<div class="row">
+  <h2>
+    <span style="color: lightgray;"># </span>
     Từ Generators tới Asyncio
-  </h1>
+  </h2>
 </div>
 <br />
 
@@ -50,15 +78,7 @@
     <small class="post-meta">Ngày: 18-11-2021</small>
     <small class="post-meta"
       >Tags: 
-      <a
-        href="../tags/python.html"
-        style="
-          text-decoration: none;
-          color: orangered;
-          background-color: lightgray;
-        "
-        >python</a
-      >
+      <a href="../tags/python.html" id="tag-name">python</a>
       
     </small>
   </div>
@@ -66,34 +86,140 @@
 <br />
 
 <p class="post-content">
-  <p></p>
+  <p>Trong Python, <strong>Generator</strong> là một khái niệm nâng cao nhưng cũng cực kì quan trọng. Generator có thể được define dưới dạng
+biểu thức (expression) hoặc hàm (generator function). Chúng hoạt động như một <em>iterator</em>.</p>
+
+<p>Để hiểu về generator ta cần hiểu về iterator.</p>
+
+<h1>Iterator</h1>
+
+<h2>Định nghĩa</h2>
+
+<p>Trong Python, Iterator là một đối tượng có thể lặp qua mỗi phần tử trong nó điển hình là <em>collections</em> và <em>sequences</em> trong Python.</p>
+
+<p>Iterator cung cấp một cách thức để truy cập các phần tử trong nó, nói cách khác, nó chỉ trả về mỗi phần tử của một collection tuần tự.
+Các collections này đều có method <code>__iter__()</code> để trả về một đối tượng iterable và <code>__next__()</code> để trả về phần tử kế tiếp mỗi khi hàm built-in <code>next()</code> được gọi.</p>
+
+<p>Nếu một đối tượng có method <code>__next()__</code> đính trong nó, nó là một iterator.</p>
+
+<p>Ví dụ, các đối tượng sau đều là iterator:</p>
+
+<pre><code>for element in [1, 2, 3]:
+    print(element, end=' ')
+print('\n')
+
+for e in (1, 2, 3):
+    print(e, end=' ')
+print('\n')
+
+for key in {'one': 1, 'two': 2}:
+    print(key, end=' ')
+print('\n')
+
+for char in "abc":
+    print(char, end=" ")
+print('\n')
+
+for line in open('example.txt'):
+    print(line, end=' ')
+print('\n')
+</code></pre>
+
+<p>kết quả:</p>
+
+<pre><code>1 2 3
+1 2 3
+one two
+a b c
+---------------------
+FileNotFoundError     Traceback (most recent call last)
+....
+
+FileNotFoundError: [Errno 2] No such file or directory: 'example.txt'
+</code></pre>
+
+<p>Đây là những gì chúng ta thấy. Nhưng thực sự đây là những gì diễn ra phía sau câu lệnh <code>for</code>:</p>
+
+<ul>
+<li><p><code>for</code> gọi hàm <code>iter()</code> trên đối tượng được lặp. Hàm này trả về một đối tượng iterable, đối tượng này đã định nghĩa phương thức <code>__next__()</code>, nó cho phép
+truy cập một phần tử tại 1 thời điểm.</p></li>
+<li><p>Khi không còn phần tử nào để duyệt qua nữa, <code>__next__()</code> sẽ raise một <code>StopIteration</code> Exception để thông báo rằng vòng lặp kết thúc.</p></li>
+<li><p><code>for</code> gọi phần tử kế tiếp trong container bằng cách dùng hàm built-in <code>next()</code>.</p></li>
+<li><p>Các phương thức <code>__iter()__</code> và <code>__next__()</code> được gọi là iterator protocol.</p></li>
+</ul>
+
+<p>Xét ví dụ sau:</p>
+
+<pre><code>s = "abc"
+it = iter(s)
+print(it)   # print &lt;str_iterator object at 0x...&gt;
+print(next(it))  # print a
+print(next(it))  # print b
+print(next(it))  # print c
+print(next(it))  # raise StopIteration exception
+</code></pre>
+
+<p>Để nhìn rõ hơn, ta sử dụng module <code>dis</code></p>
+
+<pre><code>import dis
+
+l = [1, 2, 3, 4, 5]
+for e in l:
+    print(e)
+
+print(dis.dis('for e in l: print(e)'))
+</code></pre>
+
+<p>kết quả hiển thị trên console:</p>
+
+<pre><code>1
+2
+3
+4
+5
+  1           0 SETUP_LOOP              20 (to 22)
+              2 LOAD_NAME                0 (l)
+              4 GET_ITER
+        &gt;&gt;    6 FOR_ITER                12 (to 20)
+              8 STORE_NAME               1 (each)
+             10 LOAD_NAME                2 (print)
+             12 LOAD_NAME                1 (each)
+             14 CALL_FUNCTION            1
+             16 POP_TOP
+             18 JUMP_ABSOLUTE            6
+        &gt;&gt;   20 POP_BLOCK
+        &gt;&gt;   22 LOAD_CONST               0 (None)
+             24 RETURN_VALUE
+None
+</code></pre>
+
+<p>Như bạn có thể thấy, <code>for</code> statement gọi <code>GET_ITER</code> tương ứng với hàm <code>iter(l)</code> được gọi. Vì đó nó tạo một iterator có thể được gọi bằng <code>FOR_ITER</code> tương đương với <code>next()</code> và sẽ trả về các kết quả.</p>
+
+<p><strong>Trong Python, ngoài việc chúng ta có thể tạo một iterable object bằng việc dùng iterator protocol</strong> <code>__iter__()</code>, <strong>thì ta có thể dùng method</strong> <code>__getitem__()</code></p>
+
+<p>Tóm lại ta có thể kết luận đơn giản như sau:</p>
+
+<ul>
+<li><p>Iterable object là một object có thể được duyệt qua bằng các vòng lặp như <code>for</code>, <code>while</code> hay đằng sau nó là protocol <code>__next__()</code></p></li>
+<li><p>Iterator là một iterable object</p></li>
+<li><p>Iterator được tạo ra bằng cách gọi phương thức <code>__iter__()</code> thông qua hàm built-in <code>iter()</code> và được duyệt qua bằng phương thức <code>__next__()</code> thông qua hàm built-in <code>next()</code></p></li>
+</ul>
+
+<h2>Các tính chất của Iterator</h2>
+
+<ul>
+<li>Iterator chỉ có thể được duyệt qua một lần duy nhất.</li>
+</ul>
+
+<p>Xét ví dụ sau:</p>
+
+<pre><code>
+</code></pre>
+
+<h1>Generator</h1>
 
 </p>
-
-
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4"></div>
-          <div class="col-sm-4 author">
-            <span class="text-muted"
-              >Powered by
-              <a
-                style="text-decoration: none; color: orangered;"
-                href="https://github.com/tvph"
-                >Trần Việt Phước</a
-              >
-            </span>
-          </div>
-          <div class="col-sm-4"></div>
-        </div>
-      </div>
-    </div>
-    
+ 
 <script
   src="https://utteranc.es/client.js"
   repo="tvph/tvph.github.io"
@@ -104,7 +230,8 @@
   async
 ></script>
 
+      </div>
+    </div>
     <script src="../static/script.js" type="text/javascript"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
   </body>
 </html>

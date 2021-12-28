@@ -10,38 +10,66 @@
       integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU"
       crossorigin="anonymous"
     />
-    <link
-      rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/default.min.css"
-    />
 
     <link
       rel="stylesheet"
-      type="text/css"
-      href="//fonts.googleapis.com/css?family=Droid+Sans+Mono"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/styles/base16/solarized-light.min.css"
+      integrity="sha512-ZW2g6Pn2pMbKSyjcA+r4Lc58kcfvOdcsTuCCTl3qz8NqVJwUtAuiN61pDoW3EEfrjwH2CPtkFWMdkzMY1idilA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+      integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Inter"
+      rel="stylesheet"
+      crossorigin="anonymous"
+    />
+
     <title>Phuoc's blog</title>
   </head>
   <body>
-    <br />
-    <div class="container">
-      <div class="row">
-        <div class="col-sm-2">
-          <h1 class="home-page">
-            <a
-              style="text-decoration: none; color: orangered;"
-              href="../index.html"
-              >Trang chủ</a
-            >
-          </h1>
+    <div class="main">
+      <div class="heading">
+        <a href="/"
+          ><img
+            id="home-icon"
+            src="../static/assets/pyo3.png"
+            alt="Python Trioxide"
+        /></a>
+        <div class="info">
+          <a href="https://github.com/tvph" title="Github">
+            <i class="fab fa-github-alt"></i
+          ></a>
+          <a href="https://stackoverflow.com/users/10872420/tran-viet-phuoc" title="Stack Overflow"
+            ><i class="fab fa-stack-overflow"></i
+          ></a>
+          <a href="https://www.linkedin.com/in/tranvietphuoc/" title="LinkedIn"
+            ><i class="fab fa-linkedin"></i
+          ></a>
+          <a href="mailto: phuoctv.ut@gmail.com" title="Email"
+            ><i class="fas fa-at"></i
+          ></a>
+          <a href="link_to_your_resume" title="Resume"
+            ><i class="fas fa-file"></i
+          ></a>
         </div>
-        <div class="col-sm-10">
-          
+      </div>
+      <div id="container">
+        
 <div class="row">
-  <h1>
-    <span style="color: lightgrey;"># </span>
+  <p><a id="back" href="/"> <-Trang chủ</a></p>
+</div>
+<div class="row">
+  <h2>
+    <span style="color: lightgray;"># </span>
     Threads, Processes Trong Python (Phần 2)
-  </h1>
+  </h2>
 </div>
 <br />
 
@@ -50,15 +78,7 @@
     <small class="post-meta">Ngày: 30-10-2021</small>
     <small class="post-meta"
       >Tags: 
-      <a
-        href="../tags/python.html"
-        style="
-          text-decoration: none;
-          color: orangered;
-          background-color: lightgray;
-        "
-        >python</a
-      >
+      <a href="../tags/python.html" id="tag-name">python</a>
       
     </small>
   </div>
@@ -119,7 +139,7 @@ if __name__ == "__main__":
 
 <p>Đoạn code trên thực thi trên 1 thread và 1 process duy nhất trên 1 CPU đơn. Có thể biểu diễn theo hình sau:</p>
 
-<p><img src="https://files.realpython.com/media/CPUBound.d2d32cb2626c.png" alt="synchronize" width="80%" height="auto" /></p>
+<p><img src="https://files.realpython.com/media/CPUBound.d2d32cb2626c.png" alt="synchronize" width="60%" height="auto" /></p>
 
 <p>Đây là kết quả của đoạn code trên:</p>
 
@@ -157,12 +177,12 @@ if __name__ == "__main__":
 <p>multiprocessing được thiết kế để share khối lượng công việc nặng về tính toán giữa các CPUs.
 Đây là biểu đồ thực thi của chương trình theo thời gian:</p>
 
-<p><img src="https://files.realpython.com/media/CPUMP.69c1a7fad9c4.png" alt="multprocessing" width="80%" height="auto" /></p>
+<p><img src="https://files.realpython.com/media/CPUMP.69c1a7fad9c4.png" alt="multprocessing" width="60%" height="auto" /></p>
 
 <p>Mặc định, khi tạo ra processes mới. Nó sẽ tự động xác định xem hệ thống của bạn có tối đa bao nhiêu CPUs.
 Có thể hình dung cách hoạt động của nó theo hình sau:</p>
 
-<p><img src="https://miro.medium.com/max/1400/1*iEE5_Am-9x7iCVnn6F1MGQ.jpeg" alt="multiprocessing works" width="80%" height="auto" /></p>
+<p><img src="https://miro.medium.com/max/1400/1*iEE5_Am-9x7iCVnn6F1MGQ.jpeg" alt="multiprocessing works" width="60%" height="auto" /></p>
 
 <p>Ở đây, mỗi thread sẽ nằm trên mỗi processes.</p>
 
@@ -625,31 +645,7 @@ bắt tay vào code chúng ta mới gặp được. Mong là những phần mìn
 </ul>
 
 </p>
-
-
-        </div>
-      </div>
-    </div>
-    <br />
-    <div class="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-4"></div>
-          <div class="col-sm-4 author">
-            <span class="text-muted"
-              >Powered by
-              <a
-                style="text-decoration: none; color: orangered;"
-                href="https://github.com/tvph"
-                >Trần Việt Phước</a
-              >
-            </span>
-          </div>
-          <div class="col-sm-4"></div>
-        </div>
-      </div>
-    </div>
-    
+ 
 <script
   src="https://utteranc.es/client.js"
   repo="tvph/tvph.github.io"
@@ -660,7 +656,8 @@ bắt tay vào code chúng ta mới gặp được. Mong là những phần mìn
   async
 ></script>
 
+      </div>
+    </div>
     <script src="../static/script.js" type="text/javascript"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.3.1/highlight.min.js"></script>
   </body>
 </html>
