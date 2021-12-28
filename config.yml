@@ -1,14 +1,11 @@
-github:
-  https://github.com/tvph
+github: https://github.com/tvph
 
-stackoverflow:
-  https://stackoverflow.com/users/10872420/tran-viet-phuoc
+stackoverflow: https://stackoverflow.com/users/10872420/tran-viet-phuoc
 
-linkedin:
-  https://www.linkedin.com/in/tranvietphuoc/
+linkedin: https://www.linkedin.com/in/tranvietphuoc/
 
-email:
-  phuoctv.ut@gmail.com
+email: phuoctv.ut@gmail.com
 
-resume:
-  link_to_your_resume
+resume: link_to_your_resume
+
+profile_picture: ../static/assets/pyo3.png

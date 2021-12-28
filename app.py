@@ -35,7 +35,6 @@ def create_posts(root_path: Path):
             )
 
     # return a dict with sorted following date created
-
     posts_for_rendering = {
         p: posts[p]
         for p in sorted(
@@ -153,24 +152,49 @@ if __name__ == "__main__":
     tag_template = env.get_template(name="tags.html")
 
     # render all html files
-    render_home(
-        posts_metadata=metadata,
-        render_folder=root,
-        tags=tags,
-        template=home_template,
-        info=info,
-    )
-    render_posts(
-        posts=posts,
-        tags=tags,
-        render_folder=root.joinpath("posts").resolve(),
-        template=post_template,
-        info=info,
-    )
-    render_tags(
-        posts_metadata=metadata,
-        tags=tags,
-        render_folder=root.joinpath("tags").resolve(),
-        template=tag_template,
-        info=info,
-    )
+    # render_home(
+    #     posts_metadata=metadata,
+    #     render_folder=root,
+    #     tags=tags,
+    #     template=home_template,
+    #     info=info,
+    # )
+    # render_posts(
+    #     posts=posts,
+    #     tags=tags,
+    #     render_folder=root.joinpath("posts").resolve(),
+    #     template=post_template,
+    #     info=info,
+    # )
+    # render_tags(
+    #     posts_metadata=metadata,
+    #     tags=tags,
+    #     render_folder=root.joinpath("tags").resolve(),
+    #     template=tag_template,
+    #     info=info,
+    # )
+    with ThreadPoolExecutor(max_workers=5) as executor:
+        executor.submit(
+            render_home,
+            metadata,
+            root,
+            tags,
+            home_template,
+            info,
+        )
+        executor.submit(
+            render_posts,
+            posts,
+            tags,
+            root.joinpath("posts").resolve(),
+            post_template,
+            info,
+        )
+        executor.submit(
+            render_tags,
+            metadata,
+            tags,
+            root.joinpath("tags").resolve(),
+            tag_template,
+            info,
+        )
