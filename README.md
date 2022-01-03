@@ -1,6 +1,6 @@
 # This is a small tool to render personal blog
 
-![Blog generator tool](https://github.com/tvph/tvph.github.io/actions/workflows/python-app.yml/badge.svg)
+![Blog generator tool](https://github.com/tvph/ssg/actions/workflows/python-app.yml/badge.svg)
 
 ## Prerequisite
 
@@ -52,7 +52,13 @@ summary: ....
 	* Run `make test` to run test.
 	* Run `make run` to render all html files to `posts` and `tags` folder.
 
+* Push to your repo, and go to `https://<your_github_username>.github.io/` to see.
+
 * To read more about `github pages`. Read [this guide](https://pages.github.com/)
 
 * In addition, you can add a comment plugin your self call [utterances](https://utteranc.es/?installation_id=19767855&setup_action=install). After that, go to
 `templates/post.html` and replace the script in `{% block script %}{% endblock %}` with your script.
+
+* You can put your information into `config.yml` file
+
+@LICENSE: [MIT](https://github.com/tvph/ssg/blob/master/LICENSE)
