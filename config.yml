@@ -6,7 +6,7 @@ linkedin: https://www.linkedin.com/in/tranvietphuoc/
 
 email: phuoctv.ut@gmail.com
 
-resume: link_to_your_resume
+resume: ../static/assets/resume.pdf
 
 profile_picture: ../static/assets/pyo3.png
 
