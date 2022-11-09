@@ -89,7 +89,9 @@
 </div>
 <br />
 
-<p class="post-content"><h1>1. Bit field là gì?</h1>
+<p class="post-content"><hr />
+
+<h1>1. Bit field là gì?</h1>
 
 <p>Trong lập trình C hay C++, bạn sẽ gặp một struct có dạng như thế này:</p>
 
@@ -100,10 +102,13 @@
 };
 </code></pre>
 
-<p>Trong đó:
-* <strong>type</strong> là tên kiểu dữ liệu (có thể là built-in types hay struct, class).
-* <strong>value</strong> là tên biến thành viên.
-* <strong>number</strong> là một số nguyên dương, biểu thị số bit mà <strong>value</strong> dùng trong dãy giá trị của <strong>type</strong>.</p>
+<p>Trong đó:</p>
+
+<ul>
+<li><strong>type</strong> là tên kiểu dữ liệu (có thể là built-in types hay struct, class).</li>
+<li><strong>value</strong> là tên biến thành viên.</li>
+<li><strong>number</strong> là một số nguyên dương, biểu thị số bit mà <strong>value</strong> dùng trong dãy giá trị của <strong>type</strong>.</li>
+</ul>
 
 <p>Ví dụ, xét struct:</p>
 
@@ -112,22 +117,22 @@
 };
 </code></pre>
 
-<p>Ở đây, <strong>type</strong> là <em>int</em> (giả sử <em>int</em> được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ <code>-2^32 -- 2^32-1</code>. Tuy nhiên, <strong><em>int a: 2;</em></strong> nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của <strong>a</strong> sẽ từ -2 đến 1 (tức 2^2 giá trị).</p>
+<p>Ở đây, <strong>type</strong> là _int_ (giả sử _int_ được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ <code>-2^31 -- 2^31-1</code>. Tuy nhiên, <strong>_int a: 2;_</strong> nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của <strong>a</strong> sẽ từ -2 đến 1 (tức 2^2 giá trị).</p>
 
-<p><strong>Vậy</strong>, bit field là một khai báo các thành viên của struct  với độ rộng rõ ràng theo các bit. Nhưng <u>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</u></p>
+<p><strong>Vậy</strong>, bit field là một khai báo các thành viên của struct với độ rộng rõ ràng theo các bit. Nhưng <u>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</u></p>
 
 <p>Công dụng của bit field là tiết kiệm không gian nhớ. Việc này rất hữu dụng khi bạn lập trình cho các hệ thống có ít tài nguyên như hệ thống nhúng.</p>
 
 <p><strong>Lưu ý</strong> các kiểu dữ liệu dùng trong bit field chỉ thuộc một trong 4 kiểu sau:</p>
 
 <ul>
-<li><em>unsigned int</em> -- Ví dụ:  <code>unsigned int a: 3; //a có giá trị từ 0..7</code></li>
-<li><em>signed int</em> -- Ví dụ: <code>signed int a: 3; //a có giá trị từ -4..3</code></li>
-<li><em>int</em> -- Ví dụ: <code>int a: 3; //a có giá trị từ -4..3 hoặc từ 0..7</code></li>
-<li><em>_Bool</em> (C99) -- Ví dụ: <code>bool a: 1; //a có giá trị 0..1</code></li>
+<li>_unsigned int_ -- Ví dụ: <code>unsigned int a: 3; //a có giá trị từ 0..7</code></li>
+<li>_signed int_ -- Ví dụ: <code>signed int a: 3; //a có giá trị từ -4..3</code></li>
+<li>_int_ -- Ví dụ: <code>int a: 3; //a có giá trị từ -4..3 hoặc từ 0..7</code></li>
+<li>__Bool_ (C99) -- Ví dụ: <code>bool a: 1; //a có giá trị 0..1</code></li>
 </ul>
 
-<p>Mở rộng ra, type của các bit field là các kiểu nguyên như <em>int</em>, <em>long</em>, <em>short</em>, <em>char</em>, <em>long long</em> có thể kèm theo <strong>signed</strong> hoặc <strong>unsigned</strong>. <strike>Đặc biệt là không phải kiểu dấu chấm động như <em>float</em>, <em>double</em></strike> </p>
+<p>Mở rộng ra, type của các bit field là các kiểu nguyên như _int_, _long_, _short_, _char_, _long long_ có thể kèm theo <strong>signed</strong> hoặc <strong>unsigned</strong>. <strike>Đặc biệt là không phải kiểu dấu chấm động như _float_, _double_</strike></p>
 
 <h1>2. Một số ví dụ</h1>
 
@@ -165,7 +170,7 @@ int main(){
 }
 </code></pre>
 
-<p><strong>Kết luận</strong>: Đối với bit field chỉ dùng 1 kiểu dữ liệu, nếu tổng số bit trong bit field nhỏ hơn số bít tối đa để biểu diễn kiểu dữ liệu thì kích thước của bit field là kích thước của kiểu dữ liệu đó, trong ví dụ trên, kiểu <em>unsigned char</em> có kích thước là 1 byte được biểu diễn bởi 8 bit</p>
+<p><strong>Kết luận</strong>: Đối với bit field chỉ dùng 1 kiểu dữ liệu, nếu tổng số bit trong bit field nhỏ hơn số bít tối đa để biểu diễn kiểu dữ liệu thì kích thước của bit field là kích thước của kiểu dữ liệu đó, trong ví dụ trên, kiểu _unsigned char_ có kích thước là 1 byte được biểu diễn bởi 8 bit</p>
 
 <p>Còn nếu tổng số bít là lớn hơn số bít tối đa biểu diễn kiểu dữ liệu, xét hai trường hợp:</p>
 
@@ -206,7 +211,7 @@ int main(){
 }
 </code></pre>
 
-<p>Vì sao lại là 8 bytes? Nguyên tắc cũng giống <a href="https://ptv14.github.io/sizeof-struct-and-data-alignment/">data alignment</a> Đầu tiên, compiler sẽ tìm ra member có kích thước lớn nhất (ví dụ trên là <em>unsigned int</em>) sau đó sẽ xác định số bit tối đa để biểu diễn kiểu dữ liệu của member đó ( ví dụ trên là 32 bit). Và việc so sánh chỉ thực hiện với số này thôi, việc cấp phát, tổ chức bộ nhớ thì y chang như phần <strong>data alignment</strong>. Tổng số bit của các members là 34>32, do đó kết quả sẽ là 8.</p>
+<p>Vì sao lại là 8 bytes? Nguyên tắc cũng giống <a href="https://ptv14.github.io/sizeof-struct-and-data-alignment/">data alignment</a> Đầu tiên, compiler sẽ tìm ra member có kích thước lớn nhất (ví dụ trên là _unsigned int_) sau đó sẽ xác định số bit tối đa để biểu diễn kiểu dữ liệu của member đó ( ví dụ trên là 32 bit). Và việc so sánh chỉ thực hiện với số này thôi, việc cấp phát, tổ chức bộ nhớ thì y chang như phần <strong>data alignment</strong>. Tổng số bit của các members là 34>32, do đó kết quả sẽ là 8.</p>
 
 <p>Nhiều bit field liền kề được phép đóng gói (packed) cùng nhau, ví du:</p>
 
@@ -220,11 +225,11 @@ struct S{
     //6 bit biểu diễn  giá trị của b2;
     // 2 bit biểu diễn giá trị của b3;
     //8 bit thừa, không sử dụng
-    unsigned b1: 5, : 11, b2: 6, b3: 2; 
+    unsigned b1: 5, : 11, b2: 6, b3: 2;
 };
 
 int main(){
-    std::cout&lt;&lt;sizeof(S)&lt;&lt;std::endl; //in ra 4 
+    std::cout&lt;&lt;sizeof(S)&lt;&lt;std::endl; //in ra 4
     return 0;
 }
 </code></pre>

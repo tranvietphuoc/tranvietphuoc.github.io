@@ -3,9 +3,8 @@ date: 27-09-2021
 tags: c, struct, bitfield
 name: bitfield-c
 summary: Bitfield? Nó là gì?
------------------
 
-
+---
 
 # 1. Bit field là gì?
 
@@ -20,9 +19,10 @@ struct Example{
 ```
 
 Trong đó:
-* **type** là tên kiểu dữ liệu (có thể là built-in types hay struct, class).
-* **value** là tên biến thành viên.
-* **number** là một số nguyên dương, biểu thị số bit mà **value** dùng trong dãy giá trị của **type**.
+
+-   **type** là tên kiểu dữ liệu (có thể là built-in types hay struct, class).
+-   **value** là tên biến thành viên.
+-   **number** là một số nguyên dương, biểu thị số bit mà **value** dùng trong dãy giá trị của **type**.
 
 Ví dụ, xét struct:
 
@@ -32,20 +32,20 @@ struct foo{
 };
 ```
 
-Ở đây, **type** là *int* (giả sử *int* được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ `-2^32 -- 2^32-1`. Tuy nhiên, ***int a: 2;*** nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của **a** sẽ từ -2 đến 1 (tức 2^2 giá trị).
+Ở đây, **type** là _int_ (giả sử _int_ được biểu diễn bởi 4 bytes, tức 32 bit), có dãy giá trị từ `-2^31 -- 2^31-1`. Tuy nhiên, **_int a: 2;_** nghĩa là chỉ cần dùng 2 bit trong số 32 bit đó, và dãy giá trị của **a** sẽ từ -2 đến 1 (tức 2^2 giá trị).
 
-**Vậy**, bit field là một khai báo các thành viên của struct  với độ rộng rõ ràng theo các bit. Nhưng <u>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</u>
+**Vậy**, bit field là một khai báo các thành viên của struct với độ rộng rõ ràng theo các bit. Nhưng <u>độ rộng phải nhỏ hơn số bit tối đa đễ biểu diễn kiểu dữ liệu</u>
 
 Công dụng của bit field là tiết kiệm không gian nhớ. Việc này rất hữu dụng khi bạn lập trình cho các hệ thống có ít tài nguyên như hệ thống nhúng.
 
 **Lưu ý** các kiểu dữ liệu dùng trong bit field chỉ thuộc một trong 4 kiểu sau:
 
-* *unsigned int* -- Ví dụ:  `unsigned int a: 3; //a có giá trị từ 0..7`
-* *signed int* -- Ví dụ: `signed int a: 3; //a có giá trị từ -4..3`
-* *int* -- Ví dụ: `int a: 3; //a có giá trị từ -4..3 hoặc từ 0..7`
-* *_Bool* (C99) -- Ví dụ: `bool a: 1; //a có giá trị 0..1`
+-   _unsigned int_ -- Ví dụ: `unsigned int a: 3; //a có giá trị từ 0..7`
+-   _signed int_ -- Ví dụ: `signed int a: 3; //a có giá trị từ -4..3`
+-   _int_ -- Ví dụ: `int a: 3; //a có giá trị từ -4..3 hoặc từ 0..7`
+-   _\_Bool_ (C99) -- Ví dụ: `bool a: 1; //a có giá trị 0..1`
 
-Mở rộng ra, type của các bit field là các kiểu nguyên như *int*, *long*, *short*, *char*, *long long* có thể kèm theo **signed** hoặc **unsigned**. ~~Đặc biệt là không phải kiểu dấu chấm động như *float*, *double*~~ 
+Mở rộng ra, type của các bit field là các kiểu nguyên như _int_, _long_, _short_, _char_, _long long_ có thể kèm theo **signed** hoặc **unsigned**. ~~Đặc biệt là không phải kiểu dấu chấm động như _float_, _double_~~
 
 # 2. Một số ví dụ
 
@@ -85,13 +85,13 @@ int main(){
 }
 ```
 
-**Kết luận**: Đối với bit field chỉ dùng 1 kiểu dữ liệu, nếu tổng số bit trong bit field nhỏ hơn số bít tối đa để biểu diễn kiểu dữ liệu thì kích thước của bit field là kích thước của kiểu dữ liệu đó, trong ví dụ trên, kiểu *unsigned char* có kích thước là 1 byte được biểu diễn bởi 8 bit
+**Kết luận**: Đối với bit field chỉ dùng 1 kiểu dữ liệu, nếu tổng số bit trong bit field nhỏ hơn số bít tối đa để biểu diễn kiểu dữ liệu thì kích thước của bit field là kích thước của kiểu dữ liệu đó, trong ví dụ trên, kiểu _unsigned char_ có kích thước là 1 byte được biểu diễn bởi 8 bit
 
 Còn nếu tổng số bít là lớn hơn số bít tối đa biểu diễn kiểu dữ liệu, xét hai trường hợp:
 
-* Nếu tổng số bit chia hết cho số bit biểu diễn kiểu dữ liệu thì kích thước của bit field là thương của tổng số bit của member với số bit biểu diễn kiểu dữ liệu đó nhân với kích thước của kiểu dữ liệu.
+-   Nếu tổng số bit chia hết cho số bit biểu diễn kiểu dữ liệu thì kích thước của bit field là thương của tổng số bit của member với số bit biểu diễn kiểu dữ liệu đó nhân với kích thước của kiểu dữ liệu.
 
-* Nếu tổng số bit không chia hết cho số bit của kiểu dữ liệu thì kích thước của bit field là thương của phép chia nguyên giữa tổng số bit member với số bit của kiểu dữ liệu cộng 1 rồi nhân với kích thước của kiểu dữ liệu đó.
+-   Nếu tổng số bit không chia hết cho số bit của kiểu dữ liệu thì kích thước của bit field là thương của phép chia nguyên giữa tổng số bit member với số bit của kiểu dữ liệu cộng 1 rồi nhân với kích thước của kiểu dữ liệu đó.
 
 Xem ví dụ sau:
 
@@ -127,7 +127,7 @@ int main(){
 }
 ```
 
-Vì sao lại là 8 bytes? Nguyên tắc cũng giống [data alignment](https://ptv14.github.io/sizeof-struct-and-data-alignment/) Đầu tiên, compiler sẽ tìm ra member có kích thước lớn nhất (ví dụ trên là *unsigned int*) sau đó sẽ xác định số bit tối đa để biểu diễn kiểu dữ liệu của member đó ( ví dụ trên là 32 bit). Và việc so sánh chỉ thực hiện với số này thôi, việc cấp phát, tổ chức bộ nhớ thì y chang như phần **data alignment**. Tổng số bit của các members là 34>32, do đó kết quả sẽ là 8.
+Vì sao lại là 8 bytes? Nguyên tắc cũng giống [data alignment](https://ptv14.github.io/sizeof-struct-and-data-alignment/) Đầu tiên, compiler sẽ tìm ra member có kích thước lớn nhất (ví dụ trên là _unsigned int_) sau đó sẽ xác định số bit tối đa để biểu diễn kiểu dữ liệu của member đó ( ví dụ trên là 32 bit). Và việc so sánh chỉ thực hiện với số này thôi, việc cấp phát, tổ chức bộ nhớ thì y chang như phần **data alignment**. Tổng số bit của các members là 34>32, do đó kết quả sẽ là 8.
 
 Nhiều bit field liền kề được phép đóng gói (packed) cùng nhau, ví du:
 
@@ -142,16 +142,16 @@ struct S{
     //6 bit biểu diễn  giá trị của b2;
     // 2 bit biểu diễn giá trị của b3;
     //8 bit thừa, không sử dụng
-    unsigned b1: 5, : 11, b2: 6, b3: 2; 
+    unsigned b1: 5, : 11, b2: 6, b3: 2;
 };
 
 int main(){
-    std::cout<<sizeof(S)<<std::endl; //in ra 4 
+    std::cout<<sizeof(S)<<std::endl; //in ra 4
     return 0;
 }
 ```
 
- Ở ví dụ này có một bit field không tên (tức là không có tên trước dấu **:**) chiếm 11 bit, tổng số bit là 24 bit < 32 nên kích thước là 4 byte.
+Ở ví dụ này có một bit field không tên (tức là không có tên trước dấu **:**) chiếm 11 bit, tổng số bit là 24 bit < 32 nên kích thước là 4 byte.
 
 Với các bit field không tên mà khai báo giá trị 0 sau dấu **:** thì compiler sẽ padding vùng nhớ còn lại của block và cấp block mới để đẩy vào các bit field tiếp theo. Ví dụ:
 
