@@ -6,8 +6,8 @@ linkedin: https://www.linkedin.com/in/tranvietphuoc/
 
 email: phuoctv.ut@gmail.com
 
-resume: ../static/assets/resume.pdf
+resume: ../src/static/resume.pdf
 
-profile_picture: ../static/assets/pyo3.png
+profile_picture: ../src/static/pyo3.png
 
 blog_title: Phuoc's blog
