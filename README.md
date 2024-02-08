@@ -2,6 +2,7 @@
 
 ![Blog generator tool](https://github.com/tvph/ssg/actions/workflows/python-app.yml/badge.svg)
 
+
 ## Prerequisite
 
 1. `make`
